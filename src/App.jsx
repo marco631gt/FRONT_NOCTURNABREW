@@ -1,33 +1,12 @@
-import { Routes, Route, Link } from 'react-router-dom'
-import './App.css'
-import Home from './pages/Home'
-import Menu from './pages/Menu'
-import Contact from './pages/Contact'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import React from "react";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Menu from "./pages/Menu";
 
 function App() {
-  return (
-    <>
-      <Header />
-
-      {/* Navigation Links */}
-      <nav>
-        <Link to="/">Inicio</Link> |{" "}
-        <Link to="/menu">Menú</Link> |{" "}
-        <Link to="/contact">Contacto</Link>
-      </nav>
-
-      {/* Route paths */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-
-      <Footer />
-    </>
-  )
+  return <Menu/>;
 }
+export default App;
 
-export default App
+

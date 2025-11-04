@@ -1,0 +1,324 @@
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  background-color: #fff;
+  color: #3e2c23;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 60px;
+  background-color: #fff;
+  font-family: 'Playfair Display', serif;
+  position: relative;
+  z-index: 10;
+}
+
+.logo img {
+  width: 100px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #3e2c23;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #8b2b34;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  overflow: hidden; /* recorta todo lo que sobresalga */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%; /* ocupa todo el banner */
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.hero-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin: 20PX;
+}
+
+.hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 60px;
+  margin: 10px 0;
+}
+
+.hero-content p {
+  font-style: italic;
+  font-size: 18px;
+  color: #f8eaea;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* IMAGEN DE LA TAZA */
+.hero-img {
+  position: absolute;
+  right: 0px; /* separada del borde derecho */
+  top: 100px;
+  bottom: 100px; /* separada del borde inferior */
+  z-index: 2;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+}
+
+.hero-img img {
+  width: 100%;
+  height: auto;
+}
+
+/* OUR COFFEE */
+.our-coffee {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  margin-top: -200px;
+  /*padding: 0px 30px;*/
+  background-size: cover; /* ocupa toda la sección */
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+
+}
+
+.our-coffee h2 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 50px;
+  color: #3e2c23;
+}
+
+.coffee-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.coffee-item {
+  background-color: rgba(90, 12, 23, 0.7);
+  border-radius: 50%;
+  width: 260px;
+  height: 260px;
+  padding: 30px;
+  color: #f3e6e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* --- OUR TEMPTATIONS --- */
+.temptations {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #fff;
+  margin-top: 0;        /* elimina margen superior */
+  padding-top: 20px;
+}
+
+.temptations h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #550B14;
+  margin-bottom: 40px;
+}
+
+.temptation-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.card-content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+}
+
+.card-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-content a {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #fff;
+  padding: 6px 15px;
+  border-radius: 15px;
+  transition: background 0.3s;
+}
+
+.card-content a:hover {
+  background: #550B14;
+  border-color: #550B14;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* 🔹 Fondo de cada tentación */
+.cold-brew {
+  background-image: url('./images/coldbrew.png');
+}
+
+.cappuccino {
+  background-image: url('./images/capuccino.png');
+}
+
+.cheesecake {
+  background-image: url('./images/cheesecake.png');
+}
+
+/* EFECTO HOVER */
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.card:hover img {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+.card:hover a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2px;
+  height: 450px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* FOOTER */
+footer {
+  background-color: #5a0c17;
+  color: white;
+  padding: 40px 30px;
+  display: flex;
+  font-family: 'Playfair Display SC', serif;
+
+}
+
+.phone img,
+.mail img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+
+
+footer h3 {
+  font-family: 'Playfair Display', serif;
+  margin-left: 200px;
+}
+.socials {
+  justify-content: right; /* manda las imágenes a la derecha */
+  align-items: center;
+  flex-wrap: wrap; /* por si el texto baja */
+  color: white;
+  margin-right: -2000px; /* empuja hacia la izquierda */
+
+}
+
+.socials img {
+  width: 25px;
+  margin: 0 10px;
+  filter: brightness(0) invert(1);
+  margin-top: 25px;
+  margin-left: 60px;
+  margin-bottom: 20px;
+}
+
+.contact p{
+  margin-right: 500px; /* empuja hacia la izquierda */
+  margin-left: 200px;
+  margin-top: 16px;
+
+}
+
+/* SVG Curva */
+.curve {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
