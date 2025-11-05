@@ -115,9 +115,21 @@ body {
   border: 1px solid #f4ede6;
 }
 
+/*Mensajes de error*/
+
+.error input {
+  border: 2px solid #e74c3c !important;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.75rem;
+  margin-top: -8px;
+  margin-bottom: 10px;
+  display: block;
+}
+
 /*agregue codigo index*/
-
-
 
 
 

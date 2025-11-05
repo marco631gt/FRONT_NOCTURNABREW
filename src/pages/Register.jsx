@@ -1,47 +1,99 @@
 import React, { useState } from "react";
 import "./Register.css";
+import { Link } from "react-router-dom";
 
 // Imágenes
-import logo from "../assets/images/logo.png";
-import phone from "../assets/images/phone.png";
-import email from "../assets/images/email.png";
-import linki from "../assets/images/linki.png";
-import linkf from "../assets/images/linkf.png";
-import linkw from "../assets/images/linkw.png";
 import registerBg from "../assets/images/register-bg.png";
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState({});
+
+  const validate = () => {
+    const newError = {};
+
+    // Validar nombre
+    if (!name.trim()) {
+      newError.name = "Name is required";
+    } else if (!/^[A-Za-z\sáéíóúÁÉÍÓÚñÑ]+$/.test(name)) {
+      newError.name = "Only letters and spaces allowed";
+    }
+
+    // Validar email
+    if (!email.trim()) {
+      newError.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
+      newError.email = "Email has an invalid format or extension";
+    }
+
+    // Validar password
+    if (!password.trim()) {
+      newError.password = "Password is required";
+    } else if (password.length < 6) {
+      newError.password = "Password must be at least 6 characters long";
+    }
+
+    setError(newError);
+    return Object.keys(newError).length === 0;
+  };
+
+  const handleRegister = () => {
+    if (validate()) {
+      console.log("Registro exitoso");
+    } else {
+      console.log("Errores en los campos");
+    }
+  };
 
   return (
-    <> <Header2/>
+    <>
+      <Header2 />
 
-      {/* Fondo */}
       <section
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}
       >
         <div className="overlay">
           <div className="login-box">
-            <h2>SING UP</h2>
+            <h2>SIGN UP</h2>
 
-            <div className="input-group">
-              <i className="icon">📧</i>
-              <input type="name" placeholder="name" />
+            {/* Nombre */}
+            <div className={`input-group ${error.name ? "error" : ""}`}>
+              <i className="icon">👤</i>
+              <input
+                type="text"
+                placeholder="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
+            {error.name && <span className="error-message">{error.name}</span>}
 
-            <div className="input-group">
+            {/* Email */}
+            <div className={`input-group ${error.email ? "error" : ""}`}>
               <i className="icon">📧</i>
-              <input type="email" placeholder="email" />
+              <input
+                type="email"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
+            {error.email && <span className="error-message">{error.email}</span>}
 
-            <div className="input-group">
+            {/* Password */}
+            <div className={`input-group ${error.password ? "error" : ""}`}>
               <i className="icon">🔒</i>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <span
                 className="eye"
@@ -51,13 +103,23 @@ const Register = () => {
                 {showPassword ? "🙈" : "👁️"}
               </span>
             </div>
+            {error.password && (
+              <span className="error-message">{error.password}</span>
+            )}
 
-            <button className="btn-createaccount">Create an Account</button>
+            {/* Botón */}
+            <button className="btn-createaccount" onClick={handleRegister}>
+              Create an Account
+            </button>
+
+            <p className="forgot">
+              Already have an account? <Link to="/login"> Log in here </Link>
+            </p>
           </div>
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </>
   );
 };
