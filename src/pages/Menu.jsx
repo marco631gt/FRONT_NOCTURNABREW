@@ -23,10 +23,10 @@ const Menu = () => {
   ];
 
   const endpoints = {
-    iced: `${import.meta.env.VITE_NGROK}products/category/Iced%20Favorites`,
-    hot: `${import.meta.env.VITE_NGROK}products/category/Hot%20Favorites`,
-    sweet: `${import.meta.env.VITE_NGROK}products/category/Sweet%20Delicacies`,
-    savory: `${import.meta.env.VITE_NGROK}products/category/Savory%20Delicacies`,
+    iced: `${import.meta.env.VITE_ENDPOINT}products/category/Iced%20Favorites`,
+    hot: `${import.meta.env.VITE_ENDPOINT}products/category/Hot%20Favorites`,
+    sweet: `${import.meta.env.VITE_ENDPOINT}products/category/Sweet%20Delicacies`,
+    savory: `${import.meta.env.VITE_ENDPOINT}products/category/Savory%20Delicacies`,
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Menu = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `AppToken ${import.meta.env.VITE_APPTOKEN}`,
+            "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
             "ngrok-skip-browser-warning": "true", // ⚡️Evita el banner de ngrok
           },
         });

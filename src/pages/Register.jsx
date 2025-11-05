@@ -49,11 +49,11 @@ const Register = () => {
   }
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_NGROK}users/create`, {
+    const res = await fetch(`${import.meta.env.VITE_ENDPOINT}users/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${import.meta.env.VITE_APPTOKEN}`, 
+        "Authorization": `Bearer ${import.meta.env.VITE_APPSECRET}`, 
       },
       body: JSON.stringify({ name, email, password }),
     });

@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Menu from "./pages/Menu";
 
 function App() {
-  return <Menu/>;
+  return <Login/>;
 }
 export default App;
 
