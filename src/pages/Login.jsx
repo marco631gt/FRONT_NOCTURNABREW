@@ -50,11 +50,11 @@ const Login = () => {
   }
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_ENDPOINT}login`, {
+    const res = await fetch("https://unjust-tamisha-undeferrably.ngrok-free.dev/api/login", {
       method: "POST",
       headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${import.meta.env.VITE_APPSECRET}`,
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJNeUFwcCIsImlhdCI6MTc2MjMwNjcyMn0.SdLp7a8txnblULxR1KhEV22XPSR2aPswJU1WM_5wgFc",
   },
   body: JSON.stringify({ email, password }),
 });
