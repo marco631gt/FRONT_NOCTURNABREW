@@ -49,11 +49,11 @@ const Register = () => {
   }
 
   try {
-    const res = await fetch("https://unjust-tamisha-undeferrably.ngrok-free.dev/api/users/create", {
+    const res = await fetch(`${import.meta.env.VITE_ENDPOINT}users/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJNeUFwcCIsImlhdCI6MTc2MjMwNjcyMn0.SdLp7a8txnblULxR1KhEV22XPSR2aPswJU1WM_5wgFc", 
+        "Authorization": `Bearer ${import.meta.env.VITE_APPSECRET}`, 
       },
       body: JSON.stringify({ name, email, password }),
     });
