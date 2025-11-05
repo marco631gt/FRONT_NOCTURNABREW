@@ -41,13 +41,40 @@ const Login = () => {
     return Object.keys(newError).length === 0;
   };
 
-  const handleLogin = () => {
-    if (validate()) {
-      console.log("Login correcto");
+  const handleLogin = async () => {
+  if (!validate()) {
+    console.log("Campos inválidos");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://unjust-tamisha-undeferrably.ngrok-free.dev/api/login", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-app-token": "NocturnaBrewAppToken123!"  // 👈 este header es obligatorio
+  },
+  body: JSON.stringify({ email, password }),
+});
+
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert(`✅ Bienvenido ${data.user?.name || "usuario"}`);
+      setEmail("");
+      setPassword("");
+      // Aquí podrías guardar el user en localStorage si quieres:
+      // localStorage.setItem("user", JSON.stringify(data.user));
     } else {
-      console.log("Campos inválidos");
+      alert(`⚠️ ${data.msg || "Error en el inicio de sesión"}`);
     }
-  };
+  } catch (error) {
+    console.error("❌ Error:", error);
+    alert("Error al conectar con el servidor");
+  }
+};
+
 
   return (
     <>
@@ -92,18 +119,13 @@ const Login = () => {
             </div>
             {error.password && <span className="error-message">{error.password}</span>}
 
-            {/* CONTRASEÑA OLVIDADA Y conexión a register*/}
-            <p className="forgot">
-              If you forgot your password,{" "}
-              <Link to="/register"> click here </Link>
-            </p>
-
-            {/* BOTONES */}
+            
+          </div>
+          {/* BOTONES */}
             <button className="btn primary" onClick={handleLogin}>
               Log In
             </button>
             <button className="btn secondary">Create an Account</button>
-          </div>
         </div>
       </section>
 

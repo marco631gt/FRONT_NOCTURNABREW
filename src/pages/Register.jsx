@@ -42,18 +42,46 @@ const Register = () => {
     return Object.keys(newError).length === 0;
   };
 
-  const handleRegister = () => {
-    if (validate()) {
-      console.log("Registro exitoso");
+  const handleRegister = async () => {
+  if (!validate()) {
+    console.log("Errores en los campos");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://unjust-tamisha-undeferrably.ngrok-free.dev/api/users/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJNeUFwcCIsImlhdCI6MTc2MjMwNjcyMn0.SdLp7a8txnblULxR1KhEV22XPSR2aPswJU1WM_5wgFc", // 👈 cambia esto
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const text = await res.text(); // leer como texto para depurar
+    console.log("🔍 Respuesta recibida (texto):", text);
+
+    const data = JSON.parse(text);
+    console.log("✅ Datos recibidos:", data);
+
+    if (res.ok) {
+      alert("✅ Registro exitoso");
+      setName("");
+      setEmail("");
+      setPassword("");
     } else {
-      console.log("Errores en los campos");
+      alert(`⚠️ ${data.message || "Error al registrar usuario"}`);
     }
-  };
+  } catch (error) {
+    console.error("❌ Error:", error);
+    alert("Error al conectar con el servidor");
+  }
+};
+
 
   return (
     <>
       <Header2 />
-
       <section
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}
@@ -112,16 +140,20 @@ const Register = () => {
               Create an Account
             </button>
 
-            <p className="forgot">
-              Already have an account? <Link to="/login"> Log in here </Link>
+            {/* Enlace a login */}
+            <p className="login-link">
+              Already have an account?{" "}
+              <Link to="/login" className="link">
+                Sign in
+              </Link>
             </p>
           </div>
         </div>
       </section>
-
       <Footer />
     </>
   );
 };
 
+// 🔹 Muy importante: esto debe estar al final del archivo
 export default Register;
