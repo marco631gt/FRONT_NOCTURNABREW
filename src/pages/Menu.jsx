@@ -23,14 +23,11 @@ const Menu = () => {
   ];
 
   const endpoints = {
-    iced: "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/category/Iced%20Favorites",
-    hot: "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/category/Hot%20Favorites",
-    sweet: "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/category/Sweet%20Delicacies",
-    savory: "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/category/Savory%20Delicacies",
+    iced: `${import.meta.env.VITE_NGROK}products/category/Iced%20Favorites`,
+    hot: `${import.meta.env.VITE_NGROK}products/category/Hot%20Favorites`,
+    sweet: `${import.meta.env.VITE_NGROK}products/category/Sweet%20Delicacies`,
+    savory: `${import.meta.env.VITE_NGROK}products/category/Savory%20Delicacies`,
   };
-
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJNeUFwcCIsImlhdCI6MTc2MjMwNjcyMn0.SdLp7a8txnblULxR1KhEV22XPSR2aPswJU1WM_5wgFc";
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,7 +37,7 @@ const Menu = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `AppToken ${token}`,
+            "Authorization": `AppToken ${import.meta.env.VITE_APPTOKEN}`,
             "ngrok-skip-browser-warning": "true", // ⚡️Evita el banner de ngrok
           },
         });
