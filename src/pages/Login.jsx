@@ -37,7 +37,9 @@ const Login = () => {
     }
 
     setError(newError);
-
+    console.log('Hola')
+     console.log( Object.keys(newError) )
+     console.log( Object.keys(newError).length )
     return Object.keys(newError).length === 0;
   };
 
@@ -52,7 +54,7 @@ const Login = () => {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "x-app-token": "NocturnaBrewAppToken123!"  // 👈 este header es obligatorio
+     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJNeUFwcCIsImlhdCI6MTc2MjMwNjcyMn0.SdLp7a8txnblULxR1KhEV22XPSR2aPswJU1WM_5wgFc",
   },
   body: JSON.stringify({ email, password }),
 });
