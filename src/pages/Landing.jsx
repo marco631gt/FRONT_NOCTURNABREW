@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Landing.css";
 
 // Componentes reutilizables
-import Header from "../components/Header";
+import HeaderLanding from "../components/HeaderLanding";
 import Footer from "../components/Footer";
 
 // Imágenes
@@ -16,7 +17,7 @@ import ImagesGallery from "../assets/images/ImagesGallery.png";
 const Landing = () => {
   return (
     <>
-    <Header/>
+    <HeaderLanding/>
       {/* HERO */}
       <section className="hero">
         <svg
@@ -87,7 +88,7 @@ const Landing = () => {
           >
             <div className="card-content">
               <h3>COLD BREW</h3>
-              <a href="#">View more</a>
+              <Link to="/login">View More</Link>
             </div>
           </div>
           <div
@@ -96,7 +97,7 @@ const Landing = () => {
           >
             <div className="card-content">
               <h3>CAPPUCCINO</h3>
-              <a href="#">View more</a>
+              <Link to="/login">View More</Link>
             </div>
           </div>
           <div
@@ -105,7 +106,7 @@ const Landing = () => {
           >
             <div className="card-content">
               <h3>RED FRUIT CHEESECAKE</h3>
-              <a href="#">View more</a>
+              <Link to="/login">View More</Link>
             </div>
           </div>
         </div>

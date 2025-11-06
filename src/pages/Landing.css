@@ -17,6 +17,15 @@ header {
   position: relative;
   z-index: 10;
 }
+header .logo {
+  position: relative;
+  z-index: 1000;
+}
+
+header img {
+  cursor: pointer; /* 👈 muestra que es clickeable */
+}
+
 
 .logo img {
   width: 100px;
@@ -151,7 +160,7 @@ nav a:hover {
   text-align: center;
   padding: 80px 20px;
   background-color: #fff;
-  margin-top: 0;        /* elimina margen superior */
+  margin-top: 0;        
   padding-top: 20px;
 }
 
@@ -224,15 +233,15 @@ nav a:hover {
 
 /* 🔹 Fondo de cada tentación */
 .cold-brew {
-  background-image: url('./images/coldbrew.png');
+  background-image: url('../assets/images/coldbrew.png');
 }
 
 .cappuccino {
-  background-image: url('./images/capuccino.png');
+  background-image: url('../assets/images/capuccino.png');
 }
 
 .cheesecake {
-  background-image: url('./images/cheesecake.png');
+  background-image: url('../assets/images/cheesecake.png');
 }
 
 /* EFECTO HOVER */

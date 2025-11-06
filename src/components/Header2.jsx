@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import "../pages/Login.css";
 
@@ -6,13 +7,15 @@ const Header2 = () => {
   return (
     <header className="main-header">
       <div className="logo">
-        <img src={logo} alt="Nocturna Brew Logo" />
+        <Link to="/">
+          <img src={logo} alt="Nocturna Brew Logo" />
+        </Link>
       </div>
-      <nav style={{'zIndex': 100}}>
-        <a href="/menu">Menú</a>
-        <a href="/login">Login</a>
-        <a href="/register">Join Us</a>
-        <a href="/about">About Us</a>
+      <nav style={{ zIndex: 100 }}>
+        <Link to="/menu">Menú</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/register">Join Us</Link>
+        <Link to="/about">About Us</Link>
       </nav>
 
       {/* Curva SVG */}

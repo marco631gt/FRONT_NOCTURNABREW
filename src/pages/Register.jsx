@@ -141,10 +141,10 @@ const Register = () => {
             </button>
 
             {/* Enlace a login */}
-            <p className="login-link">
+            <p className="login-link" style={{color:"white", marginTop:"10px"}}>
               Already have an account?{" "}
               <Link to="/login" className="link">
-                Sign in
+                Log in
               </Link>
             </p>
           </div>

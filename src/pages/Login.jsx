@@ -121,13 +121,14 @@ const Login = () => {
             </div>
             {error.password && <span className="error-message">{error.password}</span>}
 
-            
-          </div>
           {/* BOTONES */}
-            <button className="btn primary" onClick={handleLogin}>
-              Log In
-            </button>
-            <button className="btn secondary">Create an Account</button>
+            <Link to="/menu">
+            <button className="btn primary">Log In</button>
+            </Link>
+            <Link to="/register">
+              <button className="btn secondary">Create an Account</button>
+            </Link>
+            </div>
         </div>
       </section>
 
