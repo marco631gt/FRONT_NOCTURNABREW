@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 // Imágenes
 import registerBg from "../assets/images/register-bg.png";
-import Header2 from "../components/Header2";
+import HeaderLog from "../components/HeaderLog";
 import Footer from "../components/Footer";
 
 const Register = () => {
@@ -66,7 +66,7 @@ const Register = () => {
     console.log("✅ Datos recibidos:", data);
 
     if (res.ok) {
-      alert("✅ Registro exitoso");
+      
       setName("");
       setEmail("");
       setPassword("")
@@ -76,14 +76,14 @@ const Register = () => {
     }
   } catch (error) {
     console.error("❌ Error:", error);
-    alert("Error al conectar con el servidor");
+    //alert("Error al conectar con el servidor");
   }
 };
 
 
   return (
     <>
-      <Header2/>
+      <HeaderLog/>
       <section
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}

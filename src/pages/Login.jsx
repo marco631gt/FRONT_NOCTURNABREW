@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 
 // Imágenes
 import registerBg from "../assets/images/register-bg.png";
-import Header2 from "../components/Header2";
+import HeaderLog from "../components/HeaderLog";
 import Footer from "../components/Footer";
 
 const Login = () => {
@@ -58,7 +58,7 @@ const Login = () => {
     const data = await res.json();
 
     if (res.ok) {
-      alert(`✅ Bienvenido ${data.user?.name || "usuario"}`);
+      
       setEmail("");
       setPassword("");
       navigate("/Menu");
@@ -69,14 +69,14 @@ const Login = () => {
     }
   } catch (error) {
     console.error("❌ Error:", error);
-    alert("Error al conectar con el servidor");
+    //alert("Error al conectar con el servidor");
   }
 };
 
 
   return (
     <>
-      <Header2 />
+      <HeaderLog />
 
       {/* BACKGROUND */}
       <section
