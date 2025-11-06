@@ -83,7 +83,7 @@ const Register = () => {
 
   return (
     <>
-      <Header2 />
+      <Header2/>
       <section
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}
@@ -102,7 +102,7 @@ const Register = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            {error.name && <span className="error-message">{error.name}</span>}
+            {error.name && <span className="error-message" style={{color:"white"}}>{error.name}</span>}
 
             {/* Email */}
             <div className={`input-group ${error.email ? "error" : ""}`}>
@@ -114,7 +114,7 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {error.email && <span className="error-message">{error.email}</span>}
+            {error.email && <span className="error-message" style={{color:"white"}}>{error.email}</span>}
 
             {/* Password */}
             <div className={`input-group ${error.password ? "error" : ""}`}>
@@ -134,7 +134,7 @@ const Register = () => {
               </span>
             </div>
             {error.password && (
-              <span className="error-message">{error.password}</span>
+              <span className="error-message" style={{color:"white"}}>{error.password}</span>
             )}
 
             {/* Botón */}

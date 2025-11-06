@@ -61,7 +61,7 @@ nav a:hover {
   left: 0;
   width: 100%;
   height: 90%; /* ocupa todo el banner */
-  z-index: 2;
+  z-index: 2; 
 }
 
 .hero-content {
@@ -114,7 +114,6 @@ nav a:hover {
   font-family: 'Playfair Display', serif;
   text-align: center;
   margin-top: -200px;
-  /*padding: 0px 30px;*/
   background-size: cover; /* ocupa toda la sección */
   background-position: center;
   background-repeat: no-repeat;

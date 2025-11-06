@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 // Imágenes
 import registerBg from "../assets/images/register-bg.png";
@@ -8,6 +8,7 @@ import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 
 const Login = () => {
+  const navigate =useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -60,6 +61,7 @@ const Login = () => {
       alert(`✅ Bienvenido ${data.user?.name || "usuario"}`);
       setEmail("");
       setPassword("");
+      navigate("/Menu");
       // Aquí podrías guardar el user en localStorage si quieres:
       // localStorage.setItem("user", JSON.stringify(data.user));
     } else {
@@ -95,7 +97,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {error.email && <span className="error-message">{error.email}</span>}
+            {error.email && <span className="error-message" style={{color:"white"}}>{error.email}</span>}
 
             {/* PASSWORD */}
             <div className={`input-group ${error.password ? "error" : ""}`}>
@@ -113,7 +115,7 @@ const Login = () => {
                 {showPassword ? "🙈" : "👁️"}
               </span>
             </div>
-            {error.password && <span className="error-message">{error.password}</span>}
+            {error.password && <span className="error-message" style={{color:"white"}}>{error.password}</span>}
 
           {/* BOTONES */}
             <button className="btn primary" onClick={handleLogin}>
