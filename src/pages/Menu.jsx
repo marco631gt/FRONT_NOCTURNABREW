@@ -87,7 +87,7 @@ const Menu = () => {
               onClick={() => setActiveCategory(cat.id)}
             >
               <img src={cat.image} alt={cat.title} />
-              <div className="overlay">
+              <div className="overlay-menu">
                 <h3>{cat.title}</h3>
                 <p>View more</p>
               </div>

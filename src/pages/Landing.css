@@ -137,7 +137,7 @@ nav a:hover {
 .coffee-cards {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 80px;
   flex-wrap: wrap;
 }
 
@@ -158,11 +158,16 @@ nav a:hover {
 /* --- OUR TEMPTATIONS --- */
 .temptations {
   text-align: center;
-  padding: 80px 20px;
+  align-items: center;
+  padding: 60px 0px;
   background-color: #fff;
   margin-top: 0;        
   padding-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .temptations h2 {
   font-family: 'Playfair Display', serif;
@@ -172,12 +177,16 @@ nav a:hover {
 }
 
 .temptation-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  max-width: 1100px;
-  margin: 0 auto;
+  display: flex;                /* 🔹 usa flex en lugar de grid */
+  justify-content: center;      /* 🔹 centra horizontalmente */
+  align-items: center;          /* 🔹 centra verticalmente si cambian alturas */
+  flex-wrap: wrap;              /* 🔹 permite que bajen en pantallas pequeñas */
+  gap: 140px;                     /* 🔹 espacio entre tarjetas */
+  margin: 0 auto;               /* 🔹 centra el bloque */
+  max-width: 1100px;            /* 🔹 evita que se extienda demasiado */
+  width: 100%;
 }
+
 
 .card {
   position: relative;

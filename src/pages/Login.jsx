@@ -3,12 +3,6 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 
 // Imágenes
-import logo from "../assets/images/logo.png";
-import phone from "../assets/images/phone.png";
-import emailImg from "../assets/images/email.png";
-import linki from "../assets/images/linki.png";
-import linkf from "../assets/images/linkf.png";
-import linkw from "../assets/images/linkw.png";
 import registerBg from "../assets/images/register-bg.png";
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
@@ -87,7 +81,7 @@ const Login = () => {
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}
       >
-        <div className="overlay">
+        <div className="overlay-login">
           <div className="login-box">
             <h2>LOG IN</h2>
 
@@ -122,9 +116,9 @@ const Login = () => {
             {error.password && <span className="error-message">{error.password}</span>}
 
           {/* BOTONES */}
-            <Link to="/menu">
-            <button className="btn primary">Log In</button>
-            </Link>
+            <button className="btn primary" onClick={handleLogin}>
+              Log In
+            </button>
             <Link to="/register">
               <button className="btn secondary">Create an Account</button>
             </Link>

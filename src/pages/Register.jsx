@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Imágenes
 import registerBg from "../assets/images/register-bg.png";
@@ -8,6 +8,7 @@ import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 
 const Register = () => {
+  const navigate =useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,7 +69,8 @@ const Register = () => {
       alert("✅ Registro exitoso");
       setName("");
       setEmail("");
-      setPassword("");
+      setPassword("")
+      navigate("/login");
     } else {
       alert(`⚠️ ${data.message || "Error al registrar usuario"}`);
     }
@@ -86,7 +88,7 @@ const Register = () => {
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}
       >
-        <div className="overlay">
+        <div className="overlay-register">
           <div className="login-box">
             <h2>SIGN UP</h2>
 

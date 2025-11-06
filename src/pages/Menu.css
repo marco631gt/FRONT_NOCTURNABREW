@@ -64,7 +64,7 @@ body {
   transform: scale(1.05);
 }
 
-.overlay {
+.overlay-menu {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
@@ -154,10 +154,3 @@ body {
   margin-top: 5px;
 }
 
-.cards-container,
-.card img,
-.overlay {
-  filter: none !important;
-  backdrop-filter: none !important;
-  background: none !important;
-}
