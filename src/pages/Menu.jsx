@@ -38,11 +38,11 @@ const Menu = () => {
           headers: {
             "Content-Type": "application/json",
             "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
-            "ngrok-skip-browser-warning": "true", // ⚡️Evita el banner de ngrok
+            "ngrok-skip-browser-warning": "true", // Evita el banner de ngrok el de html
           },
         });
 
-        // 🧩 Capturamos texto crudo para depurar
+        // esto lo hicimos para depurar
         const text = await response.text();
         console.log("🔍 Respuesta recibida (texto):", text);
 
@@ -51,7 +51,7 @@ const Menu = () => {
           throw new Error("Respuesta no válida o CORS bloqueado");
         }
 
-        // Si sí parece JSON, parseamos
+        // Si sí parece JSON, lo parseamos
         const data = JSON.parse(text);
         console.log("✅ Datos recibidos:", data);
 

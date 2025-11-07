@@ -157,5 +157,4 @@ const Register = () => {
   );
 };
 
-// 🔹 Muy importante: esto debe estar al final del archivo
 export default Register;

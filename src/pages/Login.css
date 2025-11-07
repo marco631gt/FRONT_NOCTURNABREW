@@ -22,7 +22,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-    width: 100vw; /* 👈 importante */
+    width: 100vw; 
 
 }
 
@@ -131,8 +131,6 @@ body {
   margin-bottom: 10px;
   display: block;
 }
-
-/*agregue codigo index*/
 
 
 

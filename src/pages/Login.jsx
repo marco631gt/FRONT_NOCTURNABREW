@@ -62,8 +62,6 @@ const Login = () => {
       setEmail("");
       setPassword("");
       navigate("/Menu");
-      // Aquí podrías guardar el user en localStorage si quieres:
-      // localStorage.setItem("user", JSON.stringify(data.user));
     } else {
       alert(`⚠️ ${data.msg || "Error en el inicio de sesión"}`);
     }

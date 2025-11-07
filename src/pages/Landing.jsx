@@ -35,8 +35,7 @@ const Landing = () => {
         <div className="hero-content">
           <h2>NOCTURNA BREW</h2>
           <p>
-            La perfecta armonía de postres, bebidas y tentaciones que tu noche
-            merece.
+            The perfect harmony of desserts, drinks, and temptations your night deserves.
           </p>
         </div>
 
@@ -50,29 +49,24 @@ const Landing = () => {
         className="our-coffee"
         style={{ backgroundImage: `url(${backourcoffe})` }}
       >
-        <h2>OUR COFFEE</h2>
+        <h2>We are your perfect choice.</h2>
         <div className="coffee-cards">
           <div className="coffee-item">
             <h3>"EVERY CUP HAS A SOUL."</h3>
             <p>
-              Nocturna Brew fue creada para ofrecer experiencias auténticas de
-              café, mezclando tradición y modernidad mientras apoya a pequeños
-              productores.
+              Nocturna Brew was created to offer authentic coffee experiences, blending tradition and modernity while supporting small producers.
             </p>
           </div>
           <div className="coffee-item">
             <h3>"GOOD COFFEE, GOOD CONSCIENCE."</h3>
             <p>
-              El café promueve calidad, conexión humana y sostenibilidad en cada
-              paso, desde la cosecha hasta el consumo responsable.
+              Our coffee promotes quality, human connection, and sustainability at every step from harvest to responsible consumption.
             </p>
           </div>
           <div className="coffee-item">
             <h3>"STAY AWHILE, THE NIGHT IS YOUNG."</h3>
             <p>
-              Un espacio acogedor para trabajar, socializar o relajarte,
-              disfrutando gran café, atención amable y un ambiente que se siente
-              como hogar.
+              A cozy space to work, socialize, or relax, enjoying great coffee, friendly service, and an atmosphere that feels like home.
             </p>
           </div>
         </div>

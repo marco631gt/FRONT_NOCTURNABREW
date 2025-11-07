@@ -23,7 +23,7 @@ header .logo {
 }
 
 header img {
-  cursor: pointer; /* 👈 muestra que es clickeable */
+  cursor: pointer; 
 }
 
 
