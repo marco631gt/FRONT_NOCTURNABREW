@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Menu from "./pages/Menu";
 import Aboutus from "./pages/Aboutus";
+import Cart from "./pages/Cart";
+
 
 
 function App() {
