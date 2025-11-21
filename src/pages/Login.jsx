@@ -58,7 +58,7 @@ const Login = () => {
     const data = await res.json();
 
     if (res.ok) {
-      
+      localStorage.setItem("userToken", data.token);
       setEmail("");
       setPassword("");
       navigate("/Menu");

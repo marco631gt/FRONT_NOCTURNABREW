@@ -46,6 +46,7 @@ const Menu = () => {
           headers: {
             "Content-Type": "application/json",
             "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
+            "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
             "ngrok-skip-browser-warning": "true",
           },
         });
