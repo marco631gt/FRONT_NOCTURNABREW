@@ -10,8 +10,6 @@ const Cart = () => {
     const location = useLocation();
     const { cart, updateQty, deleteItem } = useCart();
 
-
-
     // 🔥 CALCULAR SUBTOTAL Y TOTAL
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
     const iva = subtotal * 0.16;
@@ -25,9 +23,6 @@ const Cart = () => {
             setShowPopup(true); // mostrar popup
         }
     };
-
-
-
 
     return (
         <>
@@ -61,7 +56,6 @@ const Cart = () => {
                                 <p>{p.description}</p>
                                 <p className="price">${p.price}</p>
 
-                                
                                 <div className="qty-container">
                                     <button className="qty-btn" onClick={() => updateQty(p.id, -1)}>
                                         –
@@ -74,7 +68,6 @@ const Cart = () => {
                                     </button>
                                 </div>
 
-                                
                                 <button
                                     className="btn-add"
                                     style={{ backgroundColor: "#8b1a1a" }}
@@ -88,20 +81,37 @@ const Cart = () => {
                 )}
             </section>
 
-            
+            {/* 🔥 RESUMEN */}
             {true && (
                 <section className="cart-summary-section">
                     <div className="cart-summary">
                         <p><strong>Subtotal:</strong> ${subtotal}</p>
                         <p><strong>Total + IVA:</strong> ${total}</p>
                     </div>
-                    <Link to="/QR" onClick={handleFinishOrder}>
+
+                    {/* 👉 PASAR LA ORDEN COMPLETA A /QR */}
+                    <Link
+                        to="/QR"
+                        state={{
+                            order: {
+                                orderId: "ORD-" + Date.now(),
+                                date: new Date().toISOString(), // 👈 AGREGA ESTO
+                                items: cart,
+                                subtotal,
+                                iva,
+                                total
+                            }
+                        }}
+                        onClick={handleFinishOrder}
+                    >
                         <button className="finish-order-btn">
-                            Finish Order</button>
+                            Finish Order
+                        </button>
                     </Link>
                 </section>
             )}
 
+            {/* POPUP */}
             {showPopup && (
                 <div className="popup-overlay" onClick={() => setShowPopup(false)}>
                     <div className="popup-box" onClick={(e) => e.stopPropagation()}>
@@ -113,7 +123,6 @@ const Cart = () => {
                     </div>
                 </div>
             )}
-
 
             <section className="gallery">
                 <img src={gallery} alt="Gallery" />
