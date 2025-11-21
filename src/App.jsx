@@ -14,6 +14,7 @@ function App() {
     
       {/* Rutas */}
       <Routes>
+        <Route path="/cart" element={<Cart />} />
         <Route path="/" element={<Landing />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/login" element={<Login />} />
