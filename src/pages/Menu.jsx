@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./menu.css";
 import gallery from "../assets/images/ImagesGallery.png";
+import shoppingcart from "../assets/images/shopping-cart.png";
 
 import icedFavorites from "../assets/images/icedfavorites.png";
 import hotFavorites from "../assets/images/hotfavorites.png";
@@ -9,8 +11,14 @@ import savoryDelicacies from "../assets/images/savorydelicacies.png";
 
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
+import { useCart } from "../context/Cartcontext";
 
 const Menu = () => {
+  const navigate = useNavigate();
+
+  const { addToCart, cart } = useCart();
+  const [showToast, setShowToast] = useState(false);
+
   const [activeCategory, setActiveCategory] = useState("iced");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -43,23 +51,20 @@ const Menu = () => {
           },
         });
 
-        // esto lo hicimos para depurar
         const text = await response.text();
         console.log("🔍 Respuesta recibida (texto):", text);
 
-        // Si no es JSON, termina aquí
         if (!response.ok || !text.startsWith("{")) {
-          throw new Error("Respuesta no válida o CORS bloqueado");
+          throw new Error("Respuesta no válida");
         }
 
-        // Si sí parece JSON, lo parseamos
         const data = JSON.parse(text);
-        console.log("✅ Datos recibidos:", data);
+        console.log("Datos recibidos:", data);
 
         if (Array.isArray(data.values)) {
-          setProducts(data.values);
+          setProducts(data.values.map((p) => ({ ...p, qty: 0 })));
         } else if (Array.isArray(data)) {
-          setProducts(data);
+          setProducts(data.map((p) => ({ ...p, qty: 0 })));
         } else {
           setProducts([]);
         }
@@ -74,9 +79,26 @@ const Menu = () => {
     fetchProducts();
   }, [activeCategory]);
 
+  const updateQty = (index, increment) => {
+    setProducts((prev) => {
+      const copy = [...prev];
+      const newQty = (copy[index].qty || 0) + increment;
+
+      const finalQty = Math.max(0, Math.min(10, newQty));
+
+      copy[index] = {
+        ...copy[index],
+        qty: finalQty,
+      };
+
+      return copy;
+    });
+  };
+
   return (
     <>
       <Header2 />
+
       <section className="categoriesrefresh">
         <h2>OUR TEMPTATIONS</h2>
 
@@ -119,17 +141,59 @@ const Menu = () => {
                 <h4>{p.name}</h4>
                 <p>{p.description}</p>
                 <p className="price">${p.price}</p>
+
+                {/* CANTIDAD */}
+                <div className="qty-container">
+                  <button
+                    className="qty-btn"
+                    onClick={() => updateQty(i, -1)}
+                  >
+                    –
+                  </button>
+
+                  <span className="qty-number">{p.qty}</span>
+
+                  <button
+                    className="qty-btn"
+                    onClick={() => updateQty(i, 1)}
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* BOTÓN */}
+                <button className="btn-add" onClick={() => {
+                  if (p.qty > 0) {
+                    addToCart(p);
+
+                    // Mostrar toast por 2 segundos
+                    setShowToast(true);
+                    setTimeout(() => setShowToast(false), 2000);
+                  }
+                }}
+                > Add to Cart
+                </button>
+
               </div>
             ))}
           </div>
         ) : (
-          <p className="no-products">No products found in this category.</p>
+          <p className="no-products" style={{ color: "black" }}>No products found in this category.</p>
         )}
       </section>
 
       <section className="gallery">
         <img src={gallery} alt="Gallery" />
       </section>
+      <button onClick={() => navigate("/cart", { state: { cart } })} className="go-cart-btn">
+        <img src={shoppingcart} />
+      </button>
+
+      {showToast && (
+        <div className="toast-added">
+          Product added
+        </div>
+      )}
 
       <Footer />
     </>

@@ -1,0 +1,173 @@
+
+/* HERO */
+.heroabout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  margin: 0;
+}
+
+
+.hero-contentabout {
+  position: relative;
+  z-index: 2;
+  margin-top: 80px;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+  margin-bottom: -20px;
+}
+
+.hero-contentabout h2 { /* nocturnabrew */
+  font-family: 'Playfair Display SC', serif;
+  font-size: 36px;
+  margin-top: 5px;
+  color: #550B14;
+  margin-left: -500px;
+}
+
+.hero-contentabout h1 { /* aboutus */
+  margin-top: 100px;
+  font-style: italic;
+  font-size: 30px;
+  margin-left: -500px;
+}
+
+.hero-contentabout p {
+  font-style: italic;
+  font-size: 30px;
+  color: #000;
+  max-width: 500px;
+  margin-top: 30px;
+  margin-bottom: 100px;
+  margin-left: -500px;
+}
+
+/* IMAGEN DE LA TAZA */
+.hero-imgabout {
+  position: absolute;
+  right: 0px;
+  top: 170px;
+  left: 1100px;
+  width: 450px;
+  bottom: 100px;
+  z-index: 3;
+  max-width: 500px;
+  height: auto;
+  
+}
+
+.hero-imgabout img {
+  width: 100%;
+  height: auto;
+}
+
+/* OUR INFORMATION */
+.our-informationabout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* empuja texto hacia la derecha */
+  gap: 40px;
+  padding: 0px 150px 0px 0; /* sin padding izquierdo, más espacio a la derecha */
+}
+
+.our-informationabout img {
+  width: 400px;
+  height: auto;
+  object-fit: contain;
+  margin-left: 0;
+}
+
+.info-text {
+  max-width: 900px;
+  margin-left: auto; /* empuja el bloque hacia el lado derecho */
+  text-align: center;
+}
+
+.info-text p {
+  font-family: 'Playfair', light;
+  font-size: 24px;
+  color: #550B14;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* LAST INFORMATION */
+.last-informationabout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0px;
+  padding: 0 0 0 100px;
+  margin-top: -120px;
+  margin-bottom: 50px;
+}
+
+.last-informationabout img {
+  width: 300px;
+  height: auto;
+  object-fit: contain;
+  margin-right: 0; /* imagen pegada al borde derecho */
+}
+
+.info-text2 {
+  max-width: 900px;
+  margin-right: auto; /* empuja el texto hacia la izquierda */
+  text-align: center;
+  margin-left: 50px;
+}
+
+.info-text2 p {
+  font-family: 'Playfair', italic;
+  font-weight: 300;
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+
+/* ===========================
+   HERO TEXT (ABOUT / NOCTURNA BREW / PÁRRAFO)
+   =========================== */
+.hero-textabout {
+  text-align: center;
+  margin-top: 180px;     /* posición vertical */
+  color: black;
+  font-family: "Playfair Display", serif;
+  transform: translateX(-250px); /* mover a la izquierda */
+  margin-top: 20px; /* más abajo */
+
+
+}
+
+/* TITLE: ABOUT */
+.hero-textabout h1 {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+/* SUBTITLE: NOCTURNA BREW */
+.hero-textabout h2 {
+  font-size: 60px;
+  font-weight: 800;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+/* PÁRRAFO */
+.hero-textabout p {
+  font-size: 22px;
+  font-style: italic;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 35px;
+  line-height: 1.6;
+}
