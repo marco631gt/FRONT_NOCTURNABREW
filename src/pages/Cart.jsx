@@ -61,7 +61,7 @@ const Cart = () => {
                                 <p>{p.description}</p>
                                 <p className="price">${p.price}</p>
 
-                                {/* CANTIDAD */}
+                                
                                 <div className="qty-container">
                                     <button className="qty-btn" onClick={() => updateQty(p.id, -1)}>
                                         –
@@ -74,7 +74,7 @@ const Cart = () => {
                                     </button>
                                 </div>
 
-                                {/* DELETE BUTTON */}
+                                
                                 <button
                                     className="btn-add"
                                     style={{ backgroundColor: "#8b1a1a" }}
@@ -88,7 +88,7 @@ const Cart = () => {
                 )}
             </section>
 
-            {/* 🔥 RESUMEN CARRITO */}
+            
             {true && (
                 <section className="cart-summary-section">
                     <div className="cart-summary">

@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Menu from "./pages/Menu";
 import Aboutus from "./pages/Aboutus";
 import Cart from "./pages/Cart";
+import QR from "./pages/QR";
 
 
 
@@ -22,7 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/aboutus" element={<Aboutus />} />
-        
+        <Route path="/QR" element={<QR />} />
         
       </Routes>
     </>
