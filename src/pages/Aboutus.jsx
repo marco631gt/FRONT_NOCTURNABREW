@@ -31,7 +31,7 @@ export default function Aboutus() {
       </div>
 
           <nav className="flex gap-6 text-lg">
-            <a href="/menu" className="hover:underline">Menú</a>
+            <a href="/login" className="hover:underline">Menú</a>
             <a href="/login" className="hover:underline">Login</a>
             <a href="/register" className="hover:underline">Join Us</a>
           </nav>
