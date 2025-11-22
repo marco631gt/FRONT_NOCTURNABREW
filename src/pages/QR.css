@@ -132,4 +132,34 @@ body {
   background: #333;
 }
 
+.success-popup {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 350px;
+
+  display: flex;              /* 👉 Activar Flexbox */
+  flex-direction: column;     /* 👉 Elementos en columna */
+  justify-content: center;    /* 👉 Centra vertical */
+  align-items: center;        /* 👉 Centra horizontal */
+
+  text-align: center;         /* 👉 Centra textos */
+  animation: pop 0.3s ease-out;
+}
+
+.success-popup h3 {
+  color: #5a0c17;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+
+/* Animación suave */
+@keyframes pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 

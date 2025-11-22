@@ -14,10 +14,11 @@ const API = import.meta.env.VITE_ENDPOINT;
 
 const QR = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { clearCart } = useCart();   // <-- 🟢 importar función para vaciar carrito
+  const { clearCart } = useCart();
 
   const order = location.state?.order;
 
@@ -69,18 +70,25 @@ const QR = () => {
           "Content-Type": "application/json",
           "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
           "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
-          "ngrok-skip-browser-warning": "true"
+          "ngrok-skip-browser-warning": "true",
         },
-        body: JSON.stringify({ status: "canceled" })
+        body: JSON.stringify({ status: "canceled" }),
       });
 
       if (!res.ok) throw new Error(await res.text());
 
-      // 🧹 Vaciar carrito aquí
+      // Vaciar carrito
       clearCart();
 
-      alert("Order canceled successfully.");
-      navigate("/menu");
+      // Pop-up de éxito
+      setShowSuccessPopup(true);
+
+      // Redirigir después de 1.5s
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+        navigate("/menu");
+      }, 1500);
+
     } catch (err) {
       console.error(err);
       alert("Error canceling order.");
@@ -98,11 +106,24 @@ const QR = () => {
         </p>
       </section>
 
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
+      >
         <Ticket order={order} />
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "15px", marginBottom: "35px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "15px",
+          marginBottom: "35px",
+        }}
+      >
         <button className="cancel-btn" onClick={generarPDF}>
           Descargar PDF
         </button>
@@ -120,15 +141,30 @@ const QR = () => {
         <Ticket order={order} />
       </div>
 
+      {/* POPUP CONFIRMAR CANCELACIÓN */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup">
             <h3>Are you sure you want to cancel the order?</h3>
 
             <div className="popup-buttons">
-              <button className="yes" onClick={cancelarOrden}>Yes, cancel</button>
-              <button className="no" onClick={() => setShowPopup(false)}>No, keep order</button>
+              <button className="yes" onClick={cancelarOrden}>
+                Yes, cancel
+              </button>
+
+              <button className="no" onClick={() => setShowPopup(false)}>
+                No, keep order
+              </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* POPUP DE ÉXITO */}
+      {showSuccessPopup && (
+        <div className="popup-overlay">
+          <div className="success-popup">
+            <h3>Order canceled successfully</h3>
           </div>
         </div>
       )}
