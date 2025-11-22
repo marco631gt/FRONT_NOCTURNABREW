@@ -124,14 +124,12 @@ const QR = () => {
           marginBottom: "35px",
         }}
       >
-        <button className="cancel-btn" onClick={generarPDF}>
+        <button className="download-btn" onClick={generarPDF}>
           Descargar PDF
         </button>
 
         <button
-          className="cancel-btn"
-          style={{ backgroundColor: "#8b1515" }}
-          onClick={() => setShowPopup(true)}
+          className="cancel-btn" onClick={() => setShowPopup(true)}
         >
           Cancel Order
         </button>

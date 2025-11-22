@@ -115,21 +115,19 @@ body {
   margin-bottom: 40px;
 }
 
-.download-btn,
-.cancel-btn {
-  padding: 12px 25px;
-  background: black;
+.download-btn {
+  background-color: #5a0c17;
   color: white;
+  padding: 12px 25px;
   border: none;
-  font-weight: bold;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-size: 18px;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
+  transition: .2s ease;
 }
 
-.download-btn:hover,
-.cancel-btn:hover {
-  background: #333;
+.download-btn:hover {
+  background-color: #8b1515;
 }
 
 .success-popup {
