@@ -1,4 +1,3 @@
-// src/components/Ticket.jsx
 import React from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import "./Ticket.css";
@@ -6,15 +5,14 @@ import "./Ticket.css";
 const Ticket = ({ order }) => {
   if (!order) return null;
 
-  // ⭐ Texto plano para que aparezca como nota al escanear el QR
+  const items = order?.items || [];
+
   const qrText =
     `NOCTURNA BREW\n` +
     `Order #${order.orderId}\n` +
     `Date: ${new Date(order.date).toLocaleString()}\n\n` +
     `Products:\n` +
-    order.items
-      .map(item => `- ${item.qty}x ${item.name} = $${item.qty * item.price}`)
-      .join("\n") +
+    items.map(item => `- ${item.qty}x ${item.name} = $${item.qty * item.price}`).join("\n") +
     `\n\nTotal: $${order.total}\n` +
     `Thank you! ❤️`;
 
@@ -24,16 +22,19 @@ const Ticket = ({ order }) => {
         <h2 className="title">NOCTURNA BREW</h2>
 
         <p className="date">{new Date(order.date).toLocaleString()}</p>
-
         <div className="divider" />
 
         <h3>Productos</h3>
-        {order.items.map((item, i) => (
-          <div key={i} className="item-row">
-            <span>{item.qty}× {item.name}</span>
-            <span>${item.price * item.qty}</span>
-          </div>
-        ))}
+        {items.length === 0 ? (
+          <p>No hay productos en esta orden</p>
+        ) : (
+          items.map((item, i) => (
+            <div key={i} className="item-row">
+              <span>{item.qty}× {item.name}</span>
+              <span>${item.price * item.qty}</span>
+            </div>
+          ))
+        )}
 
         <div className="divider" />
 
@@ -47,7 +48,7 @@ const Ticket = ({ order }) => {
         <div className="qr-section">
           <QRCodeCanvas 
             size={160}
-            value={qrText}   // ⭐ Aquí va el texto plano para celular
+            value={qrText}
           />
         </div>
 
