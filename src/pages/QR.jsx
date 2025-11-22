@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Ticket from "../components/Ticket";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { useCart } from "../context/Cartcontext";
 
 const API = import.meta.env.VITE_ENDPOINT;
 
@@ -16,6 +17,7 @@ const QR = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { clearCart } = useCart();   // <-- 🟢 importar función para vaciar carrito
 
   const order = location.state?.order;
 
@@ -51,39 +53,39 @@ const QR = () => {
     pdf.save(`Orden-${order.orderNumber}.pdf`);
   };
 
-  // Cancelar orden usando PATCH
-  // Cancelar orden en Mongo
-const cancelarOrden = async () => {
-  try {
-    const id = order.orderId || order.ticket?.orderId;
+  // Cancelar orden → actualizar estado + vaciar carrito
+  const cancelarOrden = async () => {
+    try {
+      const id = order.orderId || order.ticket?.orderId;
 
-    if (!id) {
-      alert("Error: orderId not found.");
-      return;
+      if (!id) {
+        alert("Error: orderId not found.");
+        return;
+      }
+
+      const res = await fetch(`${API}ticket/updateStatus/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
+          "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
+          "ngrok-skip-browser-warning": "true"
+        },
+        body: JSON.stringify({ status: "canceled" })
+      });
+
+      if (!res.ok) throw new Error(await res.text());
+
+      // 🧹 Vaciar carrito aquí
+      clearCart();
+
+      alert("Order canceled successfully.");
+      navigate("/menu");
+    } catch (err) {
+      console.error(err);
+      alert("Error canceling order.");
     }
-
-    const res = await fetch(`${API}ticket/updateStatus/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
-        "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
-        "ngrok-skip-browser-warning": "true"
-      },
-      body: JSON.stringify({ status: "canceled" })
-    });
-
-    if (!res.ok) throw new Error(await res.text());
-
-    alert("Order canceled successfully.");
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-    alert("Error canceling order.");
-  }
-};
-
-
+  };
 
   return (
     <>
