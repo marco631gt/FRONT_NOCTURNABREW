@@ -7,6 +7,7 @@ import registerBg from "../assets/images/register-bg.png";
 import HeaderLog from "../components/HeaderLog";
 import Footer from "../components/Footer";
 
+
 const Login = () => {
   const navigate =useNavigate();
   const [email, setEmail] = useState("");
@@ -48,28 +49,46 @@ const Login = () => {
     const res = await fetch(`${import.meta.env.VITE_ENDPOINT}login`, {
       method: "POST",
       headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${import.meta.env.VITE_APPSECRET}`,
-  },
-  body: JSON.stringify({ email, password }),
-});
-
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${import.meta.env.VITE_APPSECRET}`,
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
     const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
 
     if (res.ok) {
+      // Guardar token
       localStorage.setItem("userToken", data.token);
+
+      // Guardar rol proveniente del backend
+      const userRole = data?.user?.role;
+      if (userRole) {
+        localStorage.setItem("userRole", userRole);
+      }
+
+      // Limpiar campos
       setEmail("");
       setPassword("");
-      navigate("/Menu");
+
+      // Redireccionar según el rol
+      if (userRole === "administrator") {
+        navigate("/AdminPanel");
+      } else {
+        navigate("/menu");
+      }
+
     } else {
-      alert(`⚠️ ${data.msg || "Error en el inicio de sesión"}`);
+      alert(`⚠️ ${data.msg || data.error || "Error en el inicio de sesión"}`);
     }
+
   } catch (error) {
     console.error("❌ Error:", error);
-    //alert("Error al conectar con el servidor");
+    alert("Error al conectar con el servidor");
   }
 };
+
 
 
   return (
