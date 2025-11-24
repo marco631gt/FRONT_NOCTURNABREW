@@ -8,7 +8,6 @@ import Menu from "./pages/Menu";
 import Aboutus from "./pages/Aboutus";
 import Cart from "./pages/Cart";
 import QR from "./pages/QR";
-import AdminPanel from "./pages/AdminPanel";
 
 // 🔒 Función para verificar rol:
 const isAdmin = () => {
