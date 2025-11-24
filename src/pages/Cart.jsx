@@ -24,7 +24,7 @@ const Cart = () => {
     // 📌 Enviar orden a Mongo con el formato correcto
     const sendOrderToMongo = async () => {
         const itemsMapped = cart.map(item => ({
-            productId: item._id,
+            productId: item.id,
             name: item.name,
             qty: item.qty,
             price: item.price,
