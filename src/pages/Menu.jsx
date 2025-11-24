@@ -142,6 +142,8 @@ const Menu = () => {
                 <p>{p.description}</p>
                 <p className="price">${p.price}</p>
 
+               
+
                 {/* CANTIDAD */}
                 <div className="qty-container">
                   <button
@@ -162,17 +164,23 @@ const Menu = () => {
                 </div>
 
                 {/* BOTÓN */}
-                <button className="btn-add" onClick={() => {
-                  if (p.qty > 0) {
+                <button
+                className="btn-add"
+                disabled={!p.available || p.qty === 0}
+                style={{
+                  opacity: !p.available ? 0.5 : 1,
+                  cursor: !p.available ? "not-allowed" : "pointer"
+                }}
+                onClick={() => {
+                  if (p.available && p.qty > 0) {
                     addToCart(p);
-
-                    // Mostrar toast por 2 segundos
                     setShowToast(true);
                     setTimeout(() => setShowToast(false), 2000);
                   }
                 }}
-                > Add to Cart
-                </button>
+              >
+                {p.available ? "Add to Cart" : "Not Available"}
+              </button>
 
               </div>
             ))}
