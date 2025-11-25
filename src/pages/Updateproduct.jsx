@@ -13,7 +13,7 @@ const Updateproduct = () => {
     description: "",
     url: "",
     available: true,
-    ingredients: [{ ingredientId: "", ingredientName: "", quantity: "", unit: "" }],
+    ingredients: [{ ingredientId: 1, ingredientName: "", quantity: "", unit: "" }],
   });
 
   const handleChange = (e) => {
@@ -22,25 +22,38 @@ const Updateproduct = () => {
   };
 
   const handleIngredientChange = (index, field, value) => {
-    const updatedIngredients = [...product.ingredients];
-    updatedIngredients[index][field] = value;
-    setProduct({ ...product, ingredients: updatedIngredients });
+    const updated = [...product.ingredients];
+    updated[index][field] = value;
+    setProduct({ ...product, ingredients: updated });
   };
 
   const addIngredient = () => {
-    if (product.ingredients.length >= 5) return alert("Máximo 5 ingredientes.");
+    if (product.ingredients.length >= 5)
+      return alert("Máximo 5 ingredientes.");
+
     setProduct({
       ...product,
       ingredients: [
         ...product.ingredients,
-        { ingredientId: "", ingredientName: "", quantity: "", unit: "" },
+        {
+          ingredientId: product.ingredients.length + 1,
+          ingredientName: "",
+          quantity: "",
+          unit: "",
+        },
       ],
     });
   };
 
   const removeIngredient = (index) => {
     const updated = product.ingredients.filter((_, i) => i !== index);
-    setProduct({ ...product, ingredients: updated });
+
+    const reordered = updated.map((ing, i) => ({
+      ...ing,
+      ingredientId: i + 1,
+    }));
+
+    setProduct({ ...product, ingredients: reordered });
   };
 
   const saveProduct = () => {
@@ -57,8 +70,9 @@ const Updateproduct = () => {
       description: "",
       url: "",
       available: true,
-      ingredients: [{ ingredientId: "", ingredientName: "", quantity: "", unit: "" }],
+      ingredients: [{ ingredientId: 1, ingredientName: "", quantity: "", unit: "" }],
     });
+    alert("Product cleared.");
   };
 
   return (
@@ -66,142 +80,152 @@ const Updateproduct = () => {
       <Header2 />
 
       <div
-        className="admin-container"
-        style={{
-          backgroundImage: `url(${registerBg})`,
-        }}
+        className="update-container"
+        style={{ backgroundImage: `url(${registerBg})` }}
       >
-        <div className="admin-card">
-          <h2 className="admin-title">PRODUCT MANAGEMENT</h2>
+        <div className="update-card">
 
-          <div className="admin-input">
-            <input
-              type="number"
-              placeholder="Id Product"
-              name="id"
-              value={product.id}
-              onChange={handleChange}
-            />
+          {/* 🔥 TÍTULO FIJO */}
+          <div className="update-card-header">
+            <h2 className="update-title">UPDATE PANEL</h2>
           </div>
 
-          <div className="admin-input">
-            <input
-              type="text"
-              placeholder="Product name"
-              name="name"
-              value={product.name}
-              onChange={handleChange}
-            />
-          </div>
+          {/* 🔥 FORMULARIO CON SCROLL */}
+          <div className="update-card-body">
 
-          <div className="admin-input">
-            <textarea
-              placeholder="Description"
-              name="description"
-              value={product.description}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-
-          <div className="admin-input">
-            <input
-              type="number"
-              placeholder="Price: $"
-              name="price"
-              value={product.price}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="admin-input">
-            <input
-              type="text"
-              placeholder="Category"
-              name="category"
-              value={product.category}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="admin-input">
-            <input
-              type="text"
-              placeholder="Image URL"
-              name="url"
-              value={product.url}
-              onChange={handleChange}
-            />
-          </div>
-
-          {product.url && (
-            <img
-              src={product.url}
-              alt="preview"
-              className="admin-img-preview"
-              onError={(e) => (e.target.style.display = "none")}
-            />
-          )}
-
-          <h3 className="ingredients-title">Ingredients (max 5)</h3>
-
-          {product.ingredients.map((ing, index) => (
-            <div key={index} className="ingredient-row">
+            {/* ID */}
+            <div className="update-input">
               <input
                 type="number"
-                placeholder="ID"
-                value={ing.ingredientId}
-                onChange={(e) =>
-                  handleIngredientChange(index, "ingredientId", e.target.value)
-                }
+                placeholder="Id Product"
+                name="id"
+                value={product.id}
+                onChange={handleChange}
               />
-
-              <input
-                type="text"
-                placeholder="Name"
-                value={ing.ingredientName}
-                onChange={(e) =>
-                  handleIngredientChange(index, "ingredientName", e.target.value)
-                }
-              />
-
-              <input
-                type="number"
-                placeholder="Qty"
-                value={ing.quantity}
-                onChange={(e) =>
-                  handleIngredientChange(index, "quantity", e.target.value)
-                }
-              />
-
-              <input
-                type="text"
-                placeholder="Unit"
-                value={ing.unit}
-                onChange={(e) =>
-                  handleIngredientChange(index, "unit", e.target.value)
-                }
-              />
-
-              {index > 0 && (
-                <button className="remove-ing" onClick={() => removeIngredient(index)}>
-                  X
-                </button>
-              )}
             </div>
-          ))}
 
-          <button className="add-ing-btn" onClick={addIngredient}>
-            + Add Ingredient
-          </button>
+            {/* Name */}
+            <div className="update-input">
+              <input
+                type="text"
+                placeholder="Product name"
+                name="name"
+                value={product.name}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div className="admin-btns">
-            <button className="save-btn" onClick={saveProduct}>
-              Save Product
+            {/* description */}
+            <div className="update-input">
+              <textarea
+                placeholder="Description"
+                name="description"
+                value={product.description}
+                onChange={handleChange}
+              ></textarea>
+            </div>
+
+            {/* Price */}
+            <div className="update-input">
+              <input
+                type="number"
+                placeholder="Price: $"
+                name="price"
+                value={product.price}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Category */}
+            <div className="update-input">
+              <select
+                name="category"
+                value={product.category}
+                onChange={handleChange}
+                className="select-input"
+              >
+                <option value="">Select Category</option>
+                <option value="IcedFavorites">Iced Favorites</option>
+                <option value="HotFavorites">Hot Favorites</option>
+                <option value="SweetDelicacies">Sweet Delicacies</option>
+                <option value="SavoryDelicacies">Savory Delicacies</option>
+              </select>
+            </div>
+
+            {/* URL */}
+            <div className="update-input">
+              <input
+                type="text"
+                placeholder="Image URL"
+                name="url"
+                value={product.url}
+                onChange={handleChange}
+              />
+            </div>
+
+            {product.url && (
+              <img
+                src={product.url}
+                alt="preview"
+                className="update-img-preview"
+                onError={(e) => (e.target.style.display = "none")}
+              />
+            )}
+
+            {/* INGREDIENTS */}
+            <h3 className="ingredients-title">Ingredients (max 5)</h3>
+
+            {product.ingredients.map((ing, index) => (
+              <div key={index} className="ingredient-row">
+                <input type="number" value={ing.ingredientId} readOnly />
+
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={ing.ingredientName}
+                  onChange={(e) =>
+                    handleIngredientChange(index, "ingredientName", e.target.value)
+                  }
+                />
+
+                <input
+                  type="number"
+                  placeholder="Qty"
+                  value={ing.quantity}
+                  onChange={(e) =>
+                    handleIngredientChange(index, "quantity", e.target.value)
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Unit"
+                  value={ing.unit}
+                  onChange={(e) =>
+                    handleIngredientChange(index, "unit", e.target.value)
+                  }
+                />
+
+                {index > 0 && (
+                  <button className="remove-ing" onClick={() => removeIngredient(index)}>
+                    X
+                  </button>
+                )}
+              </div>
+            ))}
+
+            <button className="add-ing-btn" onClick={addIngredient}>
+              + Add Ingredient
             </button>
 
-            <button className="erase-btn" onClick={eraseProduct}>
-              Erase Product
-            </button>
+            <div className="update-btns">
+              <button className="save-btn" onClick={saveProduct}>
+                Save Product
+              </button>
+              <button className="erase-btn" onClick={eraseProduct}>
+                Erase Product
+              </button>
+            </div>
           </div>
         </div>
       </div>

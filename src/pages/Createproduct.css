@@ -1,0 +1,190 @@
+/* CONTENEDOR DEL FONDO */
+.create-container {
+  width: 100vw;
+  min-height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* TARJETA */
+.create-card {
+  width: 75%;
+  max-width: 1100px;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* 🔥 CABECERA FIJA */
+.create-card-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 25px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
+/* TÍTULO */
+.create-title {
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* SOLO EL FORM TIENE SCROLL */
+.create-card-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 30px 40px;
+}
+
+/* Scroll bonito */
+.create-card-body::-webkit-scrollbar {
+  width: 8px;
+}
+.create-card-body::-webkit-scrollbar-thumb {
+  background: #8c0f17;
+  border-radius: 10px;
+}
+
+/* INPUTS */
+.create-input input,
+.create-input textarea {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: none;
+  margin-bottom: 18px;
+  background: rgba(142, 23, 23, 0.8);
+  color: white;
+}
+
+textarea {
+  height: 90px;
+  resize: none;
+}
+
+/* IMAGE PREVIEW */
+.create-img-preview {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin: 15px auto;
+  display: block;
+}
+
+/* INGREDIENTES */
+.ingredients-title {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 20px;
+}
+
+.ingredient-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 80px 80px 40px;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ingredient-row input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(142, 23, 23, 0.8);
+  color: white;
+}
+
+/* REMOVE ING BUTTON */
+.remove-ing {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #8b1a1a;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* ADD ING BUTTON */
+.add-ing-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 25px;
+  background: #8b1a1a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* BOTONES */
+.create-btns {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.save-btn,
+.erase-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+.save-btn {
+  background: white;
+  color: #8b1a1a;
+}
+
+.erase-btn {
+  background: #c9c9c9;
+  color: #8b1a1a;
+}
+
+/* SELECT */
+.select-input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: none;
+  margin-bottom: 18px;
+  background: rgba(142, 23, 23, 0.8);
+  color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .create-card {
+    width: 85%;
+  }
+
+  .ingredient-row {
+    flex-direction: column;
+  }
+}
