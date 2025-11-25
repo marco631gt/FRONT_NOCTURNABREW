@@ -1,37 +1,70 @@
-.admin-container {
+/* CONTENEDOR DEL FONDO */
+.update-container {
   width: 100vw;
-  height: 100vh; /* FULL PANTALLA */
+  min-height: 100vh;
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
   display: flex;
   justify-content: center;
-  align-items: center;
 
-  padding: 0; 
-  margin: 0;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 
-.admin-card {
-  width: 75%;
-  max-width: 1100px;
+/* TARJETA */
+.update-card {
+  width: 55%;
+  max-width: 850px;
+
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
-  padding: 40px 50px;
+
   border-radius: 25px;
+  overflow: hidden;
 }
 
-.admin-title {
+/* 🔥 CABECERA FIJA */
+.update-card-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 25px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
+/* TÍTULO */
+.update-title {
   text-align: center;
-  margin-bottom: 25px;
   color: white;
   font-size: 28px;
   letter-spacing: 2px;
+  margin: 0;
 }
 
-.admin-input input,
-.admin-input textarea {
+/* SOLO EL FORM TIENE SCROLL */
+.update-card-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 30px 40px;
+}
+
+/* Scroll bonito */
+.update-card-body::-webkit-scrollbar {
+  width: 8px;
+}
+.update-card-body::-webkit-scrollbar-thumb {
+  background: #8c0f17;
+  border-radius: 10px;
+}
+
+/* INPUTS */
+.update-input input,
+.update-input textarea {
   width: 100%;
   padding: 12px 18px;
   border-radius: 30px;
@@ -46,7 +79,8 @@ textarea {
   resize: none;
 }
 
-.admin-img-preview {
+/* IMAGE PREVIEW */
+.update-img-preview {
   width: 180px;
   height: 180px;
   object-fit: cover;
@@ -55,6 +89,7 @@ textarea {
   display: block;
 }
 
+/* INGREDIENTES */
 .ingredients-title {
   margin-top: 25px;
   margin-bottom: 10px;
@@ -63,18 +98,34 @@ textarea {
 }
 
 .ingredient-row {
-  display: flex;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 50px 1fr 80px 80px 40px; /* Número, Name, Qty, Unit, X */
+  gap: 20px;
+  align-items: center;
   margin-bottom: 12px;
 }
 
 .ingredient-row input {
-  flex: 1;
+  width: 100%;
   padding: 10px;
   border-radius: 20px;
   border: none;
   background: rgba(142, 23, 23, 0.8);
   color: white;
+}
+
+.remove-ing {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #8b1a1a;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .remove-ing {
@@ -86,18 +137,20 @@ textarea {
   cursor: pointer;
 }
 
+/* ADD INGREDIENT BUTTON */
 .add-ing-btn {
   width: 100%;
   padding: 10px;
-  margin-top: 10px;
   border-radius: 25px;
   background: #8b1a1a;
   color: white;
   border: none;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-.admin-btns {
+/* BOTONES */
+.update-btns {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -121,3 +174,28 @@ textarea {
   background: #c9c9c9;
   color: #8b1a1a;
 }
+
+/* SELECT */
+.select-input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: none;
+  margin-bottom: 18px;
+  background: rgba(142, 23, 23, 0.8);
+  color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .update-card {
+    width: 85%;
+  }
+
+  .ingredient-row {
+    flex-direction: column;
+  }
+}
+
+
+
