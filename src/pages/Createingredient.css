@@ -1,0 +1,226 @@
+/* CONTENEDOR PRINCIPAL */
+.ingredient-container {
+  width: 100vw;
+  min-height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* CARD */
+.ingredient-card {
+  width: 80%;
+  max-width: 1200px;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.ingredient-card-header {
+  position: sticky;
+  top: 0;
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+
+  padding: 25px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
+.ingredient-title {
+  text-align: center;
+  color: #5b0a18;
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* BODY */
+.ingredient-card-body {
+  max-height: 70vh;
+  overflow: hidden;
+  padding: 30px 40px;
+}
+
+/* Contenedor general */
+.ingredient-body-container {
+  display: flex;
+  gap: 30px;
+}
+
+/* SECCIÓN LISTA */
+.ingredients-section {
+  flex: 1;
+  max-width: 45%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.ingredients-title {
+  margin-top: 0;
+  color: white;
+  font-size: 22px;
+}
+
+/* HEADER de tabla */
+.ingredients-header-row {
+  display: grid;
+  grid-template-columns: 0.5fr 1.2fr 0.7fr 0.7fr;
+
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+
+  border-radius: 15px;
+  color: #3b0000;
+
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* TABLA */
+.ingredients-table {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+
+  border-radius: 15px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+/* FILAS */
+.ingredient-row {
+  display: grid;
+  grid-template-columns: 0.5fr 1.2fr 0.7fr 0.7fr;
+  gap: 18px;
+
+  margin-bottom: 10px;
+  padding: 12px;
+
+  background: rgba(142, 23, 23, 0.6);
+  border-radius: 15px;
+  color: white;
+}
+
+.ingredient-row p {
+  margin: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+/* SCROLL */
+.ingredients-table::-webkit-scrollbar {
+  width: 8px;
+}
+.ingredients-table::-webkit-scrollbar-thumb {
+  background: #8c0f17;
+  border-radius: 10px;
+}
+
+/* FORMULARIO */
+.ingredient-form-section {
+  flex: 1;
+  max-width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Igual que admin */
+  gap: 15px;
+}
+
+/* Inputs */
+.ingredient-input input,
+.ingredient-input select {
+  width: 100%;
+  padding: 12px 18px;
+
+  border-radius: 30px;
+  border: none;
+  margin-bottom: 18px;
+
+  background: rgba(142, 23, 23, 0.8);
+  color: white;
+}
+
+.ingredient-input input::placeholder,
+.ingredient-input select::placeholder {
+  color: #ffffff;
+  opacity: 1.8;
+}
+
+/* BOTONES */
+.ingredient-btns {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ingredient-btns button {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  color: #333;
+
+  font-weight: 500;
+
+  transition: all 0.25s ease;
+
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+}
+
+.ingredient-btns button:hover {
+  background: #f5f2f1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+/* BOTÓN ROJO/DELETE */
+.erase-btn {
+  background: #5b0a18 !important;
+  color: white !important;
+  border-color: #5b0a18 !important;
+}
+
+.erase-btn:hover {
+  background: #6d0d1f !important;
+  border-color: #6d0d1f !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .ingredient-body-container {
+    flex-direction: column;
+  }
+
+  .ingredients-section,
+  .ingredient-form-section {
+    max-width: 100%;
+  }
+
+  .ingredient-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
