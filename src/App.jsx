@@ -10,7 +10,6 @@ import Updateproduct from "./pages/Updateproduct";
 import Cart from "./pages/Cart";
 import QR from "./pages/QR";
 
-
 // 🔒 Función para verificar rol:
 const isAdmin = () => {
   return localStorage.getItem("userRole") === "administrator";
