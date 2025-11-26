@@ -6,9 +6,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Menu from "./pages/Menu";
 import Aboutus from "./pages/Aboutus";
-import Updateproduct from "./pages/Updateproduct";
+import Createproduct from "./pages/Createproduct";
 import Cart from "./pages/Cart";
 import QR from "./pages/QR";
+import AdminPanel from "./pages/AdminPanel";
+import Productmanagement from "./pages/Productmanagement";
+import Usermanagement from "./pages/Usermanagement";
 
 // 🔒 Función para verificar rol:
 const isAdmin = () => {
@@ -29,8 +32,10 @@ function App() {
         <Route path="/QR" element={<QR />} />
 
         {/* 🔥 PROTECCIÓN DE RUTA ADMIN */}
-        <Route path="/Updateproduct" element={isAdmin() ? <Updateproduct /> : <Navigate to="/login" />}
-        />
+        <Route path="/AdminPanel" element={isAdmin() ? <AdminPanel /> : <Navigate to="/login" />}/>
+        <Route path="/Createproduct" element={<Createproduct />} />
+        <Route path="/Productmanagement" element={<Productmanagement />} />
+        <Route path="/Usermanagement" element={<Usermanagement />} />
       </Routes>
     </>
   );

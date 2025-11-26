@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
-import "./Updateproduct.css";
+import "./Createproduct.css";
 
-const Updateproduct = () => {
+const Createproduct = () => {
   const [product, setProduct] = useState({
     id: "",
     name: "",
@@ -237,4 +237,4 @@ const Updateproduct = () => {
   );
 };
 
-export default Updateproduct;
+export default Createproduct;

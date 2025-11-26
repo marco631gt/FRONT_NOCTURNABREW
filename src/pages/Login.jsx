@@ -74,7 +74,7 @@ const Login = () => {
 
       // Redireccionar según el rol
       if (userRole === "administrator") {
-        navigate("/Updateproduct");
+        navigate("/AdminPanel");
       } else {
         navigate("/menu");
       }

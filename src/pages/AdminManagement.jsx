@@ -1,1 +1,0 @@
-{/*este es el admin panel donde estan las dos opciones: products y users */}

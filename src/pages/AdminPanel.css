@@ -1,0 +1,98 @@
+/* Contenedor general */
+.adminpanel-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fondo full screen */
+.adminpanel-bg {
+  flex: 1;
+  width: 100vw;
+  height: calc(100vh - 160px); /* Ajustar si tu header/footer cambian */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caja central */
+.adminpanel-box {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 50px;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  width: 600px;
+  max-width: 90%;
+}
+
+/* Título */
+.adminpanel-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 35px;
+}
+
+/* Contenedor de botones lado a lado */
+.adminpanel-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Botones */
+.adminpanel-btn {
+  flex: 1;
+  padding: 20px;
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  text-align: center;
+
+  /* 🔥 Quitar orilla morada */
+  border: none !important;
+  outline: none !important;
+}
+
+/* También evitar orilla en focus/active */
+.adminpanel-btn:focus,
+.adminpanel-btn:active {
+  outline: none !important;
+  border: none !important;
+}
+
+/* Imagen dentro de cada botón */
+.adminpanel-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 8px auto;
+}
+
+/* Estilos individuales */
+.adminpanel-btn.product {
+  background-color: #5a0c17;
+}
+
+.adminpanel-btn.product:hover {
+  background-color: #8b1515;
+}
+
+.adminpanel-btn.user {
+  background-color: #5a0c17;
+}
+
+.adminpanel-btn.user:hover {
+  background-color: #8b1515;
+}
