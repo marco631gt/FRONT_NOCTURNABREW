@@ -11,7 +11,7 @@ import Cart from "./pages/Cart";
 import QR from "./pages/QR";
 import AdminPanel from "./pages/AdminPanel";
 import Productmanagement from "./pages/Productmanagement";
-import Usermanagement from "./pages/Usermanagement";
+import UserManagement from "./pages/UserManagement";
 
 // 🔒 Función para verificar rol:
 const isAdmin = () => {
@@ -35,7 +35,7 @@ function App() {
         <Route path="/AdminPanel" element={isAdmin() ? <AdminPanel /> : <Navigate to="/login" />}/>
         <Route path="/Createproduct" element={<Createproduct />} />
         <Route path="/Productmanagement" element={<Productmanagement />} />
-        <Route path="/Usermanagement" element={<Usermanagement />} />
+        <Route path="/UserManagement" element={<UserManagement />} />
       </Routes>
     </>
   );

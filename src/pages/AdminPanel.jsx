@@ -26,7 +26,7 @@ const AdminPanel = () => {
               Product Management
             </button>
             </Link>
-            <Link to="/Usermanagement">
+            <Link to="/UserManagement">
             <button className="adminpanel-btn user">
               <img src={Usermanagement} alt="user icon" className="adminpanel-img" />
               User Management
