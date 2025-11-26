@@ -117,11 +117,11 @@ const Productmanagement = () => {
 
                 {/* BOTÓN EDITAR */}
                 <button
-                  className="btn-edit"
-                  onClick={() => navigate(`/editproduct/${p.id}`)}
-                >
-                  Edit Product
-                </button>
+  className="btn-edit"
+  onClick={() => navigate(`/Updateproduct`, { state: { product: p } })}
+>
+  Edit Product
+</button>
               </div>
             ))}
           </div>
