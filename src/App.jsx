@@ -13,6 +13,7 @@ import QR from "./pages/QR";
 import AdminPanel from "./pages/AdminPanel";
 import Productmanagement from "./pages/Productmanagement";
 import UserManagement from "./pages/UserManagement";
+import Createingredient from "./pages/Createingredient";
 
 // 🔒 Función para verificar rol:
 const isAdmin = () => {
@@ -39,6 +40,8 @@ function App() {
         <Route path="/UserManagement" element={<UserManagement />} />
         <Route path="/Updateproduct" element={<Updateproduct />} />
 
+        <Route path="/Updateproduct/:id" element={<Updateproduct />} />
+        <Route path="/Createingredient" element={<Createingredient />} />
 
       </Routes>
     </>

@@ -25,7 +25,6 @@
   text-align: center;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
-  
 }
 
 .pm-card:hover {
@@ -113,4 +112,34 @@
 
 .create-btn:hover {
   background: #7a1020;
+}
+
+/* MENÚ FLOTANTE DEL BOTÓN + */
+.create-menu {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  background: white;
+  border-radius: 15px;
+  padding: 10px 0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-menu button {
+  background: none;
+  border: none;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  color: #5a0c17;
+  font-weight: bold;
+}
+
+.create-menu button:hover {
+  background: #f3e6e8;
 }

@@ -11,12 +11,15 @@ import savoryDelicacies from "../assets/images/savorydelicacies.png";
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 
-const Productmanagement = () => { 
+const Productmanagement = () => {
   const navigate = useNavigate();
 
   const [activeCategory, setActiveCategory] = useState("iced");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Estado para menú flotante del botón +
+  const [showMenu, setShowMenu] = useState(false);
 
   const categories = [
     { id: "iced", title: "ICED FAVORITES", image: icedFavorites },
@@ -49,7 +52,7 @@ const Productmanagement = () => {
         const text = await response.text();
 
         if (!response.ok || !text.startsWith("{")) {
-          throw new Error("Respuesta no válida");
+          throw new Error("Invalid response");
         }
 
         const data = JSON.parse(text);
@@ -126,7 +129,9 @@ const Productmanagement = () => {
             ))}
           </div>
         ) : (
-          <p className="no-products" style={{ color: "black" }}>No products found in this category.</p>
+          <p className="no-products" style={{ color: "black" }}>
+            No products found in this category.
+          </p>
         )}
       </section>
 
@@ -137,10 +142,22 @@ const Productmanagement = () => {
       {/* BOTÓN FLOTANTE + */}
       <button 
         className="create-btn"
-        onClick={() => navigate("/Createproduct")}
+        onClick={() => setShowMenu(!showMenu)}
       >
         +
       </button>
+
+      {/* MENÚ DESPLEGABLE */}
+      {showMenu && (
+        <div className="create-menu">
+          <button onClick={() => navigate("/Createproduct")}>
+            Create Product
+          </button>
+          <button onClick={() => navigate("/Createingredient")}>
+            Create Ingredient
+          </button>
+        </div>
+      )}
 
       <Footer />
     </>

@@ -1,25 +1,20 @@
 .admin-container {
   width: 100vw;
   min-height: 100vh;
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   display: flex;
   justify-content: center;
-
   padding-top: 80px;
   padding-bottom: 80px;
 }
 
 .admin-card {
-  width: 55%;
-  max-width: 850px;
-
+  width: 80%;
+  max-width: 1200px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
-
   border-radius: 25px;
   overflow: hidden;
 }
@@ -37,7 +32,7 @@
 
 .admin-title {
   text-align: center;
-  color: white;
+  color: #5b0a18;
   font-size: 28px;
   letter-spacing: 2px;
   margin: 0;
@@ -46,9 +41,36 @@
 /* BODY */
 .admin-card-body {
   max-height: 70vh;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 30px 40px;
 }
+
+/* Contenedor de lista y formulario */
+.admin-body-container {
+  display: flex;
+  gap: 30px;
+}
+
+/* Secciones */
+.users-section {
+  flex: 1;
+  max-width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  flex: 1;
+  max-width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrado vertical */
+  gap: 15px; /* Espacio entre inputs */
+}
+
 
 /* Inputs */
 .admin-input input,
@@ -62,77 +84,140 @@
   color: white;
 }
 
-/* Scroll */
-.admin-card-body::-webkit-scrollbar {
-  width: 8px;
-}
-.admin-card-body::-webkit-scrollbar-thumb {
-  background: #8c0f17;
-  border-radius: 10px;
-}
-
-/* Buttons */
-.admin-btns {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.save-btn {
-  padding: 12px 25px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  background: white;
-  color: #8b1a1a;
-}
-
-.erase-btn {
-  padding: 12px 25px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  background: #c9c9c9;
-  color: #8b1a1a;
-}
-
-.users-title {
-  margin-top: 20px;
-  color: white;
-  font-size: 22px;
-}
-
-/* Users Table */
+/* Scroll para usuarios */
 .users-table {
-  margin-top: 15px;
   background: rgba(0, 0, 0, 0.3);
   padding: 15px;
   border-radius: 15px;
+  max-height: 350px;
+  overflow-y: auto;
+  
 }
 
 .user-row {
   display: grid;
   grid-template-columns: 1fr 1fr 0.6fr;
+  gap: 18px; /* ← AQUI agregamos espacio entre columnas */
   margin-bottom: 10px;
   padding: 12px;
   background: rgba(142, 23, 23, 0.6);
   border-radius: 15px;
   color: white;
 }
+.users-header-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.6fr;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  color: #3b0000;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
 
 .user-row p {
   margin: 0;
 }
 
+/* Scroll de la tabla de usuarios */
+.users-table::-webkit-scrollbar {
+  width: 8px;
+}
+.users-table::-webkit-scrollbar-thumb {
+  background: #8c0f17;
+  border-radius: 10px;
+}
+
+.admin-btns {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* RESET del borde feo al hacer click */
+button:focus,
+button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Botones base (blancos aesthetic) */
+.admin-btns button {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  color: #333;
+}
+
+/* Hover general */
+.admin-btns button:hover {
+  background: #f5f2f1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+/* --------------------------- */
+/*         BOTONES GUINDO      */
+/* --------------------------- */
+
+.erase-btn, /* DELETE */
+.clear-btn { /* CLEAR */
+  background: #5b0a18 !important; 
+  color: white !important;
+  border: 1px solid #5b0a18 !important;
+}
+
+.erase-btn:hover,
+.clear-btn:hover {
+  background: #6d0d1f !important;
+  border-color: #6d0d1f !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+
+/* Título de usuarios */
+.users-title {
+  margin-top: 0;
+  color: white;
+  font-size: 22px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-  .admin-card {
-    width: 85%;
+  .admin-body-container {
+    flex-direction: column;
   }
-
+  .users-section,
+  .form-section {
+    max-width: 100%;
+  }
   .user-row {
     grid-template-columns: 1fr;
     text-align: center;
   }
 }
+
+.user-row p {
+  margin: 0;
+  word-break: break-word; /* Corta palabras largas */
+  overflow-wrap: anywhere; /* Permite salto de línea */
+  white-space: normal; /* Evita que el texto se mantenga en una sola línea */
+}
+
+.admin-input input::placeholder,
+.admin-input select::placeholder {
+  color: #ffffff;
+  opacity: 1.8;
+}
+
