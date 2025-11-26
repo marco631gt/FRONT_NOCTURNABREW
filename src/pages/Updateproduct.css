@@ -197,5 +197,12 @@ textarea {
   }
 }
 
+/* WRAPPER DE IMAGEN PARA CENTRAR Y CONTROLAR MARGEN */
+.update-img-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
 
 

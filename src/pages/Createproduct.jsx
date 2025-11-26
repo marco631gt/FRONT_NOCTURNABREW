@@ -164,13 +164,15 @@ const Updateproduct = () => {
             </div>
 
             {product.url && (
-              <img
-                src={product.url}
-                alt="preview"
-                className="create-img-preview"
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            )}
+                <div className="create-img-wrapper">
+                  <img
+                    src={product.url}
+                    alt="preview"
+                    className="create-img-preview"
+                    onError={(e) => (e.target.style.display = "none")}
+                  />
+                </div>
+              )}
 
             {/* INGREDIENTS */}
             <h3 className="ingredients-title">Ingredients (max 5)</h3>
