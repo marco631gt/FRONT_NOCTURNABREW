@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Header2 from "../components/Header2";
-import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./Productmanagement.css";
+import gallery from "../assets/images/ImagesGallery.png";
 
 import icedFavorites from "../assets/images/icedfavorites.png";
 import hotFavorites from "../assets/images/hotfavorites.png";
 import sweetDelicacies from "../assets/images/sweetdelicacies.png";
 import savoryDelicacies from "../assets/images/savorydelicacies.png";
 
-import "./productmanagement.css";
+import Header2 from "../components/Header2";
+import Footer from "../components/Footer";
 
-const ProductManagement = () => {
+const Productmanagement = () => { 
+  const navigate = useNavigate();
+
+  const [activeCategory, setActiveCategory] = useState("iced");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const categories = [
     { id: "iced", title: "ICED FAVORITES", image: icedFavorites },
     { id: "hot", title: "HOT FAVORITES", image: hotFavorites },
@@ -25,78 +32,119 @@ const ProductManagement = () => {
     savory: `${import.meta.env.VITE_ENDPOINT}products/category/Savory%20Delicacies`,
   };
 
-  const [selectedCategory, setSelectedCategory] = useState("iced");
-  const [products, setProducts] = useState([]);
-
-  // Cargar productos cada vez que cambia la categoría
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const res = await fetch(endpoints[selectedCategory]);
-        const data = await res.json();
-        setProducts(data.products || []);
+        const response = await fetch(endpoints[activeCategory], {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
+            "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
+            "ngrok-skip-browser-warning": "true",
+          },
+        });
+
+        const text = await response.text();
+
+        if (!response.ok || !text.startsWith("{")) {
+          throw new Error("Respuesta no válida");
+        }
+
+        const data = JSON.parse(text);
+
+        if (Array.isArray(data.values)) {
+          setProducts(data.values);
+        } else if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts([]);
+        }
       } catch (error) {
-        console.error("Error loading products:", error);
+        console.error("⚠️ Error fetching products:", error);
+        setProducts([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [selectedCategory]);
+  }, [activeCategory]);
 
   return (
-    <div className="product-management-container">
+    <>
       <Header2 />
 
-      <div className="product-management-content">
-        <h2 className="pm-title">Product Management</h2>
+      <section className="categoriesrefresh">
+        <h2>PRODUCT MANAGEMENT</h2>
 
-        {/* Botón para crear producto */}
-        <div className="pm-add-container">
-          <Link to="/createproduct" className="pm-add-btn">+</Link>
-        </div>
-
-        {/* Categorías */}
-        <div className="pm-categories">
+        <div className="cards">
           {categories.map((cat) => (
-            <button
+            <div
               key={cat.id}
-              className={`pm-category-btn ${selectedCategory === cat.id ? "active" : ""}`}
-              onClick={() => setSelectedCategory(cat.id)}
+              className={`card ${activeCategory === cat.id ? "selected" : ""}`}
+              onClick={() => setActiveCategory(cat.id)}
             >
-              <img src={cat.image} alt={cat.title} className="pm-category-img" />
-              {cat.title}
-            </button>
+              <img src={cat.image} alt={cat.title} />
+              <div className="overlay-menu">
+                <h3>{cat.title}</h3>
+                <p>View more</p>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Productos */}
-        <div className="pm-products-grid">
-          {products.length === 0 ? (
-            <p className="pm-empty">No products found in this category.</p>
-          ) : (
-            products.map((product) => (
-              <div key={product._id} className="pm-product-card">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="pm-product-img"
-                />
+        {loading ? (
+          <div className="loading" style={{ marginTop: "50px" }}>
+            <div className="spinner"></div>
+            <p style={{ color: "black" }}>Loading products...</p>
+          </div>
+        ) : products.length > 0 ? (
+          <div className="pm-container active">
+            {products.map((p, i) => (
+              <div className="pm-card" key={i}>
+                {p.url && (
+                  <img
+                    src={p.url}
+                    alt={p.name}
+                    onError={(e) => (e.target.style.display = "none")}
+                  />
+                )}
+                <h4>{p.name}</h4>
+                <p>{p.description}</p>
+                <p className="pm-price">${p.price}</p>
 
-                <h3 className="pm-product-name">{product.name}</h3>
-                <p className="pm-product-price">${product.price}</p>
-
-                <Link to={`/editproduct/${product._id}`} className="pm-edit-btn">
+                {/* BOTÓN EDITAR */}
+                <button
+                  className="btn-edit"
+                  onClick={() => navigate(`/editproduct/${p.id}`)}
+                >
                   Edit Product
-                </Link>
+                </button>
               </div>
-            ))
-          )}
-        </div>
-      </div>
+            ))}
+          </div>
+        ) : (
+          <p className="no-products" style={{ color: "black" }}>No products found in this category.</p>
+        )}
+      </section>
+
+      <section className="gallery">
+        <img src={gallery} alt="Gallery" />
+      </section>
+
+      {/* BOTÓN FLOTANTE + */}
+      <button 
+        className="create-btn"
+        onClick={() => navigate("/Createproduct")}
+      >
+        +
+      </button>
 
       <Footer />
-    </div>
+    </>
   );
 };
 
-export default ProductManagement;
+export default Productmanagement;

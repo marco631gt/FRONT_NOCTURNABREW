@@ -164,23 +164,25 @@ const Createproduct = () => {
             </div>
 
             {product.url && (
-                <div className="create-img-wrapper">
-                  <img
-                    src={product.url}
-                    alt="preview"
-                    className="create-img-preview"
-                    onError={(e) => (e.target.style.display = "none")}
-                  />
-                </div>
-              )}
+              <div className="create-img-wrapper">
+                <img
+                  src={product.url}
+                  alt="preview"
+                  className="create-img-preview"
+                  onError={(e) => (e.target.style.display = "none")}
+                />
+              </div>
+            )}
 
             {/* INGREDIENTS */}
             <h3 className="ingredients-title">Ingredients (max 5)</h3>
 
             {product.ingredients.map((ing, index) => (
               <div key={index} className="ingredient-row">
+                {/* ID */}
                 <input type="number" value={ing.ingredientId} readOnly />
 
+                {/* Name */}
                 <input
                   type="text"
                   placeholder="Name"
@@ -190,6 +192,7 @@ const Createproduct = () => {
                   }
                 />
 
+                {/* Qty */}
                 <input
                   type="number"
                   placeholder="Qty"
@@ -199,14 +202,16 @@ const Createproduct = () => {
                   }
                 />
 
-                <input
-                  type="text"
-                  placeholder="Unit"
+                {/* Unit (desplegable) */}
+                <select
                   value={ing.unit}
-                  onChange={(e) =>
-                    handleIngredientChange(index, "unit", e.target.value)
-                  }
-                />
+                  onChange={(e) => handleIngredientChange(index, "unit", e.target.value)}
+                >
+                  <option value="">Select Unit</option>
+                  <option value="g">g</option>
+                  <option value="ml">ml</option>
+                  <option value="piece">piece</option>
+                </select>
 
                 {index > 0 && (
                   <button className="remove-ing" onClick={() => removeIngredient(index)}>

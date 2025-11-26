@@ -1,0 +1,138 @@
+.admin-container {
+  width: 100vw;
+  min-height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.admin-card {
+  width: 55%;
+  max-width: 850px;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.admin-card-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 25px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
+.admin-title {
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* BODY */
+.admin-card-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 30px 40px;
+}
+
+/* Inputs */
+.admin-input input,
+.admin-input select {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: none;
+  margin-bottom: 18px;
+  background: rgba(142, 23, 23, 0.8);
+  color: white;
+}
+
+/* Scroll */
+.admin-card-body::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-card-body::-webkit-scrollbar-thumb {
+  background: #8c0f17;
+  border-radius: 10px;
+}
+
+/* Buttons */
+.admin-btns {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.save-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: #8b1a1a;
+}
+
+.erase-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  background: #c9c9c9;
+  color: #8b1a1a;
+}
+
+.users-title {
+  margin-top: 20px;
+  color: white;
+  font-size: 22px;
+}
+
+/* Users Table */
+.users-table {
+  margin-top: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.user-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.6fr;
+  margin-bottom: 10px;
+  padding: 12px;
+  background: rgba(142, 23, 23, 0.6);
+  border-radius: 15px;
+  color: white;
+}
+
+.user-row p {
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-card {
+    width: 85%;
+  }
+
+  .user-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}

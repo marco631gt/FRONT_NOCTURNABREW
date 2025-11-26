@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Menu from "./pages/Menu";
 import Aboutus from "./pages/Aboutus";
 import Createproduct from "./pages/Createproduct";
+import Updateproduct from "./pages/Updateproduct";
 import Cart from "./pages/Cart";
 import QR from "./pages/QR";
 import AdminPanel from "./pages/AdminPanel";
@@ -36,6 +37,9 @@ function App() {
         <Route path="/Createproduct" element={<Createproduct />} />
         <Route path="/Productmanagement" element={<Productmanagement />} />
         <Route path="/UserManagement" element={<UserManagement />} />
+        <Route path="/Updateproduct/:id" element={<Updateproduct />} />
+
+
       </Routes>
     </>
   );

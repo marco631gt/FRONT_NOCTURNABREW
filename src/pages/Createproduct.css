@@ -2,26 +2,21 @@
 .create-container {
   width: 100vw;
   min-height: 100vh;
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   display: flex;
   justify-content: center;
-
   padding-top: 80px;
   padding-bottom: 80px;
 }
 
 /* TARJETA */
 .create-card {
- width: 55%;
+  width: 55%;
   max-width: 850px;
-
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
-
   border-radius: 25px;
   overflow: hidden;
 }
@@ -40,7 +35,7 @@
 /* TÍTULO */
 .create-title {
   text-align: center;
-  color: white;
+  color: #5a0c17;
   font-size: 28px;
   letter-spacing: 2px;
   margin: 0;
@@ -114,6 +109,19 @@ textarea {
   color: white;
 }
 
+/* SELECTS DE INGREDIENTES */
+.ingredient-row select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(142, 23, 23, 0.8) url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+  background-size: 12px;
+  color: white;
+  appearance: none; /* quita flecha por defecto */
+  cursor: pointer;
+}
+
 /* REMOVE ING BUTTON */
 .remove-ing {
   width: 35px;
@@ -167,7 +175,7 @@ textarea {
   color: #8b1a1a;
 }
 
-/* SELECT */
+/* SELECT GENERAL */
 .select-input {
   width: 100%;
   padding: 12px 18px;
@@ -185,7 +193,8 @@ textarea {
   }
 
   .ingredient-row {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
