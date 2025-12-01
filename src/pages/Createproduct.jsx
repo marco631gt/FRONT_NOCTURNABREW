@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
@@ -13,12 +13,83 @@ const Createproduct = () => {
     description: "",
     url: "",
     available: true,
-    ingredients: [{ ingredientId: 1, ingredientName: "", quantity: "", unit: "" }],
+    ingredients: [{ ingredientId: "", ingredientName: "", quantity: "", unit: "" }],
   });
 
+  const [allIngredients, setAllIngredients] = useState([]);
+
+  const categories = [
+    "Iced Favorites",
+    "Hot Favorites",
+    "Sweet Delicacies",
+    "Savory Delicacies",
+    "Cold Brew",
+  ];
+
+  // 🔥 Fetch ingredientes como Updateproduct
+  useEffect(() => {
+    const fetchIngredients = async () => {
+      try {
+        const res = await fetch(
+          "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/stock/getAll",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `AppToken ${import.meta.env.VITE_APPSECRET}`,
+              "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
+              "ngrok-skip-browser-warning": "true",
+            },
+          }
+        );
+
+        const text = await res.text();
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch {
+          console.error("❌ No es JSON válido");
+          return;
+        }
+
+        const list = data.values || [];
+
+        const mapped = list.map((i) => ({
+          ingredientId: i.id,
+          ingredientName: i.name,
+          unit: i.unit,
+        }));
+
+        setAllIngredients(mapped);
+      } catch (err) {
+        console.error("Error fetching ingredients:", err);
+        setAllIngredients([]);
+      }
+    };
+
+    fetchIngredients();
+  }, []);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+    setProduct({ ...product, [e.target.name]: e.target.value });
+  };
+
+  const handleIngredientSelect = (index, selectedId) => {
+    const selected = allIngredients.find(
+      (i) => i.ingredientId === Number(selectedId)
+    );
+    if (!selected) return;
+
+    const updated = [...product.ingredients];
+    updated[index] = {
+      ...updated[index],
+      ingredientId: selected.ingredientId,
+      ingredientName: selected.ingredientName,
+      unit: selected.unit,
+    };
+
+    setProduct({ ...product, ingredients: updated });
   };
 
   const handleIngredientChange = (index, field, value) => {
@@ -30,35 +101,66 @@ const Createproduct = () => {
   const addIngredient = () => {
     if (product.ingredients.length >= 5)
       return alert("Máximo 5 ingredientes.");
-
     setProduct({
       ...product,
       ingredients: [
         ...product.ingredients,
-        {
-          ingredientId: product.ingredients.length + 1,
-          ingredientName: "",
-          quantity: "",
-          unit: "",
-        },
+        { ingredientId: "", ingredientName: "", quantity: "", unit: "" },
       ],
     });
   };
 
   const removeIngredient = (index) => {
     const updated = product.ingredients.filter((_, i) => i !== index);
-
-    const reordered = updated.map((ing, i) => ({
-      ...ing,
-      ingredientId: i + 1,
-    }));
-
-    setProduct({ ...product, ingredients: reordered });
+    setProduct({ ...product, ingredients: updated });
   };
 
-  const saveProduct = () => {
-    console.log("PRODUCT SENT:", product);
-    alert("Product saved (demo).");
+  // 🔥 POST para crear el producto
+  const saveProduct = async () => {
+    try {
+      const response = await fetch(
+        `https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `AppToken ${import.meta.env.VITE_APPSECRET}`,
+            "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
+            "ngrok-skip-browser-warning": "true",
+          },
+          body: JSON.stringify({
+            id: Number(product.id),
+            name: product.name,
+            price: Number(product.price),
+            category: product.category,
+            description: product.description,
+            url: product.url,
+            available: product.available,
+            ingredients: product.ingredients.map((ing) => ({
+              ingredientId: Number(ing.ingredientId),
+              ingredientName: ing.ingredientName,
+              quantity: Number(ing.quantity),
+              unit: ing.unit,
+            })),
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("Error creating product:", data);
+        alert("❌ Error creating product. Check console.");
+        return;
+      }
+
+      alert("✅ Product created successfully!");
+
+      eraseProduct();
+    } catch (err) {
+      console.error("Error saving product:", err);
+      alert("❌ Error saving product. Check console.");
+    }
   };
 
   const eraseProduct = () => {
@@ -70,9 +172,8 @@ const Createproduct = () => {
       description: "",
       url: "",
       available: true,
-      ingredients: [{ ingredientId: 1, ingredientName: "", quantity: "", unit: "" }],
+      ingredients: [{ ingredientId: "", ingredientName: "", quantity: "", unit: "" }],
     });
-    alert("Product cleared.");
   };
 
   return (
@@ -84,16 +185,12 @@ const Createproduct = () => {
         style={{ backgroundImage: `url(${registerBg})` }}
       >
         <div className="create-card">
-
-          {/* 🔥 TÍTULO FIJO */}
           <div className="create-card-header">
             <h2 className="create-title">CREATE PRODUCT</h2>
           </div>
 
-          {/* 🔥 FORMULARIO CON SCROLL */}
           <div className="create-card-body">
 
-            {/* ID */}
             <div className="create-input">
               <input
                 type="number"
@@ -104,7 +201,6 @@ const Createproduct = () => {
               />
             </div>
 
-            {/* Name */}
             <div className="create-input">
               <input
                 type="text"
@@ -115,7 +211,6 @@ const Createproduct = () => {
               />
             </div>
 
-            {/* description */}
             <div className="create-input">
               <textarea
                 placeholder="Description"
@@ -125,7 +220,6 @@ const Createproduct = () => {
               ></textarea>
             </div>
 
-            {/* Price */}
             <div className="create-input">
               <input
                 type="number"
@@ -136,7 +230,6 @@ const Createproduct = () => {
               />
             </div>
 
-            {/* Category */}
             <div className="create-input">
               <select
                 name="category"
@@ -145,14 +238,14 @@ const Createproduct = () => {
                 className="select-input"
               >
                 <option value="">Select Category</option>
-                <option value="IcedFavorites">Iced Favorites</option>
-                <option value="HotFavorites">Hot Favorites</option>
-                <option value="SweetDelicacies">Sweet Delicacies</option>
-                <option value="SavoryDelicacies">Savory Delicacies</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
               </select>
             </div>
 
-            {/* URL */}
             <div className="create-input">
               <input
                 type="text"
@@ -174,25 +267,29 @@ const Createproduct = () => {
               </div>
             )}
 
-            {/* INGREDIENTS */}
             <h3 className="ingredients-title">Ingredients (max 5)</h3>
 
             {product.ingredients.map((ing, index) => (
               <div key={index} className="ingredient-row">
-                {/* ID */}
+
                 <input type="number" value={ing.ingredientId} readOnly />
 
-                {/* Name */}
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={ing.ingredientName}
+                <select
+                  value={ing.ingredientId}
                   onChange={(e) =>
-                    handleIngredientChange(index, "ingredientName", e.target.value)
+                    handleIngredientSelect(index, e.target.value)
                   }
-                />
+                >
+                  <option value="">
+                    {ing.ingredientName || "Select Ingredient"}
+                  </option>
+                  {allIngredients.map((i) => (
+                    <option key={i.ingredientId} value={i.ingredientId}>
+                      {i.ingredientName}
+                    </option>
+                  ))}
+                </select>
 
-                {/* Qty */}
                 <input
                   type="number"
                   placeholder="Qty"
@@ -202,19 +299,13 @@ const Createproduct = () => {
                   }
                 />
 
-                {/* Unit (desplegable) */}
-                <select
-                  value={ing.unit}
-                  onChange={(e) => handleIngredientChange(index, "unit", e.target.value)}
-                >
-                  <option value="">Select Unit</option>
-                  <option value="g">g</option>
-                  <option value="ml">ml</option>
-                  <option value="piece">piece</option>
-                </select>
+                <input type="text" placeholder="Unit" value={ing.unit} readOnly />
 
                 {index > 0 && (
-                  <button className="remove-ing" onClick={() => removeIngredient(index)}>
+                  <button
+                    className="remove-ing"
+                    onClick={() => removeIngredient(index)}
+                  >
                     X
                   </button>
                 )}
@@ -229,6 +320,7 @@ const Createproduct = () => {
               <button className="save-btn" onClick={saveProduct}>
                 Save Product
               </button>
+
               <button className="erase-btn" onClick={eraseProduct}>
                 Erase Product
               </button>
