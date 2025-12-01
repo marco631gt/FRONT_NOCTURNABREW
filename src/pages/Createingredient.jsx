@@ -16,6 +16,14 @@ const Createingredient = () => {
 
   const [ingredients, setIngredients] = useState([]);
 
+  // POPUP STATE
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    type: "", // "success" | "error" | "confirm"
+    onConfirm: null, // Función a ejecutar si se confirma
+  });
+
   // HEADERS
   const getAuthHeaders = () => ({
     "Content-Type": "application/json",
@@ -39,7 +47,6 @@ const Createingredient = () => {
     setIngredientData({ ...ingredientData, [name]: value });
   };
 
-  // ➤ GENERA EL SIGUIENTE ID AUTOMÁTICO
   const generateNextId = (list) => {
     if (!list || list.length === 0) return 1;
     const maxId = Math.max(...list.map((i) => Number(i.id)));
@@ -52,50 +59,44 @@ const Createingredient = () => {
         method: "GET",
         headers: getAuthHeaders(),
       });
-
       const data = await safeJson(res);
-      const list = data.values || [];
-
-      setIngredients(list);
-
+      setIngredients(data.values || []);
     } catch (error) {
       console.error("❌ Error cargando ingredientes:", error);
+      showPopup("Error cargando ingredientes.", "error");
     }
   };
 
-  const searchIngredient = async () => {
-    if (!ingredientData.id) return alert("Ingresa un ID para buscar.");
+  const showPopup = (message, type = "success", onConfirm = null) => {
+    setPopup({ show: true, message, type, onConfirm });
+  };
 
+  const searchIngredient = async () => {
+    if (!ingredientData.id) return showPopup("Ingresa un ID para buscar.", "error");
     try {
       const res = await fetch(`${API}/id/${ingredientData.id}`, {
         method: "GET",
         headers: getAuthHeaders(),
       });
-
       const data = await safeJson(res);
-
-      if (!data.values) return alert("Ingrediente no encontrado.");
-
+      if (!data.values) return showPopup("Ingrediente no encontrado.", "error");
       setIngredientData({
         id: data.values.id,
         name: data.values.name,
         unit: data.values.unit,
         quantity: data.values.quantity,
       });
-
-      alert("Ingrediente encontrado.");
+      showPopup("Ingrediente encontrado.", "success");
     } catch (error) {
       console.error(error);
-      alert("Error al buscar ingrediente.");
+      showPopup("Error al buscar ingrediente.", "error");
     }
   };
 
-  // ➤ CREATE — SOLO AQUÍ SE GENERA EL ID AUTOMÁTICO
   const createIngredient = async () => {
     const newId = generateNextId(ingredients);
-
-    if (!ingredientData.name.trim()) return alert("El nombre es requerido.");
-    if (!ingredientData.unit.trim()) return alert("La unidad es requerida.");
+    if (!ingredientData.name.trim()) return showPopup("El nombre es requerido.", "error");
+    if (!ingredientData.unit.trim()) return showPopup("La unidad es requerida.", "error");
 
     const bodyToSend = {
       id: newId,
@@ -110,46 +111,33 @@ const Createingredient = () => {
         headers: getAuthHeaders(),
         body: JSON.stringify(bodyToSend),
       });
-
       const data = await safeJson(res);
+      if (!res.ok) return showPopup(data.message || "Error al crear ingrediente", "error");
 
-      if (!res.ok) return alert(data.message || "Error al crear ingrediente");
-
-      alert("Ingrediente creado.");
-
-      // Recargar tabla
+      showPopup("Ingrediente creado exitosamente.", "success");
       await getAllIngredients();
 
-      // 🔥 LIMPIAR FORM COMPLETO (incluye ID)
-      setIngredientData({
-        id: "",
-        name: "",
-        unit: "",
-        quantity: "",
-      });
+      setIngredientData({ id: "", name: "", unit: "", quantity: "" });
 
-      // 🔥 Después de un breve delay, poner el ID siguiente
       setTimeout(() => {
         setIngredientData((prev) => ({
           ...prev,
           id: generateNextId([...ingredients, bodyToSend]),
         }));
       }, 300);
-
     } catch (error) {
       console.error(error);
-      alert("Error al crear ingrediente.");
+      showPopup("Error al crear ingrediente.", "error");
     }
   };
 
   const updateIngredient = async () => {
-    if (!ingredientData.id) return alert("Debes ingresar un ID.");
+    if (!ingredientData.id) return showPopup("Debes ingresar un ID.", "error");
 
     const updateBody = {};
     if (ingredientData.name) updateBody.name = ingredientData.name;
     if (ingredientData.unit) updateBody.unit = ingredientData.unit;
-    if (ingredientData.quantity !== "")
-      updateBody.quantity = Number(ingredientData.quantity);
+    if (ingredientData.quantity !== "") updateBody.quantity = Number(ingredientData.quantity);
 
     try {
       const res = await fetch(`${API}/update/${ingredientData.id}`, {
@@ -157,66 +145,54 @@ const Createingredient = () => {
         headers: getAuthHeaders(),
         body: JSON.stringify(updateBody),
       });
-
       const data = await safeJson(res);
-      alert(data.message || "Ingrediente actualizado.");
+      showPopup(data.message || "Ingrediente actualizado.", "success");
       getAllIngredients();
     } catch (error) {
       console.error(error);
-      alert("Error al actualizar.");
+      showPopup("Error al actualizar.", "error");
     }
   };
 
   const deleteIngredient = async () => {
-    if (!ingredientData.id) return alert("Debes ingresar un ID.");
-    if (!confirm("¿Eliminar ingrediente?")) return;
+    if (!ingredientData.id) return showPopup("Debes ingresar un ID.", "error");
 
-    try {
-      const res = await fetch(`${API}/delete/${ingredientData.id}`, {
-        method: "GET",
-        headers: getAuthHeaders(),
-      });
+    // Mostrar popup de confirmación
+    showPopup(
+      `¿Seguro que deseas eliminar el ingrediente ${ingredientData.name}?`,
+      "confirm",
+      async () => {
+        try {
+          const res = await fetch(`${API}/delete/${ingredientData.id}`, {
+            method: "GET",
+            headers: getAuthHeaders(),
+          });
+          const data = await safeJson(res);
+          showPopup(data.message || "Ingrediente eliminado.", "success");
+          getAllIngredients();
 
-      const data = await safeJson(res);
-      alert(data.message || "Ingrediente eliminado.");
-      getAllIngredients();
+          setIngredientData({ id: "", name: "", unit: "", quantity: "" });
 
-      // Limpiar formulario y generar nuevo ID
-      setIngredientData({
-        id: "",
-        name: "",
-        unit: "",
-        quantity: "",
-      });
-
-      setTimeout(() => {
-        setIngredientData((prev) => ({
-          ...prev,
-          id: generateNextId(
-            ingredients.filter((x) => x.id !== Number(ingredientData.id))
-          ),
-        }));
-      }, 300);
-
-    } catch (error) {
-      console.error(error);
-      alert("Error al eliminar.");
-    }
+          setTimeout(() => {
+            setIngredientData((prev) => ({
+              ...prev,
+              id: generateNextId(
+                ingredients.filter((x) => x.id !== Number(ingredientData.id))
+              ),
+            }));
+          }, 300);
+        } catch (error) {
+          console.error(error);
+          showPopup("Error al eliminar.", "error");
+        }
+      }
+    );
   };
 
   const clearForm = () => {
-    setIngredientData({
-      id: "",
-      name: "",
-      unit: "",
-      quantity: "",
-    });
-
+    setIngredientData({ id: "", name: "", unit: "", quantity: "" });
     setTimeout(() => {
-      setIngredientData((prev) => ({
-        ...prev,
-        id: generateNextId(ingredients),
-      }));
+      setIngredientData((prev) => ({ ...prev, id: generateNextId(ingredients) }));
     }, 300);
   };
 
@@ -228,32 +204,56 @@ const Createingredient = () => {
     <>
       <Header2 />
 
-      <div
-        className="ingredient-container"
-        style={{ backgroundImage: `url(${registerBg})` }}
-      >
+      {/* POPUP */}
+      {popup.show && (
+        <div className={`popup-overlay ${popup.type}`}>
+          <div className="popup-box">
+            <p>{popup.message}</p>
+            {popup.type === "confirm" ? (
+              <div className="popup-buttons">
+                <button
+                  onClick={() => {
+                    if (popup.onConfirm) popup.onConfirm();
+                    setPopup({ show: false, message: "", type: "", onConfirm: null });
+                  }}
+                >
+                  Sí
+                </button>
+                <button
+                  onClick={() => setPopup({ show: false, message: "", type: "", onConfirm: null })}
+                >
+                  No
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setPopup({ show: false, message: "", type: "", onConfirm: null })}
+              >
+                OK
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="ingredient-container" style={{ backgroundImage: `url(${registerBg})` }}>
         <div className="ingredient-card">
           <div className="ingredient-card-header">
             <h2 className="ingredient-title">INGREDIENT ADMIN PANEL</h2>
           </div>
-
           <div className="ingredient-card-body">
             <div className="ingredient-body-container">
-
               {/* LISTA */}
               <div className="ingredients-section">
                 <h3 className="ingredients-title">All Ingredients</h3>
-
                 <div className="ingredients-header-row">
                   <p>ID</p>
                   <p>Name</p>
                   <p>Unit</p>
                   <p>Qty</p>
                 </div>
-
                 <div className="ingredients-table">
                   {ingredients.length === 0 && <p>No ingredients found.</p>}
-
                   {ingredients.map((i, index) => (
                     <div key={index} className="ingredient-row">
                       <p><strong>{i.id}</strong></p>
@@ -267,50 +267,23 @@ const Createingredient = () => {
 
               {/* FORM */}
               <div className="ingredient-form-section">
-
                 <div className="ingredient-input">
-                  <input
-                    type="number"
-                    placeholder="ID"
-                    name="id"
-                    value={ingredientData.id}
-                    onChange={handleChange}   // ← ID editable
-                  />
+                  <input type="number" placeholder="ID" name="id" value={ingredientData.id} onChange={handleChange} />
                 </div>
-
                 <div className="ingredient-input">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    value={ingredientData.name}
-                    onChange={handleChange}
-                  />
+                  <input type="text" placeholder="Name" name="name" value={ingredientData.name} onChange={handleChange} />
                 </div>
-
                 <div className="ingredient-input">
-                  <select
-                    name="unit"
-                    value={ingredientData.unit}
-                    onChange={handleChange}
-                  >
+                  <select name="unit" value={ingredientData.unit} onChange={handleChange}>
                     <option value="">Select unit</option>
                     <option value="g">Grams (g)</option>
                     <option value="ml">Milliliters (ml)</option>
                     <option value="piece">Piece</option>
                   </select>
                 </div>
-
                 <div className="ingredient-input">
-                  <input
-                    type="number"
-                    placeholder="Quantity"
-                    name="quantity"
-                    value={ingredientData.quantity}
-                    onChange={handleChange}
-                  />
+                  <input type="number" placeholder="Quantity" name="quantity" value={ingredientData.quantity} onChange={handleChange} />
                 </div>
-
                 <div className="ingredient-btns">
                   <button className="save-btn" onClick={createIngredient}>Create</button>
                   <button className="save-btn" onClick={updateIngredient}>Update</button>
@@ -318,7 +291,6 @@ const Createingredient = () => {
                   <button className="save-btn" onClick={searchIngredient}>Search</button>
                   <button className="erase-btn" onClick={clearForm}>Clear</button>
                 </div>
-
               </div>
 
             </div>

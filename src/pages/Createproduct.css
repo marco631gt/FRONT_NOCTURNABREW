@@ -21,7 +21,7 @@
   overflow: hidden;
 }
 
-/* 🔥 CABECERA FIJA */
+/* CABECERA */
 .create-card-header {
   position: sticky;
   top: 0;
@@ -32,7 +32,6 @@
   z-index: 10;
 }
 
-/* TÍTULO */
 .create-title {
   text-align: center;
   color: #5a0c17;
@@ -41,7 +40,7 @@
   margin: 0;
 }
 
-/* SOLO EL FORM TIENE SCROLL */
+/* BODY */
 .create-card-body {
   max-height: 70vh;
   overflow-y: auto;
@@ -55,6 +54,20 @@
 .create-card-body::-webkit-scrollbar-thumb {
   background: #8c0f17;
   border-radius: 10px;
+}
+
+.create-input input,
+.create-input textarea,
+.create-input select,
+.ingredient-rowcreate input,
+.ingredient-rowcreate select {
+  color: white;
+}
+
+.create-input input::placeholder,
+.create-input textarea::placeholder,
+.ingredient-rowcreate input::placeholder {
+  color: rgb(236, 235, 235);
 }
 
 /* INPUTS */
@@ -84,6 +97,13 @@ textarea {
   display: block;
 }
 
+.create-img-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
 /* INGREDIENTES */
 .ingredients-title {
   margin-top: 25px;
@@ -92,7 +112,7 @@ textarea {
   font-size: 20px;
 }
 
-.ingredient-row {
+.ingredient-rowcreate {
   display: grid;
   grid-template-columns: 50px 1fr 80px 80px 40px;
   gap: 20px;
@@ -100,7 +120,7 @@ textarea {
   margin-bottom: 12px;
 }
 
-.ingredient-row input {
+.ingredient-rowcreate input {
   width: 100%;
   padding: 10px;
   border-radius: 20px;
@@ -109,16 +129,18 @@ textarea {
   color: white;
 }
 
-/* SELECTS DE INGREDIENTES */
-.ingredient-row select {
+/* SELECT ING */
+.ingredient-rowcreate select {
   width: 100%;
   padding: 10px;
   border-radius: 20px;
   border: none;
-  background: rgba(142, 23, 23, 0.8) url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+  background: rgba(142, 23, 23, 0.8)
+    url("data:image/svg+xml;utf8,<svg fill='white' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>")
+    no-repeat right 10px center;
   background-size: 12px;
   color: white;
-  appearance: none; /* quita flecha por defecto */
+  appearance: none;
   cursor: pointer;
 }
 
@@ -192,15 +214,64 @@ textarea {
     width: 85%;
   }
 
-  .ingredient-row {
+  .ingredient-rowcreate {
     grid-template-columns: 1fr;
     gap: 12px;
   }
 }
 
-.create-img-wrapper {
-  width: 100%;
+/* --------------------- */
+/* 🌟 POPUPS BONITOS */
+/* --------------------- */
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-box {
+  background: white;
+  padding: 25px 35px;
+  border-radius: 20px;
+  text-align: center;
+  min-width: 260px;
+  animation: pop 0.25s ease-out;
+}
+
+.popup-box p {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #5a0c17;
+}
+
+.popup-box button {
+  background: #8b1a1a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+
+@keyframes pop {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

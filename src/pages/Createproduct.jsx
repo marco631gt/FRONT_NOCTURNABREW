@@ -5,6 +5,13 @@ import registerBg from "../assets/images/register-bg.png";
 import "./Createproduct.css";
 
 const Createproduct = () => {
+
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    type: ""
+  });
+
   const [product, setProduct] = useState({
     id: "",
     name: "",
@@ -26,7 +33,54 @@ const Createproduct = () => {
     "Cold Brew",
   ];
 
-  // 🔥 Fetch ingredientes como Updateproduct
+  // ---------------------------------------------------------
+  // 🔥 FUNCIÓN REUTILIZABLE PARA GENERAR ID AUTOMÁTICO
+  // ---------------------------------------------------------
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(
+        "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/getAll",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `AppToken ${import.meta.env.VITE_APPSECRET}`,
+            "Auth-User": `Bearer ${localStorage.getItem("userToken")}`,
+            "ngrok-skip-browser-warning": "true",
+          },
+        }
+      );
+
+      const text = await res.text();
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("❌ No es JSON válido");
+        return;
+      }
+
+      const list = data.values || [];
+
+      if (list.length > 0) {
+        const maxId = Math.max(...list.map((p) => p.id));
+        setProduct((prev) => ({ ...prev, id: maxId + 1 }));
+      } else {
+        setProduct((prev) => ({ ...prev, id: 1 }));
+      }
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    }
+  };
+
+  // 🔥 Se llama una sola vez al inicio
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+
+  // 🔥 Fetch ingredientes
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
@@ -100,7 +154,12 @@ const Createproduct = () => {
 
   const addIngredient = () => {
     if (product.ingredients.length >= 5)
-      return alert("Máximo 5 ingredientes.");
+      return setPopup({
+        show: true,
+        message: "⚠️ Máximo 5 ingredientes.",
+        type: "error"
+      });
+
     setProduct({
       ...product,
       ingredients: [
@@ -115,7 +174,7 @@ const Createproduct = () => {
     setProduct({ ...product, ingredients: updated });
   };
 
-  // 🔥 POST para crear el producto
+  
   const saveProduct = async () => {
     try {
       const response = await fetch(
@@ -149,23 +208,39 @@ const Createproduct = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error("Error creating product:", data);
-        alert("❌ Error creating product. Check console.");
+        setPopup({
+          show: true,
+          message: "Error creating product.",
+          type: "error"
+        });
         return;
       }
 
-      alert("✅ Product created successfully!");
+      setPopup({
+        show: true,
+        message: "Product created successfully!",
+        type: "success"
+      });
 
       eraseProduct();
+      await fetchProducts(); 
+
     } catch (err) {
       console.error("Error saving product:", err);
-      alert("❌ Error saving product. Check console.");
+      setPopup({
+        show: true,
+        message: "Error saving product.",
+        type: "error"
+      });
     }
   };
 
+  // ---------------------------------------------------------
+  // 🔥 NO BORRA ID
+  // ---------------------------------------------------------
   const eraseProduct = () => {
-    setProduct({
-      id: "",
+    setProduct((prev) => ({
+      ...prev, // mantener ID
       name: "",
       price: "",
       category: "",
@@ -173,11 +248,22 @@ const Createproduct = () => {
       url: "",
       available: true,
       ingredients: [{ ingredientId: "", ingredientName: "", quantity: "", unit: "" }],
-    });
+    }));
   };
 
   return (
     <>
+      {popup.show && (
+        <div className={`popup-overlay ${popup.type}`}>
+          <div className="popup-box">
+            <p>{popup.message}</p>
+            <button onClick={() => setPopup({ ...popup, show: false })}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       <Header2 />
 
       <div
@@ -190,99 +276,56 @@ const Createproduct = () => {
           </div>
 
           <div className="create-card-body">
-
             <div className="create-input">
               <input
                 type="number"
                 placeholder="Id Product"
                 name="id"
                 value={product.id}
-                onChange={handleChange}
+                readOnly
               />
             </div>
 
             <div className="create-input">
-              <input
-                type="text"
-                placeholder="Product name"
-                name="name"
-                value={product.name}
-                onChange={handleChange}
-              />
+              <input type="text" placeholder="Product name" name="name" value={product.name} onChange={handleChange} />
             </div>
 
             <div className="create-input">
-              <textarea
-                placeholder="Description"
-                name="description"
-                value={product.description}
-                onChange={handleChange}
-              ></textarea>
+              <textarea placeholder="Description" name="description" value={product.description} onChange={handleChange}></textarea>
             </div>
 
             <div className="create-input">
-              <input
-                type="number"
-                placeholder="Price: $"
-                name="price"
-                value={product.price}
-                onChange={handleChange}
-              />
+              <input type="number" placeholder="Price: $" name="price" value={product.price} onChange={handleChange} />
             </div>
 
             <div className="create-input">
-              <select
-                name="category"
-                value={product.category}
-                onChange={handleChange}
-                className="select-input"
-              >
+              <select name="category" value={product.category} onChange={handleChange} className="select-input">
                 <option value="">Select Category</option>
                 {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
+                  <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
             </div>
 
             <div className="create-input">
-              <input
-                type="text"
-                placeholder="Image URL"
-                name="url"
-                value={product.url}
-                onChange={handleChange}
-              />
+              <input type="text" placeholder="Image URL" name="url" value={product.url} onChange={handleChange} />
             </div>
 
             {product.url && (
               <div className="create-img-wrapper">
-                <img
-                  src={product.url}
-                  alt="preview"
-                  className="create-img-preview"
-                  onError={(e) => (e.target.style.display = "none")}
-                />
+                <img src={product.url} alt="preview" className="create-img-preview" />
               </div>
             )}
 
             <h3 className="ingredients-title">Ingredients (max 5)</h3>
 
             {product.ingredients.map((ing, index) => (
-              <div key={index} className="ingredient-row">
+              <div key={index} className="ingredient-rowcreate">
 
                 <input type="number" value={ing.ingredientId} readOnly />
 
-                <select
-                  value={ing.ingredientId}
-                  onChange={(e) =>
-                    handleIngredientSelect(index, e.target.value)
-                  }
-                >
-                  <option value="">
-                    {ing.ingredientName || "Select Ingredient"}
-                  </option>
+                <select value={ing.ingredientId} onChange={(e) => handleIngredientSelect(index, e.target.value)}>
+                  <option value="">{ing.ingredientName || "Select Ingredient"}</option>
                   {allIngredients.map((i) => (
                     <option key={i.ingredientId} value={i.ingredientId}>
                       {i.ingredientName}
@@ -302,10 +345,7 @@ const Createproduct = () => {
                 <input type="text" placeholder="Unit" value={ing.unit} readOnly />
 
                 {index > 0 && (
-                  <button
-                    className="remove-ing"
-                    onClick={() => removeIngredient(index)}
-                  >
+                  <button className="remove-ing" onClick={() => removeIngredient(index)}>
                     X
                   </button>
                 )}
@@ -317,14 +357,10 @@ const Createproduct = () => {
             </button>
 
             <div className="create-btns">
-              <button className="save-btn" onClick={saveProduct}>
-                Save Product
-              </button>
-
-              <button className="erase-btn" onClick={eraseProduct}>
-                Erase Product
-              </button>
+              <button className="save-btn" onClick={saveProduct}>Save Product</button>
+              <button className="erase-btn" onClick={eraseProduct}>Erase Product</button>
             </div>
+
           </div>
         </div>
       </div>

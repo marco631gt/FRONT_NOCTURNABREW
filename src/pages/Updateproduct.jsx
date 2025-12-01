@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header2 from "../components/Header2";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
@@ -7,6 +7,17 @@ import "./Updateproduct.css";
 
 const Updateproduct = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // ⬅ NECESARIO PARA REDIRECCIONAR
+
+  // POPUP STATE
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    type: "" // "success" | "error"
+  });
+
+  // BANDERA PARA REDIRECCIÓN
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const [product, setProduct] = useState({
     id: "",
@@ -56,7 +67,7 @@ const Updateproduct = () => {
         try {
           data = JSON.parse(text);
         } catch {
-          console.error("❌ No es JSON válido");
+          console.error("No es JSON válido");
           return;
         }
 
@@ -104,7 +115,14 @@ const Updateproduct = () => {
   };
 
   const addIngredient = () => {
-    if (product.ingredients.length >= 5) return alert("Máximo 5 ingredientes.");
+    if (product.ingredients.length >= 5) {
+      setPopup({
+        show: true,
+        message: "Máximo 5 ingredientes.",
+        type: "error"
+      });
+      return;
+    }
     setProduct({
       ...product,
       ingredients: [
@@ -152,14 +170,30 @@ const Updateproduct = () => {
 
       if (!response.ok) {
         console.error("Error updating product:", data);
-        alert("❌ Error updating product. Check console.");
+        setPopup({
+          show: true,
+          message: "Error updating product. Check console.",
+          type: "error"
+        });
         return;
       }
 
-      alert("✅ Product updated successfully!");
+      // ÉXITO
+      setPopup({
+        show: true,
+        message: "Product updated successfully!",
+        type: "success"
+      });
+
+      setShouldRedirect(true); // ⬅ Activamos la redirección después de OK
+
     } catch (err) {
       console.error("Error saving product:", err);
-      alert("❌ Error saving product. Check console.");
+      setPopup({
+        show: true,
+        message: "Error saving product. Check console.",
+        type: "error"
+      });
     }
   };
 
@@ -187,26 +221,56 @@ const Updateproduct = () => {
 
       if (!response.ok) {
         console.error("Error updating availability:", data);
-        alert("❌ Error updating product status.");
+        setPopup({
+          show: true,
+          message: "Error updating product status.",
+          type: "error"
+        });
         return;
       }
 
       setProduct({ ...product, available: newStatus });
 
-      alert(
-        newStatus
-          ? "✅ Producto marcado como DISPONIBLE"
-          : "👁️ Producto OCULTO"
-      );
+      setPopup({
+        show: true,
+        message: newStatus ? "Producto marcado como DISPONIBLE" : "Producto OCULTO",
+        type: "success"
+      });
     } catch (err) {
       console.error("Error updating availability:", err);
-      alert("❌ Error updating availability.");
+      setPopup({
+        show: true,
+        message: "❌ Error updating availability.",
+        type: "error"
+      });
     }
   };
 
   return (
     <>
       <Header2 />
+
+      {/* POPUP */}
+      {popup.show && (
+        <div className={`popup-overlay ${popup.type}`}>
+          <div className="popup-box">
+            <p>{popup.message}</p>
+            <button
+              onClick={() => {
+                setPopup({ show: false, message: "", type: "" });
+
+                // REDIRECCIÓN SOLO SI FUE ÉXITO
+                if (shouldRedirect) {
+                  navigate("/Productmanagement");
+                }
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       <div
         className="update-container"
         style={{ backgroundImage: `url(${registerBg})` }}
@@ -296,7 +360,7 @@ const Updateproduct = () => {
             <h3 className="ingredients-title">Ingredients (max 5)</h3>
 
             {product.ingredients.map((ing, index) => (
-              <div key={index} className="ingredient-row">
+              <div key={index} className="ingredient-rowupdate">
                 <input type="number" value={ing.ingredientId} readOnly />
 
                 <select

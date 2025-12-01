@@ -16,6 +16,14 @@ const UserManagement = () => {
 
   const [users, setUsers] = useState([]);
 
+  // POPUP STATE
+  const [popup, setPopup] = useState({
+    show: false,
+    message: "",
+    type: "", // "success" | "error" | "confirm"
+    onConfirm: null, // Función a ejecutar si se confirma
+  });
+
   const getAuthHeaders = () => ({
     "Content-Type": "application/json",
     "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
@@ -37,6 +45,10 @@ const UserManagement = () => {
     setUserData({ ...userData, [name]: value });
   };
 
+  const showPopup = (message, type = "success", onConfirm = null) => {
+    setPopup({ show: true, message, type, onConfirm });
+  };
+
   const getAllUsers = async () => {
     try {
       const res = await fetch(`${API}/getAll`, {
@@ -47,11 +59,12 @@ const UserManagement = () => {
       setUsers(data.values || []);
     } catch (error) {
       console.error("❌ Error cargando usuarios:", error);
+      showPopup("Error cargando usuarios.", "error");
     }
   };
 
   const searchUser = async () => {
-    if (!userData.email) return alert("Ingresa un email para buscar.");
+    if (!userData.email) return showPopup("Ingresa un email para buscar.", "error");
     try {
       const res = await fetch(`${API}/email/${userData.email}`, {
         method: "GET",
@@ -59,7 +72,7 @@ const UserManagement = () => {
       });
       const data = await safeJson(res);
       if (!data.values) {
-        alert("Usuario no encontrado.");
+        showPopup("Usuario no encontrado.", "error");
         return;
       }
       setUserData({
@@ -68,21 +81,21 @@ const UserManagement = () => {
         password: "",
         role: data.values.role || "",
       });
-      alert("Usuario encontrado.");
+      showPopup("Usuario encontrado.", "success");
     } catch (error) {
       console.error("Error searching user:", error);
-      alert("Error al buscar usuario.");
+      showPopup("Error al buscar usuario.", "error");
     }
   };
 
   const createUser = async () => {
-    if (!userData.name.trim()) return alert("Name is required");
+    if (!userData.name.trim()) return showPopup("Name is required", "error");
     if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(userData.email.trim()))
-      return alert("Email has an invalid format");
-    if (!userData.password.trim()) return alert("Password is required");
+      return showPopup("Email has an invalid format", "error");
+    if (!userData.password.trim()) return showPopup("Password is required", "error");
     if (userData.password.trim().length < 6)
-      return alert("Password must be at least 6 characters long");
-    if (!userData.role.trim()) return alert("Role is required");
+      return showPopup("Password must be at least 6 characters long", "error");
+    if (!userData.role.trim()) return showPopup("Role is required", "error");
 
     const bodyToSend = {
       name: userData.name.trim(),
@@ -98,21 +111,19 @@ const UserManagement = () => {
         body: JSON.stringify(bodyToSend),
       });
       const data = await safeJson(res);
-      if (!res.ok) {
-        alert(`⚠️ ${data.message || "Error creating user"}`);
-        return;
-      }
-      alert(data.message || "User created successfully");
+      if (!res.ok) return showPopup(data.message || "Error creating user", "error");
+
+      showPopup(data.message || "User created successfully", "success");
       clearForm();
       getAllUsers();
     } catch (error) {
       console.error(error);
-      alert("Error creating user.");
+      showPopup("Error creating user.", "error");
     }
   };
 
   const updateUser = async () => {
-    if (!userData.email) return alert("Debes ingresar el email del usuario.");
+    if (!userData.email) return showPopup("Debes ingresar el email del usuario.", "error");
     const updateBody = {};
     if (userData.name) updateBody.name = userData.name;
     if (userData.email) updateBody.email = userData.email;
@@ -126,32 +137,38 @@ const UserManagement = () => {
         body: JSON.stringify(updateBody),
       });
       const data = await safeJson(res);
-      alert(data.message || "Usuario actualizado.");
+      showPopup(data.message || "Usuario actualizado.", "success");
       getAllUsers();
     } catch (error) {
       console.error(error);
-      alert("Error al actualizar usuario.");
+      showPopup("Error al actualizar usuario.", "error");
     }
   };
 
   const deleteUser = async () => {
-    if (!userData.email) return alert("Debes ingresar el email del usuario.");
-    if (!confirm("¿Seguro que deseas eliminarlo?")) return;
+    if (!userData.email) return showPopup("Debes ingresar el email del usuario.", "error");
 
-    try {
-      const email = encodeURIComponent(userData.email);
-      const res = await fetch(`${API}/delete/${email}`, {
-        method: "DELETE",
-        headers: getAuthHeaders(),
-      });
-      const data = await safeJson(res);
-      alert(data.message || "Usuario eliminado.");
-      getAllUsers();
-      clearForm();
-    } catch (error) {
-      console.error(error);
-      alert("Error al eliminar usuario.");
-    }
+    // Mostrar popup de confirmación
+    showPopup(
+      `¿Seguro que deseas eliminar al usuario ${userData.name}?`,
+      "confirm",
+      async () => {
+        try {
+          const email = encodeURIComponent(userData.email);
+          const res = await fetch(`${API}/delete/${email}`, {
+            method: "DELETE",
+            headers: getAuthHeaders(),
+          });
+          const data = await safeJson(res);
+          showPopup(data.message || "Usuario eliminado.", "success");
+          getAllUsers();
+          clearForm();
+        } catch (error) {
+          console.error(error);
+          showPopup("Error al eliminar usuario.", "error");
+        }
+      }
+    );
   };
 
   const clearForm = () => {
@@ -170,6 +187,42 @@ const UserManagement = () => {
   return (
     <>
       <Header2 />
+
+      {/* POPUP */}
+      {popup.show && (
+        <div className={`popup-overlay ${popup.type}`}>
+          <div className="popup-box">
+            <p>{popup.message}</p>
+            {popup.type === "confirm" ? (
+              <div className="popup-buttons">
+                <button
+                  onClick={() => {
+                    if (popup.onConfirm) popup.onConfirm();
+                    setPopup({ show: false, message: "", type: "", onConfirm: null });
+                  }}
+                >
+                  Sí
+                </button>
+                <button
+                  onClick={() =>
+                    setPopup({ show: false, message: "", type: "", onConfirm: null })
+                  }
+                >
+                  No
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() =>
+                  setPopup({ show: false, message: "", type: "", onConfirm: null })
+                }
+              >
+                OK
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       <div
         className="admin-container"
@@ -220,7 +273,6 @@ const UserManagement = () => {
                     name="email"
                     value={userData.email}
                     onChange={handleChange}
-                    
                   />
                 </div>
                 <div className="admin-input">
@@ -252,9 +304,9 @@ const UserManagement = () => {
                   <button className="erase-btn" onClick={clearForm}>Clear</button>
                 </div>
               </div>
+
             </div>
           </div>
-
         </div>
       </div>
 
