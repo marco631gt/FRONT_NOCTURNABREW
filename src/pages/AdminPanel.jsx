@@ -1,5 +1,5 @@
 import React from "react";
-import Header2 from "../components/Header2";
+import HeaderAdminPanel from "../components/HeaderAdminPanel";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import Productmanagement from "../assets/images/Productmanagement.png";
@@ -10,7 +10,7 @@ import "./adminpanel.css";
 const AdminPanel = () => {
   return (
     <div className="adminpanel-container">
-      <Header2 />
+      <HeaderAdminPanel />
 
       <div
         className="adminpanel-bg"

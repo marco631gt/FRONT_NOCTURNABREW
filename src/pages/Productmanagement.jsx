@@ -8,7 +8,7 @@ import hotFavorites from "../assets/images/hotfavorites.png";
 import sweetDelicacies from "../assets/images/sweetdelicacies.png";
 import savoryDelicacies from "../assets/images/savorydelicacies.png";
 
-import Header2 from "../components/Header2";
+import HeaderAdminPanel from "../components/HeaderAdminPanel";
 import Footer from "../components/Footer";
 
 const Productmanagement = () => {
@@ -77,7 +77,7 @@ const Productmanagement = () => {
 
   return (
     <>
-      <Header2 />
+      <HeaderAdminPanel />
 
       <section className="categoriesrefresh">
         <h2>PRODUCT MANAGEMENT</h2>

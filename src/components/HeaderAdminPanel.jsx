@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.png";
 import "../pages/Login.css";
 import { logout } from "../utils/logout";
 
-const Header2 = () => {
+const HeaderAdminPanel = () => {
   const navigate = useNavigate();
   const isLogged = !!localStorage.getItem("userToken");
   const userRole = localStorage.getItem("userRole");
@@ -23,7 +23,6 @@ const Header2 = () => {
       </div>
 
       <nav style={{ zIndex: 100, display: "flex", alignItems: "center", gap: "15px" }}>
-                <Link to="/aboutus">About Us</Link>
 
 
         {!isLogged && (
@@ -71,4 +70,4 @@ const Header2 = () => {
   );
 };
 
-export default Header2;
+export default HeaderAdminPanel;

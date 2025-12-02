@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header2 from "../components/Header2";
+import HeaderAdminPanel from "../components/HeaderAdminPanel";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import "./UserManagement.css";
@@ -186,7 +186,7 @@ const UserManagement = () => {
 
   return (
     <>
-      <Header2 />
+      <HeaderAdminPanel />
 
       {/* POPUP */}
       {popup.show && (

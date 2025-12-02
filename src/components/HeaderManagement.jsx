@@ -23,7 +23,7 @@ const Header2 = () => {
       </div>
 
       <nav style={{ zIndex: 100, display: "flex", alignItems: "center", gap: "15px" }}>
-                <Link to="/aboutus">About Us</Link>
+                <Link to="/Productmanagement">Management Menu</Link>
 
 
         {!isLogged && (

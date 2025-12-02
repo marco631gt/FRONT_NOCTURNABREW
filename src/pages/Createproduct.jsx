@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header2 from "../components/Header2";
+import HeaderManagement from "../components/HeaderManagement";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import "./Createproduct.css";
@@ -264,7 +264,7 @@ const Createproduct = () => {
         </div>
       )}
 
-      <Header2 />
+      <HeaderManagement />
 
       <div
         className="create-container"

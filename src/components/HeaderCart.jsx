@@ -23,13 +23,13 @@ const Header2 = () => {
       </div>
 
       <nav style={{ zIndex: 100, display: "flex", alignItems: "center", gap: "15px" }}>
-                <Link to="/aboutus">About Us</Link>
+            <Link to="/menu">Menú</Link>
+            <Link to="/aboutus">About Us</Link>
 
 
         {!isLogged && (
           <>
             <Link to="/login">Login</Link>
-            <Link to="/register">Join Us</Link>
           </>
         )}
 

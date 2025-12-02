@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./QR.css";
 import gallery from "../assets/images/ImagesGallery.png";
-import Header2 from "../components/Header2";
+import HeaderCart from "../components/HeaderCart";
 import Footer from "../components/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Ticket from "../components/Ticket";
@@ -97,7 +97,7 @@ const QR = () => {
 
   return (
     <>
-      <Header2 />
+      <HeaderCart />
 
       <section className="titleqr">
         <h2>QR</h2>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
 import gallery from "../assets/images/ImagesGallery.png";
-import Header2 from "../components/Header2";
+import HeaderCart from "../components/HeaderCart";
 import Footer from "../components/Footer";
 import { useCart } from "../context/Cartcontext";
 
@@ -99,7 +99,7 @@ const Cart = () => {
 
     return (
         <>
-            <Header2 />
+            <HeaderCart />
 
             <section className="categoriesrefresh1">
                 <section className="titlecart">

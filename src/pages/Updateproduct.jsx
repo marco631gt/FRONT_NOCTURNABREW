@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Header2 from "../components/Header2";
+import HeaderManagement from "../components/HeaderManagement";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import "./Updateproduct.css";
@@ -248,7 +248,7 @@ const Updateproduct = () => {
 
   return (
     <>
-      <Header2 />
+      <HeaderManagement />
 
       {/* POPUP */}
       {popup.show && (

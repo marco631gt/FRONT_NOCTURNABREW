@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header2 from "../components/Header2";
+import HeaderManagement from "../components/HeaderManagement";
 import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import "./Createingredient.css";
@@ -202,7 +202,7 @@ const Createingredient = () => {
 
   return (
     <>
-      <Header2 />
+      <HeaderManagement />
 
       {/* POPUP */}
       {popup.show && (
