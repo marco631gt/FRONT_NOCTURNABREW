@@ -37,7 +37,7 @@ const Createingredient = () => {
     try {
       return JSON.parse(text);
     } catch {
-      console.error("❌ Respuesta no válida:", text);
+      console.error("Invalid response:", text);
       throw new Error("Error parsing JSON");
     }
   };
@@ -62,8 +62,8 @@ const Createingredient = () => {
       const data = await safeJson(res);
       setIngredients(data.values || []);
     } catch (error) {
-      console.error("❌ Error cargando ingredientes:", error);
-      showPopup("Error cargando ingredientes.", "error");
+      console.error("Error loading ingredients:", error);
+      showPopup("Error loading ingredients.", "error");
     }
   };
 
@@ -72,31 +72,38 @@ const Createingredient = () => {
   };
 
   const searchIngredient = async () => {
-    if (!ingredientData.id) return showPopup("Ingresa un ID para buscar.", "error");
+    if (!ingredientData.id) return showPopup("Enter an ID to search.", "error");
+
     try {
       const res = await fetch(`${API}/id/${ingredientData.id}`, {
         method: "GET",
         headers: getAuthHeaders(),
       });
       const data = await safeJson(res);
-      if (!data.values) return showPopup("Ingrediente no encontrado.", "error");
+
+      if (!data.values) return showPopup("Ingredient not found.", "error");
+
       setIngredientData({
         id: data.values.id,
         name: data.values.name,
         unit: data.values.unit,
         quantity: data.values.quantity,
       });
-      showPopup("Ingrediente encontrado.", "success");
+
+      showPopup("Ingredient found.", "success");
     } catch (error) {
       console.error(error);
-      showPopup("Error al buscar ingrediente.", "error");
+      showPopup("Error searching ingredient.", "error");
     }
   };
 
   const createIngredient = async () => {
     const newId = generateNextId(ingredients);
-    if (!ingredientData.name.trim()) return showPopup("El nombre es requerido.", "error");
-    if (!ingredientData.unit.trim()) return showPopup("La unidad es requerida.", "error");
+
+    if (!ingredientData.name.trim())
+      return showPopup("Name is required.", "error");
+    if (!ingredientData.unit.trim())
+      return showPopup("Unit is required.", "error");
 
     const bodyToSend = {
       id: newId,
@@ -112,9 +119,11 @@ const Createingredient = () => {
         body: JSON.stringify(bodyToSend),
       });
       const data = await safeJson(res);
-      if (!res.ok) return showPopup(data.message || "Error al crear ingrediente", "error");
 
-      showPopup("Ingrediente creado exitosamente.", "success");
+      if (!res.ok)
+        return showPopup(data.message || "Error creating ingredient.", "error");
+
+      showPopup("Ingredient created successfully.", "success");
       await getAllIngredients();
 
       setIngredientData({ id: "", name: "", unit: "", quantity: "" });
@@ -127,17 +136,19 @@ const Createingredient = () => {
       }, 300);
     } catch (error) {
       console.error(error);
-      showPopup("Error al crear ingrediente.", "error");
+      showPopup("Error creating ingredient.", "error");
     }
   };
 
   const updateIngredient = async () => {
-    if (!ingredientData.id) return showPopup("Debes ingresar un ID.", "error");
+    if (!ingredientData.id)
+      return showPopup("You must enter an ID.", "error");
 
     const updateBody = {};
     if (ingredientData.name) updateBody.name = ingredientData.name;
     if (ingredientData.unit) updateBody.unit = ingredientData.unit;
-    if (ingredientData.quantity !== "") updateBody.quantity = Number(ingredientData.quantity);
+    if (ingredientData.quantity !== "")
+      updateBody.quantity = Number(ingredientData.quantity);
 
     try {
       const res = await fetch(`${API}/update/${ingredientData.id}`, {
@@ -145,21 +156,22 @@ const Createingredient = () => {
         headers: getAuthHeaders(),
         body: JSON.stringify(updateBody),
       });
+
       const data = await safeJson(res);
-      showPopup(data.message || "Ingrediente actualizado.", "success");
+      showPopup(data.message || "Ingredient updated.", "success");
       getAllIngredients();
     } catch (error) {
       console.error(error);
-      showPopup("Error al actualizar.", "error");
+      showPopup("Error updating ingredient.", "error");
     }
   };
 
   const deleteIngredient = async () => {
-    if (!ingredientData.id) return showPopup("Debes ingresar un ID.", "error");
+    if (!ingredientData.id)
+      return showPopup("You must enter an ID.", "error");
 
-    // Mostrar popup de confirmación
     showPopup(
-      `¿Seguro que deseas eliminar el ingrediente ${ingredientData.name}?`,
+      `Are you sure you want to delete ingredient ${ingredientData.name}?`,
       "confirm",
       async () => {
         try {
@@ -167,8 +179,10 @@ const Createingredient = () => {
             method: "GET",
             headers: getAuthHeaders(),
           });
+
           const data = await safeJson(res);
-          showPopup(data.message || "Ingrediente eliminado.", "success");
+
+          showPopup(data.message || "Ingredient deleted.", "success");
           getAllIngredients();
 
           setIngredientData({ id: "", name: "", unit: "", quantity: "" });
@@ -183,7 +197,7 @@ const Createingredient = () => {
           }, 300);
         } catch (error) {
           console.error(error);
-          showPopup("Error al eliminar.", "error");
+          showPopup("Error deleting ingredient.", "error");
         }
       }
     );
@@ -192,7 +206,10 @@ const Createingredient = () => {
   const clearForm = () => {
     setIngredientData({ id: "", name: "", unit: "", quantity: "" });
     setTimeout(() => {
-      setIngredientData((prev) => ({ ...prev, id: generateNextId(ingredients) }));
+      setIngredientData((prev) => ({
+        ...prev,
+        id: generateNextId(ingredients),
+      }));
     }, 300);
   };
 
@@ -217,17 +234,31 @@ const Createingredient = () => {
                     setPopup({ show: false, message: "", type: "", onConfirm: null });
                   }}
                 >
-                  Sí
+                  Yes
                 </button>
                 <button
-                  onClick={() => setPopup({ show: false, message: "", type: "", onConfirm: null })}
+                  onClick={() =>
+                    setPopup({
+                      show: false,
+                      message: "",
+                      type: "",
+                      onConfirm: null,
+                    })
+                  }
                 >
                   No
                 </button>
               </div>
             ) : (
               <button
-                onClick={() => setPopup({ show: false, message: "", type: "", onConfirm: null })}
+                onClick={() =>
+                  setPopup({
+                    show: false,
+                    message: "",
+                    type: "",
+                    onConfirm: null,
+                  })
+                }
               >
                 OK
               </button>
@@ -243,6 +274,7 @@ const Createingredient = () => {
           </div>
           <div className="ingredient-card-body">
             <div className="ingredient-body-container">
+
               {/* LISTA */}
               <div className="ingredients-section">
                 <h3 className="ingredients-title">All Ingredients</h3>

@@ -20,13 +20,13 @@ const UserManagement = () => {
   const [popup, setPopup] = useState({
     show: false,
     message: "",
-    type: "", // "success" | "error" | "confirm"
-    onConfirm: null, // Función a ejecutar si se confirma
+    type: "", // success | error | confirm
+    onConfirm: null,
   });
 
   const getAuthHeaders = () => ({
     "Content-Type": "application/json",
-    "Authorization": `AppToken ${import.meta.env.VITE_APPSECRET}`,
+    Authorization: `AppToken ${import.meta.env.VITE_APPSECRET}`,
     "ngrok-skip-browser-warning": "true",
   });
 
@@ -35,8 +35,8 @@ const UserManagement = () => {
     try {
       return JSON.parse(text);
     } catch {
-      console.error("❌ Respuesta no válida (HTML recibido):", text);
-      throw new Error("El servidor devolvió HTML en lugar de JSON.");
+      console.error("Invalid response (HTML received):", text);
+      throw new Error("Server returned HTML instead of JSON.");
     }
   };
 
@@ -58,43 +58,69 @@ const UserManagement = () => {
       const data = await safeJson(res);
       setUsers(data.values || []);
     } catch (error) {
-      console.error("❌ Error cargando usuarios:", error);
-      showPopup("Error cargando usuarios.", "error");
+      console.error("Error loading users:", error);
+      showPopup("Error loading users.", "error");
     }
   };
 
   const searchUser = async () => {
-    if (!userData.email) return showPopup("Ingresa un email para buscar.", "error");
+    if (!userData.email) return showPopup("Enter an email to search.", "error");
+
     try {
       const res = await fetch(`${API}/email/${userData.email}`, {
         method: "GET",
         headers: getAuthHeaders(),
       });
       const data = await safeJson(res);
+
       if (!data.values) {
-        showPopup("Usuario no encontrado.", "error");
+        showPopup("User not found.", "error");
         return;
       }
+
       setUserData({
         name: data.values.name || "",
         email: data.values.email || "",
         password: "",
         role: data.values.role || "",
       });
-      showPopup("Usuario encontrado.", "success");
+
+      showPopup("User found.", "success");
     } catch (error) {
       console.error("Error searching user:", error);
-      showPopup("Error al buscar usuario.", "error");
+      showPopup("Error searching user.", "error");
     }
   };
 
   const createUser = async () => {
     if (!userData.name.trim()) return showPopup("Name is required", "error");
-    if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(userData.email.trim()))
+
+    const onlyLettersPattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
+  if (!onlyLettersPattern.test(userData.name)) {
+    return showPopup("Name must contain only letters.", "error");
+  }
+
+    const sqlPattern =
+      /['";=]|(--|\b(SELECT|INSERT|DELETE|UPDATE|DROP|UNION|WHERE|OR|AND)\b)/i;
+
+    if (sqlPattern.test(userData.name)) {
+      return showPopup("Invalid characters detected in name.", "error");
+    }
+
+    if (
+      !/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(userData.email.trim())
+    )
       return showPopup("Email has an invalid format", "error");
-    if (!userData.password.trim()) return showPopup("Password is required", "error");
+
+    if (!userData.password.trim())
+      return showPopup("Password is required", "error");
+
     if (userData.password.trim().length < 6)
-      return showPopup("Password must be at least 6 characters long", "error");
+      return showPopup(
+        "Password must be at least 6 characters long",
+        "error"
+      );
+
     if (!userData.role.trim()) return showPopup("Role is required", "error");
 
     const bodyToSend = {
@@ -110,10 +136,12 @@ const UserManagement = () => {
         headers: getAuthHeaders(),
         body: JSON.stringify(bodyToSend),
       });
-      const data = await safeJson(res);
-      if (!res.ok) return showPopup(data.message || "Error creating user", "error");
 
-      showPopup(data.message || "User created successfully", "success");
+      const data = await safeJson(res);
+      if (!res.ok)
+        return showPopup(data.message || "Error creating user", "error");
+
+      showPopup(data.message || "User created successfully.", "success");
       clearForm();
       getAllUsers();
     } catch (error) {
@@ -123,7 +151,9 @@ const UserManagement = () => {
   };
 
   const updateUser = async () => {
-    if (!userData.email) return showPopup("Debes ingresar el email del usuario.", "error");
+    if (!userData.email)
+      return showPopup("You must enter the user email.", "error");
+
     const updateBody = {};
     if (userData.name) updateBody.name = userData.name;
     if (userData.email) updateBody.email = userData.email;
@@ -136,21 +166,23 @@ const UserManagement = () => {
         headers: getAuthHeaders(),
         body: JSON.stringify(updateBody),
       });
+
       const data = await safeJson(res);
-      showPopup(data.message || "Usuario actualizado.", "success");
+      showPopup(data.message || "User updated.", "success");
+
       getAllUsers();
     } catch (error) {
       console.error(error);
-      showPopup("Error al actualizar usuario.", "error");
+      showPopup("Error updating user.", "error");
     }
   };
 
   const deleteUser = async () => {
-    if (!userData.email) return showPopup("Debes ingresar el email del usuario.", "error");
+    if (!userData.email)
+      return showPopup("You must enter the user email.", "error");
 
-    // Mostrar popup de confirmación
     showPopup(
-      `¿Seguro que deseas eliminar al usuario ${userData.name}?`,
+      `Are you sure you want to delete user ${userData.name}?`,
       "confirm",
       async () => {
         try {
@@ -159,13 +191,15 @@ const UserManagement = () => {
             method: "DELETE",
             headers: getAuthHeaders(),
           });
+
           const data = await safeJson(res);
-          showPopup(data.message || "Usuario eliminado.", "success");
+          showPopup(data.message || "User deleted.", "success");
+
           getAllUsers();
           clearForm();
         } catch (error) {
           console.error(error);
-          showPopup("Error al eliminar usuario.", "error");
+          showPopup("Error deleting user.", "error");
         }
       }
     );
@@ -193,19 +227,31 @@ const UserManagement = () => {
         <div className={`popup-overlay ${popup.type}`}>
           <div className="popup-box">
             <p>{popup.message}</p>
+
             {popup.type === "confirm" ? (
               <div className="popup-buttons">
                 <button
                   onClick={() => {
                     if (popup.onConfirm) popup.onConfirm();
-                    setPopup({ show: false, message: "", type: "", onConfirm: null });
+                    setPopup({
+                      show: false,
+                      message: "",
+                      type: "",
+                      onConfirm: null,
+                    });
                   }}
                 >
-                  Sí
+                  Yes
                 </button>
+
                 <button
                   onClick={() =>
-                    setPopup({ show: false, message: "", type: "", onConfirm: null })
+                    setPopup({
+                      show: false,
+                      message: "",
+                      type: "",
+                      onConfirm: null,
+                    })
                   }
                 >
                   No
@@ -214,7 +260,12 @@ const UserManagement = () => {
             ) : (
               <button
                 onClick={() =>
-                  setPopup({ show: false, message: "", type: "", onConfirm: null })
+                  setPopup({
+                    show: false,
+                    message: "",
+                    type: "",
+                    onConfirm: null,
+                  })
                 }
               >
                 OK
@@ -235,19 +286,24 @@ const UserManagement = () => {
 
           <div className="admin-card-body">
             <div className="admin-body-container">
-              {/* LISTA DE USUARIOS */}
+              {/* USERS LIST */}
               <div className="users-section">
                 <h3 className="users-title">All Users</h3>
+
                 <div className="users-header-row">
                   <p>Name</p>
                   <p>Email</p>
-                  <p>Rol</p>
+                  <p>Role</p>
                 </div>
+
                 <div className="users-table">
                   {users.length === 0 && <p>No users found.</p>}
+
                   {users.map((u, index) => (
                     <div key={index} className="user-row">
-                      <p><strong>{u.name}</strong></p>
+                      <p>
+                        <strong>{u.name}</strong>
+                      </p>
                       <p>{u.email}</p>
                       <p>{u.role}</p>
                     </div>
@@ -255,7 +311,7 @@ const UserManagement = () => {
                 </div>
               </div>
 
-              {/* FORMULARIO */}
+              {/* FORM */}
               <div className="form-section">
                 <div className="admin-input">
                   <input
@@ -266,6 +322,7 @@ const UserManagement = () => {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="admin-input">
                   <input
                     type="email"
@@ -275,6 +332,7 @@ const UserManagement = () => {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="admin-input">
                   <input
                     type="password"
@@ -284,6 +342,7 @@ const UserManagement = () => {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="admin-input">
                   <select
                     name="role"
@@ -296,15 +355,25 @@ const UserManagement = () => {
                     <option value="customer">Customer</option>
                   </select>
                 </div>
+
                 <div className="admin-btns">
-                  <button className="save-btn" onClick={createUser}>Create</button>
-                  <button className="save-btn" onClick={updateUser}>Update</button>
-                  <button className="erase-btn" onClick={deleteUser}>Delete</button>
-                  <button className="save-btn" onClick={searchUser}>Search</button>
-                  <button className="erase-btn" onClick={clearForm}>Clear</button>
+                  <button className="save-btn" onClick={createUser}>
+                    Create
+                  </button>
+                  <button className="save-btn" onClick={updateUser}>
+                    Update
+                  </button>
+                  <button className="erase-btn" onClick={deleteUser}>
+                    Delete
+                  </button>
+                  <button className="save-btn" onClick={searchUser}>
+                    Search
+                  </button>
+                  <button className="erase-btn" onClick={clearForm}>
+                    Clear
+                  </button>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

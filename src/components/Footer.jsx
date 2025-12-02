@@ -20,13 +20,13 @@ const Footer = () => {
         </p>
       </div>
       <div className="socials">
-        <a href="#">
+        <a href="https://www.instagram.com/">
           <img src={linki} alt="Instagram" />
         </a>
-        <a href="#">
+        <a href="https://www.facebook.com/">
           <img src={linkf} alt="Facebook" />
         </a>
-        <a href="#">
+        <a href="https://www.whatsapp.com/">
           <img src={linkw} alt="Whatsapp" />
         </a>
         <p>© 2025 Nocturna Brew. Todos los derechos reservados.</p>
