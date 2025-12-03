@@ -24,6 +24,7 @@ const Header2 = () => {
 
       <nav style={{ zIndex: 100, display: "flex", alignItems: "center", gap: "15px" }}>
                 <Link to="/aboutus">About Us</Link>
+                <Link to="/MyOrders">My Orders</Link>
 
 
         {!isLogged && (

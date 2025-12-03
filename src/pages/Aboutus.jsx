@@ -38,12 +38,13 @@ export default function Aboutus() {
               gap: "15px",
             }}
           >
-            <Link to="/login">Menú</Link>
+            <Link to="/Menu">Menú</Link>
 
             {!isLogged && (
               <>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Join Us</Link>
+
               </>
             )}
 

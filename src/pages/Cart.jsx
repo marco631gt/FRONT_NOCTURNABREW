@@ -66,15 +66,10 @@ const Cart = () => {
 
         try {
             const mongoOrder = await sendOrderToMongo();
-            console.log("MONGO ORDER RESPONSE:", mongoOrder);
-
-            // ✔ EXTRAER **SOLO** EL orderId (TCK-XXXX)
             const orderId = mongoOrder?.order?.orderId;
 
-            console.log("🔥 Order ID:", orderId);
-
             const orderData = {
-                orderId,                     // ← ahora ya no muestra el _id de mongo
+                orderId,
                 date: new Date().toISOString(),
                 items: cart,
                 total
@@ -82,10 +77,11 @@ const Cart = () => {
 
             console.log("ORDER DATA SENT:", orderData);
 
-            navigate("/QR", { state: { order: orderData } });
-
-
-            console.log("ORDER DATA SENT:", orderData);
+            // === 👉 GUARDAR ORDEN LOCALMENTE AQUÍ ===
+            const saved = JSON.parse(localStorage.getItem("orders")) || [];
+            saved.push(orderData);
+            localStorage.setItem("orders", JSON.stringify(saved));
+            // ========================================
 
             navigate("/QR", { state: { order: orderData } });
 
@@ -96,6 +92,7 @@ const Cart = () => {
 
         setLoading(false);
     };
+
 
     return (
         <>

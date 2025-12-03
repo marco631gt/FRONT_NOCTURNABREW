@@ -1,0 +1,113 @@
+/* =======================
+   GENERAL
+======================= */
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f4f2; /* Fondo suave */
+  font-family: 'Playfair Display', serif;
+}
+
+/* Asegura que nada limite ancho */
+#root, .App, main, .page-container {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* =======================
+   CONTENEDOR PRINCIPAL
+======================= */
+.orders-container {
+  width: 100%;
+  max-width: 900px; /* ⭐ Más centrado y elegante */
+  margin: 40px auto 80px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.orders-container h2 {
+  color: #5a0c17;
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.orders-container p {
+  font-size: 17px;
+  color: #3e2c23;
+}
+
+/* =======================
+   TARJETAS DE PEDIDOS
+======================= */
+.order-card {
+  width: 100%;
+  max-width: 750px; /* ⭐ Cards más elegantes y centradas */
+  margin: 25px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  text-align: left;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+/* Hover effect elegante */
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.order-card h3 {
+  color: #5a0c17;
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.order-card p {
+  margin: 6px 0;
+  font-size: 16px;
+  color: #46362d;
+}
+
+.order-card h4 {
+  color: #5a0c17;
+  margin-top: 15px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.order-card ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.order-card li {
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: #4e3b2e;
+}
+
+/* =======================
+   BOTÓN CANCELAR
+======================= */
+.cancel-btn {
+  background-color: #5a0c17;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s ease;
+  font-weight: 600;
+}
+
+.cancel-btn:hover {
+  background-color: #7a1020;
+  transform: scale(1.05);
+}
