@@ -34,7 +34,7 @@ const Createproduct = () => {
   ];
 
   // ---------------------------------------------------------
-  // 🔥 FUNCIÓN REUTILIZABLE PARA GENERAR ID AUTOMÁTICO
+  // 🔥 AUTO ID GENERATOR
   // ---------------------------------------------------------
   const fetchProducts = async () => {
     try {
@@ -57,7 +57,7 @@ const Createproduct = () => {
       try {
         data = JSON.parse(text);
       } catch {
-        console.error("❌ No es JSON válido");
+        console.error("Invalid JSON");
         return;
       }
 
@@ -74,13 +74,12 @@ const Createproduct = () => {
     }
   };
 
-  // 🔥 Se llama una sola vez al inicio
+  // Load on start
   useEffect(() => {
     fetchProducts();
   }, []);
 
-
-  // 🔥 Fetch ingredientes
+  // Fetch ingredients
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
@@ -103,7 +102,7 @@ const Createproduct = () => {
         try {
           data = JSON.parse(text);
         } catch {
-          console.error("❌ No es JSON válido");
+          console.error("Invalid JSON");
           return;
         }
 
@@ -156,7 +155,7 @@ const Createproduct = () => {
     if (product.ingredients.length >= 5)
       return setPopup({
         show: true,
-        message: "⚠️ Máximo 5 ingredientes.",
+        message: "Maximum 5 ingredients.",
         type: "error"
       });
 
@@ -174,7 +173,6 @@ const Createproduct = () => {
     setProduct({ ...product, ingredients: updated });
   };
 
-  
   const saveProduct = async () => {
     try {
       const response = await fetch(
@@ -223,7 +221,7 @@ const Createproduct = () => {
       });
 
       eraseProduct();
-      await fetchProducts(); 
+      await fetchProducts();
 
     } catch (err) {
       console.error("Error saving product:", err);
@@ -236,11 +234,11 @@ const Createproduct = () => {
   };
 
   // ---------------------------------------------------------
-  // 🔥 NO BORRA ID
+  // 🔥 CLEAR FIELDS BUT KEEP ID
   // ---------------------------------------------------------
   const eraseProduct = () => {
     setProduct((prev) => ({
-      ...prev, // mantener ID
+      ...prev,
       name: "",
       price: "",
       category: "",

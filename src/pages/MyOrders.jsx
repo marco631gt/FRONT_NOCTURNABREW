@@ -9,6 +9,12 @@ const API = import.meta.env.VITE_ENDPOINT;
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
 
+  // 🔥 Estado para popup de confirmación
+  const [confirmPopup, setConfirmPopup] = useState({
+    show: false,
+    orderId: null
+  });
+
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("orders")) || [];
     setOrders(saved);
@@ -51,8 +57,39 @@ const MyOrders = () => {
     localStorage.setItem("orders", JSON.stringify(updated));
   };
 
+  // 🔥 Abrir popup
+  const openConfirmPopup = (orderId) => {
+    setConfirmPopup({ show: true, orderId });
+  };
+
+  // 🔥 Confirmar Sí
+  const confirmCancel = async () => {
+    await cancelLocalOrder(confirmPopup.orderId);
+    setConfirmPopup({ show: false, orderId: null });
+  };
+
+  // 🔥 Cancelar No
+  const closePopup = () => {
+    setConfirmPopup({ show: false, orderId: null });
+  };
+
   return (
     <>
+      {/* 🔥 POPUP DE CONFIRMACIÓN */}
+      {confirmPopup.show && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <h3>Cancel Order</h3>
+            <p>Are you sure you want to cancel this order?</p>
+
+            <div className="popup-buttons">
+              <button className="confirm-yes" onClick={confirmCancel}>Yes</button>
+              <button className="confirm-no" onClick={closePopup}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Header2 />
 
       <div className="orders-container">
@@ -79,7 +116,7 @@ const MyOrders = () => {
             {order.status !== "canceled" && (
               <button
                 className="cancel-btn"
-                onClick={() => cancelLocalOrder(order.orderId)}
+                onClick={() => openConfirmPopup(order.orderId)}
               >
                 Cancel Order
               </button>

@@ -7,7 +7,7 @@ import "./Updateproduct.css";
 
 const Updateproduct = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // ⬅ NECESARIO PARA REDIRECCIONAR
+  const navigate = useNavigate();
 
   // POPUP STATE
   const [popup, setPopup] = useState({
@@ -16,7 +16,6 @@ const Updateproduct = () => {
     type: "" // "success" | "error"
   });
 
-  // BANDERA PARA REDIRECCIÓN
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const [product, setProduct] = useState({
@@ -67,7 +66,7 @@ const Updateproduct = () => {
         try {
           data = JSON.parse(text);
         } catch {
-          console.error("No es JSON válido");
+          console.error("Invalid JSON");
           return;
         }
 
@@ -118,7 +117,7 @@ const Updateproduct = () => {
     if (product.ingredients.length >= 5) {
       setPopup({
         show: true,
-        message: "Máximo 5 ingredientes.",
+        message: "Maximum 5 ingredients.",
         type: "error"
       });
       return;
@@ -178,14 +177,13 @@ const Updateproduct = () => {
         return;
       }
 
-      // ÉXITO
       setPopup({
         show: true,
         message: "Product updated successfully!",
         type: "success"
       });
 
-      setShouldRedirect(true); // ⬅ Activamos la redirección después de OK
+      setShouldRedirect(true);
 
     } catch (err) {
       console.error("Error saving product:", err);
@@ -233,14 +231,14 @@ const Updateproduct = () => {
 
       setPopup({
         show: true,
-        message: newStatus ? "Producto marcado como DISPONIBLE" : "Producto OCULTO",
+        message: newStatus ? "Product marked as AVAILABLE" : "Product HIDDEN",
         type: "success"
       });
     } catch (err) {
       console.error("Error updating availability:", err);
       setPopup({
         show: true,
-        message: "❌ Error updating availability.",
+        message: "Error updating availability.",
         type: "error"
       });
     }
@@ -250,7 +248,6 @@ const Updateproduct = () => {
     <>
       <HeaderManagement />
 
-      {/* POPUP */}
       {popup.show && (
         <div className={`popup-overlay ${popup.type}`}>
           <div className="popup-box">
@@ -259,7 +256,6 @@ const Updateproduct = () => {
               onClick={() => {
                 setPopup({ show: false, message: "", type: "" });
 
-                // REDIRECCIÓN SOLO SI FUE ÉXITO
                 if (shouldRedirect) {
                   navigate("/Productmanagement");
                 }
@@ -412,8 +408,8 @@ const Updateproduct = () => {
 
               <button className="erase-btn" onClick={toggleAvailability}>
                 {product.available
-                  ? "Ocultar Producto"
-                  : "Marcar como Disponible"}
+                  ? "Hide Product"
+                  : "Mark as Available"}
               </button>
             </div>
           </div>

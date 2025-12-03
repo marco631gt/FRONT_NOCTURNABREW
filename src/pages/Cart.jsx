@@ -72,7 +72,8 @@ const Cart = () => {
                 orderId,
                 date: new Date().toISOString(),
                 items: cart,
-                total
+                total: Number(total.toFixed(2)),
+
             };
 
             console.log("ORDER DATA SENT:", orderData);
@@ -141,8 +142,8 @@ const Cart = () => {
 
             <section className="cart-summary-section">
                 <div className="cart-summary">
-                    <p><strong>Subtotal:</strong> ${subtotal}</p>
-                    <p><strong>Total + IVA:</strong> ${total}</p>
+                    <p><strong>Subtotal:</strong> ${subtotal.toFixed(2)}</p>
+                    <p><strong>Total + IVA:</strong> ${total.toFixed(2)}</p>
                 </div>
 
                 <button
