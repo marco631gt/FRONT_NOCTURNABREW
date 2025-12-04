@@ -112,7 +112,7 @@ const QR = () => {
           Descargar PDF
         </button>
 
-        <button className="cancel-btn" onClick={() => setShowPopup(true)}>
+        <button className="cancel-boton" onClick={() => setShowPopup(true)}>
           Cancel Order
         </button>
       </div>
