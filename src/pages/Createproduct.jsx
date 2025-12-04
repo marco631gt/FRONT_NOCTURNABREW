@@ -37,7 +37,7 @@ const Createproduct = () => {
   const fetchProducts = async () => {
     try {
       const res = await fetch(
-        "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/getAll",
+        `${import.meta.env.VITE_ENDPOINT}products/getAll`,
         {
           method: "GET",
           headers: {
@@ -80,7 +80,7 @@ const Createproduct = () => {
     const fetchIngredients = async () => {
       try {
         const res = await fetch(
-          "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/stock/getAll",
+          `${import.meta.env.VITE_ENDPOINT}stock/getAll`,
           {
             method: "GET",
             headers: {
@@ -172,7 +172,7 @@ const Createproduct = () => {
   const saveProduct = async () => {
     try {
       const response = await fetch(
-        `https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/create`,
+        `${import.meta.env.VITE_ENDPOINT}products/create`,
         {
           method: "POST",
           headers: {

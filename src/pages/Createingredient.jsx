@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import "./Createingredient.css";
 
-const API = "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/stock";
+const API = `${import.meta.env.VITE_ENDPOINT}stock`;
 
 const Createingredient = () => {
   const [ingredientData, setIngredientData] = useState({

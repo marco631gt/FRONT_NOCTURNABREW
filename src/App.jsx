@@ -17,6 +17,8 @@ import Createingredient from "./pages/Createingredient";
 import MyOrders from "./pages/MyOrders";
 
 import ProtectedRoute from "./utils/ProtectedRoute";
+import ProtectedRouteUser from "./utils/ProtectedRouteUser";
+
 
 function App() {
   return (
@@ -28,9 +30,18 @@ function App() {
       <Route path="/aboutus" element={<Aboutus />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/QR" element={<QR />} />
-      <Route path="/MyOrders" element={<MyOrders />} />
 
-      
+
+      <Route
+        path="/MyOrders"
+        element={
+          <ProtectedRouteUser>
+            <MyOrders />
+          </ProtectedRouteUser>
+        }
+      />
+
+
 
       <Route
         path="/AdminPanel"

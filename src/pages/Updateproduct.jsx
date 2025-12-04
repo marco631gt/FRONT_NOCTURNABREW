@@ -48,7 +48,7 @@ const Updateproduct = () => {
     const fetchIngredients = async () => {
       try {
         const res = await fetch(
-          "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/stock/getAll",
+          `${import.meta.env.VITE_ENDPOINT}stock/getAll`,
           {
             method: "GET",
             headers: {
@@ -138,7 +138,7 @@ const Updateproduct = () => {
   const saveProduct = async () => {
     try {
       const response = await fetch(
-        `https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/update/${product.id}`,
+        `${import.meta.env.VITE_ENDPOINT}products/update/${product.id}`,
         {
           method: "PATCH",
           headers: {
@@ -199,7 +199,7 @@ const Updateproduct = () => {
       const newStatus = !product.available;
 
       const response = await fetch(
-        `https://unjust-tamisha-undeferrably.ngrok-free.dev/api/products/update/${product.id}`,
+        `${import.meta.env.VITE_ENDPOINT}products/update/${product.id}`,
         {
           method: "PATCH",
           headers: {

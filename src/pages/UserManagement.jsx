@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import registerBg from "../assets/images/register-bg.png";
 import "./UserManagement.css";
 
-const API = "https://unjust-tamisha-undeferrably.ngrok-free.dev/api/users";
+const API = `${import.meta.env.VITE_ENDPOINT}users`;
 
 const UserManagement = () => {
   const [userData, setUserData] = useState({
