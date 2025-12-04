@@ -1,6 +1,6 @@
 // src/pages/MyOrders.jsx
 import React, { useEffect, useState } from "react";
-import Header2 from "../components/Header2";
+import HeaderOrders from "../components/HeaderOrders";
 import Footer from "../components/Footer";
 import "./MyOrder.css";
 
@@ -90,7 +90,7 @@ const MyOrders = () => {
         </div>
       )}
 
-      <Header2 />
+      <HeaderOrders />
 
       <div className="orders-container">
         <h2>Your Orders</h2>

@@ -11,7 +11,7 @@ const API = import.meta.env.VITE_ENDPOINT;
 
 const Cart = () => {
     const navigate = useNavigate();
-    const { cart, updateQty, deleteItem } = useCart();
+    const { cart, updateQty, deleteItem, clearCart } = useCart(); // ← AÑADIDO
     console.log("CART DEBUG:", cart);
 
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -73,17 +73,19 @@ const Cart = () => {
                 date: new Date().toISOString(),
                 items: cart,
                 total: Number(total.toFixed(2)),
-
             };
 
             console.log("ORDER DATA SENT:", orderData);
 
-            // === 👉 GUARDAR ORDEN LOCALMENTE AQUÍ ===
+            // 👉 GUARDAR ORDEN LOCALMENTE
             const saved = JSON.parse(localStorage.getItem("orders")) || [];
             saved.push(orderData);
             localStorage.setItem("orders", JSON.stringify(saved));
-            // ========================================
 
+            // 👉👉 LIMPIAR EL CARRITO DESPUÉS DE CREAR LA ORDEN
+            clearCart();
+
+            // Navegar al QR
             navigate("/QR", { state: { order: orderData } });
 
         } catch (err) {
@@ -93,7 +95,6 @@ const Cart = () => {
 
         setLoading(false);
     };
-
 
     return (
         <>

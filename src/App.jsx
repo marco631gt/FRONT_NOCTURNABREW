@@ -18,9 +18,6 @@ import MyOrders from "./pages/MyOrders";
 
 import ProtectedRoute from "./utils/ProtectedRoute";
 
-// Verificar rol admin
-const isAdmin = () => localStorage.getItem("userRole") === "administrator";
-
 function App() {
   return (
     <Routes>
@@ -46,20 +43,66 @@ function App() {
       <Route
         path="/AdminPanel"
         element={
-          isAdmin() ? (
+          <ProtectedRoute>
             <AdminPanel />
-          ) : (
-            <Navigate to="/login" replace />
-          )
+          </ProtectedRoute>
         }
       />
 
-      <Route path="/Createproduct" element={<Createproduct />} />
-      <Route path="/Productmanagement" element={<Productmanagement />} />
-      <Route path="/UserManagement" element={<UserManagement />} />
-      <Route path="/Updateproduct" element={<Updateproduct />} />
-      <Route path="/Updateproduct/:id" element={<Updateproduct />} />
-      <Route path="/Createingredient" element={<Createingredient />} />
+      {/* 🔒 TODAS ESTAS RUTAS SON SOLO PARA ADMIN */}
+      <Route
+        path="/Createproduct"
+        element={
+          <ProtectedRoute>
+            <Createproduct />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/Productmanagement"
+        element={
+          <ProtectedRoute>
+            <Productmanagement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/UserManagement"
+        element={
+          <ProtectedRoute>
+            <UserManagement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/Updateproduct"
+        element={
+          <ProtectedRoute>
+            <Updateproduct />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/Updateproduct/:id"
+        element={
+          <ProtectedRoute>
+            <Updateproduct />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/Createingredient"
+        element={
+          <ProtectedRoute>
+            <Createingredient />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
