@@ -1,5 +1,4 @@
 
-/* HERO */
 .heroabout {
   position: relative;
   width: 100%;
@@ -48,7 +47,7 @@
   margin-left: -500px;
 }
 
-/* IMAGEN DE LA TAZA */
+/* imagen de la taza */
 .hero-imgabout {
   position: absolute;
   right: 0px;
@@ -67,13 +66,13 @@
   height: auto;
 }
 
-/* OUR INFORMATION */
+/* aboutus */
 .our-informationabout {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* empuja texto hacia la derecha */
+  justify-content: space-between;
   gap: 40px;
-  padding: 0px 150px 0px 0; /* sin padding izquierdo, más espacio a la derecha */
+  padding: 0px 150px 0px 0;
 }
 
 .our-informationabout img {
@@ -85,7 +84,7 @@
 
 .info-text {
   max-width: 900px;
-  margin-left: auto; /* empuja el bloque hacia el lado derecho */
+  margin-left: auto;
   text-align: center;
 }
 
@@ -97,7 +96,6 @@
   line-height: 1.6;
 }
 
-/* LAST INFORMATION */
 .last-informationabout {
   display: flex;
   align-items: center;
@@ -112,12 +110,12 @@
   width: 300px;
   height: auto;
   object-fit: contain;
-  margin-right: 0; /* imagen pegada al borde derecho */
+  margin-right: 0; 
 }
 
 .info-text2 {
   max-width: 900px;
-  margin-right: auto; /* empuja el texto hacia la izquierda */
+  margin-right: auto; 
   text-align: center;
   margin-left: 50px;
 }
@@ -131,22 +129,17 @@
   line-height: 1.6;
 }
 
-
-/* ===========================
-   HERO TEXT (ABOUT / NOCTURNA BREW / PÁRRAFO)
-   =========================== */
 .hero-textabout {
   text-align: center;
-  margin-top: 180px;     /* posición vertical */
+  margin-top: 180px;     
   color: black;
   font-family: "Playfair Display", serif;
-  transform: translateX(-250px); /* mover a la izquierda */
-  margin-top: 20px; /* más abajo */
+  transform: translateX(-250px); 
+  margin-top: 20px; 
 
 
 }
 
-/* TITLE: ABOUT */
 .hero-textabout h1 {
   font-size: 48px;
   font-weight: 600;
@@ -154,7 +147,6 @@
   margin-bottom: 10px;
 }
 
-/* SUBTITLE: NOCTURNA BREW */
 .hero-textabout h2 {
   font-size: 60px;
   font-weight: 800;
@@ -162,7 +154,6 @@
   margin-bottom: 25px;
 }
 
-/* PÁRRAFO */
 .hero-textabout p {
   font-size: 22px;
   font-style: italic;

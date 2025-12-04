@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Login.css";
 import { Link,useNavigate } from "react-router-dom";
 
-// Imágenes
 import registerBg from "../assets/images/register-bg.png";
 import HeaderLog from "../components/HeaderLog";
 import Footer from "../components/Footer";
@@ -18,14 +17,12 @@ const Login = () => {
   const validate = () => {
     const newError = {};
 
-    // Validación email
     if (!email.trim()) {
       newError.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
       newError.email = "Email has an invalid format or extension";
     }
 
-    // Validación password
     if (!password.trim()) {
       newError.password = "Password is required";
     } else if (password.length < 6) {
@@ -59,20 +56,16 @@ const Login = () => {
     console.log("LOGIN RESPONSE:", data);
 
     if (res.ok) {
-      // Guardar token
       localStorage.setItem("userToken", data.token);
 
-      // Guardar rol proveniente del backend
       const userRole = data?.user?.role;
       if (userRole) {
         localStorage.setItem("userRole", userRole);
       }
 
-      // Limpiar campos
       setEmail("");
       setPassword("");
 
-      // Redireccionar según el rol
       if (userRole === "administrator") {
         navigate("/AdminPanel");
       } else {
@@ -80,11 +73,11 @@ const Login = () => {
       }
 
     } else {
-      alert(`⚠️ ${data.msg || data.error || "Error en el inicio de sesión"}`);
+      alert(` ${data.msg || data.error || "Error en el inicio de sesión"}`);
     }
 
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error("Error:", error);
     alert("Error al conectar con el servidor");
   }
 };
@@ -95,7 +88,6 @@ const Login = () => {
     <>
       <HeaderLog />
 
-      {/* BACKGROUND */}
       <section
         className="background"
         style={{ backgroundImage: `url(${registerBg})` }}
@@ -104,9 +96,8 @@ const Login = () => {
           <div className="login-box">
             <h2>LOG IN</h2>
 
-            {/* EMAIL */}
             <div className={`input-group ${error.email ? "error" : ""}`}>
-              <i className="icon">📧</i>
+              <i className="icon"></i>
               <input
                 type="email"
                 placeholder="e-mail"
@@ -116,9 +107,8 @@ const Login = () => {
             </div>
             {error.email && <span className="error-message" style={{color:"white"}}>{error.email}</span>}
 
-            {/* PASSWORD */}
             <div className={`input-group ${error.password ? "error" : ""}`}>
-              <i className="icon">🔒</i>
+              <i className="icon"></i>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="password"
@@ -129,12 +119,11 @@ const Login = () => {
                 className="eye"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? "" : ""}
               </span>
             </div>
             {error.password && <span className="error-message" style={{color:"white"}}>{error.password}</span>}
 
-          {/* BOTONES */}
             <button className="btn primary" onClick={handleLogin}>
               Log In
             </button>

@@ -9,11 +9,10 @@ const Updateproduct = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // POPUP STATE
   const [popup, setPopup] = useState({
     show: false,
     message: "",
-    type: "" // "success" | "error"
+    type: ""
   });
 
   const [shouldRedirect, setShouldRedirect] = useState(false);

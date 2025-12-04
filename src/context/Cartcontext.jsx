@@ -11,7 +11,7 @@ export const CartProvider = ({ children }) => {
     setCart((prevCart) => {
       const exists = prevCart.find((p) => p.id === product.id);
 
-      // 🔥 SUMAR cantidades si ya existe
+      // ESta es para sumar si ya existe
       if (exists) {
         return prevCart.map((p) =>
           p.id === product.id
@@ -20,7 +20,7 @@ export const CartProvider = ({ children }) => {
         );
       }
 
-      // Agregar nuevo producto
+      // sumar el nuevo producto como habai dicho marco
       return [...prevCart, product];
     });
   };
@@ -39,7 +39,7 @@ export const CartProvider = ({ children }) => {
     setCart((prev) => prev.filter((p) => p.id !== id));
   };
 
-  // ✅ NUEVO: Vaciar carrito
+  // para vaciar carrito
   const clearCart = () => {
     setCart([]);
   };

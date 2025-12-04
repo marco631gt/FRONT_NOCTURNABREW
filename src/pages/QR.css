@@ -10,36 +10,50 @@ body {
   color: #3e2c23;
 }
 
-/* CONTENEDOR DEL TÍTULO */
+
 .titleqr {
     text-align: center;
-    margin-top: 30px;     /* 🔼 súbelo si quieres más */
+    margin-top: 30px;
     margin-bottom: 30px;
-    
 }
 
-/* TITULO */
+
 .titleqr h2 {
     font-size: 30px;
     font-weight: 700;
     margin: 0;
     color: #5a0c17;
     margin-bottom: 20px;
-    
 }
 
-/* MENSAJE "CART EMPTY" */
-.titleqr .warning {
-    color: black;
-    font-size: 18px;
-    margin-top: 5px;
+
+.titleqr .Warning {
+  color: black;
+  font-size: 18px;
+  margin-top: 5px;
+  margin-bottom: 10px; 
 }
 
-/* CONTENEDOR DEL BOTÓN */
-.cancel-container {
+
+
+.buttons-container {
   display: flex;
   justify-content: center;
-  margin: 30px 0;
+  align-items: center;
+  gap: 20px;
+  margin: 40px 0;
+}
+
+
+.download-boton {
+  background-color: #5a0c17;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .cancel-btn {
@@ -48,16 +62,20 @@ body {
   padding: 12px 25px;
   border: none;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
-  transition: .2s ease;
+  transition: 0.2s ease;
+  margin-top: 0%;
 }
 
+
+.download-boton:hover,
 .cancel-btn:hover {
   background-color: #8b1515;
+  transform: scale(1.05);
 }
 
-/* POPUP */
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -108,27 +126,6 @@ body {
   cursor: pointer;
 }
 
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.download-btn {
-  background-color: #5a0c17;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: .2s ease;
-}
-
-.download-btn:hover {
-  background-color: #8b1515;
-}
 
 .success-popup {
   background: #fff;
@@ -137,12 +134,12 @@ body {
   width: 80%;
   max-width: 350px;
 
-  display: flex;              /* 👉 Activar Flexbox */
-  flex-direction: column;     /* 👉 Elementos en columna */
-  justify-content: center;    /* 👉 Centra vertical */
-  align-items: center;        /* 👉 Centra horizontal */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  text-align: center;         /* 👉 Centra textos */
+  text-align: center;
   animation: pop 0.3s ease-out;
 }
 
@@ -151,13 +148,16 @@ body {
   font-weight: 700;
   font-size: 20px;
   margin: 10px 0;
-  text-align: center;
 }
 
 
-/* Animación suave */
 @keyframes pop {
   0% { transform: scale(0.9); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
 
+.ticket-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}

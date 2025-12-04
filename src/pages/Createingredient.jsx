@@ -16,15 +16,13 @@ const Createingredient = () => {
 
   const [ingredients, setIngredients] = useState([]);
 
-  // POPUP STATE
   const [popup, setPopup] = useState({
     show: false,
     message: "",
-    type: "", // "success" | "error" | "confirm"
-    onConfirm: null, // Función a ejecutar si se confirma
+    type: "", 
+    onConfirm: null,
   });
 
-  // HEADERS
   const getAuthHeaders = () => ({
     "Content-Type": "application/json",
     Authorization: `AppToken ${import.meta.env.VITE_APPSECRET}`,
@@ -221,7 +219,6 @@ const Createingredient = () => {
     <>
       <HeaderManagement />
 
-      {/* POPUP */}
       {popup.show && (
         <div className={`popup-overlay ${popup.type}`}>
           <div className="popup-box">
@@ -275,7 +272,6 @@ const Createingredient = () => {
           <div className="ingredient-card-body">
             <div className="ingredient-body-container">
 
-              {/* LISTA */}
               <div className="ingredients-section">
                 <h3 className="ingredients-title">All Ingredients</h3>
                 <div className="ingredients-header-row">
@@ -297,7 +293,6 @@ const Createingredient = () => {
                 </div>
               </div>
 
-              {/* FORM */}
               <div className="ingredient-form-section">
                 <div className="ingredient-input">
                   <input type="number" placeholder="ID" name="id" value={ingredientData.id} onChange={handleChange} />

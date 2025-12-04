@@ -28,18 +28,10 @@ function App() {
       <Route path="/aboutus" element={<Aboutus />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/QR" element={<QR />} />
+      <Route path="/MyOrders" element={<MyOrders />} />
 
-      {/* 🔒 PROTEGER MY ORDERS */}
-      <Route
-        path="/MyOrders"
-        element={
-          <ProtectedRoute>
-            <MyOrders />
-          </ProtectedRoute>
-        }
-      />
+      
 
-      {/* 🔒 PROTEGER PANEL DE ADMIN */}
       <Route
         path="/AdminPanel"
         element={
@@ -49,7 +41,6 @@ function App() {
         }
       />
 
-      {/* 🔒 TODAS ESTAS RUTAS SON SOLO PARA ADMIN */}
       <Route
         path="/Createproduct"
         element={

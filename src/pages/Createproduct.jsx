@@ -33,9 +33,7 @@ const Createproduct = () => {
     "Cold Brew",
   ];
 
-  // ---------------------------------------------------------
-  // 🔥 AUTO ID GENERATOR
-  // ---------------------------------------------------------
+
   const fetchProducts = async () => {
     try {
       const res = await fetch(
@@ -74,12 +72,10 @@ const Createproduct = () => {
     }
   };
 
-  // Load on start
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  // Fetch ingredients
   useEffect(() => {
     const fetchIngredients = async () => {
       try {
@@ -233,9 +229,6 @@ const Createproduct = () => {
     }
   };
 
-  // ---------------------------------------------------------
-  // 🔥 CLEAR FIELDS BUT KEEP ID
-  // ---------------------------------------------------------
   const eraseProduct = () => {
     setProduct((prev) => ({
       ...prev,

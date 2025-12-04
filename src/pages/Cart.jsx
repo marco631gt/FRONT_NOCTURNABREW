@@ -1,4 +1,3 @@
-// src/pages/Cart.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
@@ -11,7 +10,7 @@ const API = import.meta.env.VITE_ENDPOINT;
 
 const Cart = () => {
     const navigate = useNavigate();
-    const { cart, updateQty, deleteItem, clearCart } = useCart(); // ← AÑADIDO
+    const { cart, updateQty, deleteItem, clearCart } = useCart(); 
     console.log("CART DEBUG:", cart);
 
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -21,7 +20,6 @@ const Cart = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // 📌 Enviar orden a Mongo con el formato correcto
     const sendOrderToMongo = async () => {
         const itemsMapped = cart.map(item => ({
             productId: item.id,
@@ -77,15 +75,12 @@ const Cart = () => {
 
             console.log("ORDER DATA SENT:", orderData);
 
-            // 👉 GUARDAR ORDEN LOCALMENTE
             const saved = JSON.parse(localStorage.getItem("orders")) || [];
             saved.push(orderData);
             localStorage.setItem("orders", JSON.stringify(saved));
 
-            // 👉👉 LIMPIAR EL CARRITO DESPUÉS DE CREAR LA ORDEN
             clearCart();
 
-            // Navegar al QR
             navigate("/QR", { state: { order: orderData } });
 
         } catch (err) {

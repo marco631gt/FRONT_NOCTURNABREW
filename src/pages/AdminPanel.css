@@ -1,4 +1,3 @@
-/* Contenedor general */
 .adminpanel-container {
   width: 100%;
   min-height: 100vh;
@@ -6,11 +5,10 @@
   flex-direction: column;
 }
 
-/* Fondo full screen */
 .adminpanel-bg {
   flex: 1;
   width: 100vw;
-  height: calc(100vh - 160px); /* Ajustar si tu header/footer cambian */
+  height: calc(100vh - 160px); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,7 +18,6 @@
   align-items: center;
 }
 
-/* Caja central */
 .adminpanel-box {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
@@ -32,7 +29,6 @@
   max-width: 90%;
 }
 
-/* Título */
 .adminpanel-title {
   font-size: 36px;
   font-weight: bold;
@@ -40,14 +36,12 @@
   margin-bottom: 35px;
 }
 
-/* Contenedor de botones lado a lado */
 .adminpanel-buttons {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
-/* Botones */
 .adminpanel-btn {
   flex: 1;
   padding: 20px;
@@ -59,19 +53,16 @@
   transition: 0.25s ease-in-out;
   text-align: center;
 
-  /* 🔥 Quitar orilla morada */
   border: none !important;
   outline: none !important;
 }
 
-/* También evitar orilla en focus/active */
 .adminpanel-btn:focus,
 .adminpanel-btn:active {
   outline: none !important;
   border: none !important;
 }
 
-/* Imagen dentro de cada botón */
 .adminpanel-img {
   width: 60px;
   height: 60px;
@@ -80,7 +71,6 @@
   margin: 0 auto 8px auto;
 }
 
-/* Estilos individuales */
 .adminpanel-btn.product {
   background-color: #5a0c17;
 }

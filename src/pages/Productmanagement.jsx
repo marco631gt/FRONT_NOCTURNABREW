@@ -18,7 +18,6 @@ const Productmanagement = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Estado para menú flotante del botón +
   const [showMenu, setShowMenu] = useState(false);
 
   const categories = [
@@ -65,7 +64,7 @@ const Productmanagement = () => {
           setProducts([]);
         }
       } catch (error) {
-        console.error("⚠️ Error fetching products:", error);
+        console.error("Error fetching products:", error);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -118,7 +117,6 @@ const Productmanagement = () => {
                 <p>{p.description}</p>
                 <p className="pm-price">${p.price}</p>
 
-                {/* BOTÓN EDITAR */}
                 <button
   className="btn-edit"
   onClick={() => navigate(`/Updateproduct`, { state: { product: p } })}
@@ -139,7 +137,6 @@ const Productmanagement = () => {
         <img src={gallery} alt="Gallery" />
       </section>
 
-      {/* BOTÓN FLOTANTE + */}
       <button 
         className="create-btn"
         onClick={() => setShowMenu(!showMenu)}
@@ -147,7 +144,6 @@ const Productmanagement = () => {
         +
       </button>
 
-      {/* MENÚ DESPLEGABLE */}
       {showMenu && (
         <div className="create-menu">
           <button onClick={() => navigate("/Createproduct")}>

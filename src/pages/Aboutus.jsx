@@ -22,7 +22,6 @@ export default function Aboutus() {
     <>
       <div className="font-[Poppins]">
 
-        {/* HEADER FUSIONADO (DISEÑO DE Header2) */}
         <header className="main-header">
           <div className="logo">
             <Link to="/">
@@ -54,7 +53,6 @@ export default function Aboutus() {
                   <Link to="/AdminPanel">Admin</Link>
                 )}
 
-                {/* Ícono de cerrar sesión (con tu nueva imagen) */}
                 <button
                   onClick={handleLogout}
                   style={{
@@ -81,7 +79,6 @@ export default function Aboutus() {
 
         </header>
 
-        {/* HERO */}
         <section className="relative overflow-hidden bg-[#550B14] text-white pb-20">
           <svg
             className="absolute top-0 left-0 w-full"
@@ -109,7 +106,6 @@ export default function Aboutus() {
           </div>
         </section>
 
-        {/* OUR INFORMATION */}
         <section className="our-informationabout max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <img src={coffeecup2} alt="Taza de café 2" className="w-80 mx-auto" />
 
@@ -132,7 +128,6 @@ export default function Aboutus() {
           </div>
         </section>
 
-        {/* LAST INFO */}
         <section className="last-informationabout max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="info-text2 text-xl italic">
             <p>
@@ -144,7 +139,6 @@ export default function Aboutus() {
           <img src={coffee} alt="Coffee cup" className="w-72 mx-auto" />
         </section>
 
-        {/* GALLERY */}
         <section className="gallery w-full flex justify-center py-10">
           <img src={gallery} alt="Gallery" className="w-[90%] max-w-4xl" />
         </section>

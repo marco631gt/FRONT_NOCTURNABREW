@@ -1,4 +1,3 @@
-// src/pages/QR.jsx
 import React, { useState } from "react";
 import "./QR.css";
 import gallery from "../assets/images/ImagesGallery.png";
@@ -33,7 +32,7 @@ const QR = () => {
       </>
     );
 
-  // Descargar PDF
+
   const generarPDF = async () => {
     const elemento = document.getElementById("ticket-pdf");
 
@@ -54,7 +53,7 @@ const QR = () => {
     pdf.save(`Orden-${order.orderNumber}.pdf`);
   };
 
-  // Cancelar orden → actualizar estado + vaciar carrito
+  
   const cancelarOrden = async () => {
     try {
       const id = order.orderId || order.ticket?.orderId;
@@ -77,13 +76,10 @@ const QR = () => {
 
       if (!res.ok) throw new Error(await res.text());
 
-      // Vaciar carrito
       clearCart();
 
-      // Pop-up de éxito
       setShowSuccessPopup(true);
 
-      // Redirigir después de 1.5s
       setTimeout(() => {
         setShowSuccessPopup(false);
         navigate("/menu");
@@ -106,31 +102,17 @@ const QR = () => {
         </p>
       </section>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "20px",
-        }}
-      >
+      <div>
         <Ticket order={order} />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "15px",
-          marginBottom: "35px",
-        }}
-      >
-        <button className="download-btn" onClick={generarPDF}>
+      
+      <div className="buttons-container">
+        <button className="download-boton" onClick={generarPDF}>
           Descargar PDF
         </button>
 
-        <button
-          className="cancel-btn" onClick={() => setShowPopup(true)}
-        >
+        <button className="cancel-btn" onClick={() => setShowPopup(true)}>
           Cancel Order
         </button>
       </div>
@@ -139,7 +121,7 @@ const QR = () => {
         <Ticket order={order} />
       </div>
 
-      {/* POPUP CONFIRMAR CANCELACIÓN */}
+     
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup">
@@ -158,7 +140,7 @@ const QR = () => {
         </div>
       )}
 
-      {/* POPUP DE ÉXITO */}
+      
       {showSuccessPopup && (
         <div className="popup-overlay">
           <div className="success-popup">

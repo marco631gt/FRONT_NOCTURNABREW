@@ -16,11 +16,10 @@ const UserManagement = () => {
 
   const [users, setUsers] = useState([]);
 
-  // POPUP STATE
   const [popup, setPopup] = useState({
     show: false,
     message: "",
-    type: "", // success | error | confirm
+    type: "", 
     onConfirm: null,
   });
 
@@ -222,7 +221,6 @@ const UserManagement = () => {
     <>
       <HeaderAdminPanel />
 
-      {/* POPUP */}
       {popup.show && (
         <div className={`popup-overlay ${popup.type}`}>
           <div className="popup-box">
@@ -286,7 +284,7 @@ const UserManagement = () => {
 
           <div className="admin-card-body">
             <div className="admin-body-container">
-              {/* USERS LIST */}
+
               <div className="users-section">
                 <h3 className="users-title">All Users</h3>
 
@@ -311,7 +309,6 @@ const UserManagement = () => {
                 </div>
               </div>
 
-              {/* FORM */}
               <div className="form-section">
                 <div className="admin-input">
                   <input

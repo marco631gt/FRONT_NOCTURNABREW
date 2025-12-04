@@ -17,7 +17,6 @@ body {
   width: 100%;
 }
 
-/* CATEGORÍAS */
 .categoriesrefresh {
   text-align: center;
   color: white;
@@ -91,7 +90,6 @@ body {
   color: #3e2c23;
 }
 
-/* PRODUCTOS */
 .product-container {
   margin-top: 30px;
   display: none;
@@ -150,7 +148,6 @@ body {
   margin-top: 5px;
 }
 
-/* ====== CANTIDAD ====== */
 .qty-container {
   margin-top: 15px;
   display: flex;
@@ -168,9 +165,9 @@ body {
   border: none;
   font-size: 20px;
   cursor: pointer;
-  display: flex;             /* 🔥 Esto centra el contenido */
-  align-items: center;       /* 🔥 Centra vertical */
-  justify-content: center;   /* 🔥 Centra horizontal */
+  display: flex;             
+  align-items: center;       
+  justify-content: center;   
   padding: 0;
   line-height: 1;
   transition: background 0.2s ease;
@@ -185,7 +182,6 @@ body {
   color: #3e2c23;
 }
 
-/* ====== BOTÓN ADD ====== */
 .btn-add {
   margin-top: 15px;
   width: 100%;
@@ -209,17 +205,15 @@ body {
   transform: scale(0.95);
 }
 
-/* Igualar altura de los títulos */
 .product-card h4 {
-  min-height: 10px; /* Ajusta si quieres más o menos espacio */
+  min-height: 10px; 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Igualar altura de las descripciones */
 .product-card p {
-  min-height: 40px; /* Asegura que todas tengan la misma altura */
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,10 +244,9 @@ body {
   background: #7a1020;
 }
 
-/* ====== TOAST PRODUCTO AGREGADO ====== */
 .toast-added {
   position: fixed;
-  bottom: 130px; /* un poco más arriba del botón "Go to Cart" */
+  bottom: 130px; 
   right: 20px;
   background: #5a0c17;
   color: white;

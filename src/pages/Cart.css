@@ -22,7 +22,6 @@ body {
 }
 
 
-/* PRODUCTOS */
 .product-container {
   margin-top: 30px;
   display: none;
@@ -81,7 +80,6 @@ body {
   margin-top: 5px;
 }
 
-/* ====== CANTIDAD ====== */
 .qty-container {
   margin-top: 15px;
   display: flex;
@@ -99,9 +97,9 @@ body {
   border: none;
   font-size: 20px;
   cursor: pointer;
-  display: flex;             /* 🔥 Esto centra el contenido */
-  align-items: center;       /* 🔥 Centra vertical */
-  justify-content: center;   /* 🔥 Centra horizontal */
+  display: flex;            
+  align-items: center;       
+  justify-content: center;   
   padding: 0;
   line-height: 1;
   transition: background 0.2s ease;
@@ -116,7 +114,6 @@ body {
   color: #3e2c23;
 }
 
-/* ====== BOTÓN ADD ====== */
 .btn-add {
   margin-top: 15px;
   width: 100%;
@@ -140,17 +137,15 @@ body {
   transform: scale(0.95);
 }
 
-/* Igualar altura de los títulos */
 .product-card h4 {
-  min-height: 10px; /* Ajusta si quieres más o menos espacio */
+  min-height: 10px; 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Igualar altura de las descripciones */
 .product-card p {
-  min-height: 40px; /* Asegura que todas tengan la misma altura */
+  min-height: 40px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,12 +173,11 @@ body {
 .cart-summary-section {
   width: 100%;
   padding: 20px 0;
-  margin-top: 40px; /* Súbelo un poco */
+  margin-top: 40px; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px; /* Espacio entre resumen y botón */
-}
+  gap: 15px; }
 
 .cart-summary {
   width: 80%;
@@ -223,15 +217,13 @@ body {
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
 }
-/* CONTENEDOR DEL TÍTULO */
 .titlecart {
     text-align: center;
-    margin-top: 30px;     /* 🔼 súbelo si quieres más */
+    margin-top: 30px;     
     margin-bottom: 30px;
     
 }
 
-/* TITULO */
 .titlecart h2 {
     font-size: 26px;
     font-weight: 700;
@@ -240,14 +232,12 @@ body {
     
 }
 
-/* MENSAJE "CART EMPTY" */
 .titlecart .no-products {
     color: black;
     font-size: 18px;
     margin-top: 5px;
 }
 
-/* Fondo oscuro transparente */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -261,7 +251,6 @@ body {
     z-index: 999;
 }
 
-/* Caja del pop-up */
 .popup-box {
     background: white;
     width: 85%;
@@ -272,7 +261,6 @@ body {
     animation: popupFade 0.3s ease;
 }
 
-/* Animación */
 @keyframes popupFade {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
@@ -289,7 +277,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Botón del popup */
 .popup-btn {
     background: #8b1a1a;
     color: white;

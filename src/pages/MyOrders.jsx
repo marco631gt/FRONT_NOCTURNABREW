@@ -1,4 +1,3 @@
-// src/pages/MyOrders.jsx
 import React, { useEffect, useState } from "react";
 import HeaderOrders from "../components/HeaderOrders";
 import Footer from "../components/Footer";
@@ -9,7 +8,6 @@ const API = import.meta.env.VITE_ENDPOINT;
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
 
-  // 🔥 Estado para popup de confirmación
   const [confirmPopup, setConfirmPopup] = useState({
     show: false,
     orderId: null
@@ -20,7 +18,6 @@ const MyOrders = () => {
     setOrders(saved);
   }, []);
 
-  // 🔥 Cancelar en Mongo igual que en QR.jsx
   const cancelOrderInMongo = async (orderId) => {
     try {
       const res = await fetch(`${API}ticket/updateStatus/${orderId}`, {
@@ -38,13 +35,12 @@ const MyOrders = () => {
       return true;
 
     } catch (err) {
-      console.error("❌ Error canceling order in Mongo:", err);
+      console.error("Error canceling order in Mongo:", err);
       alert("Error canceling order.");
       return false;
     }
   };
 
-  // 🔥 Cancela en Mongo y luego en localStorage
   const cancelLocalOrder = async (orderId) => {
     const ok = await cancelOrderInMongo(orderId);
     if (!ok) return;
@@ -57,25 +53,21 @@ const MyOrders = () => {
     localStorage.setItem("orders", JSON.stringify(updated));
   };
 
-  // 🔥 Abrir popup
   const openConfirmPopup = (orderId) => {
     setConfirmPopup({ show: true, orderId });
   };
 
-  // 🔥 Confirmar Sí
   const confirmCancel = async () => {
     await cancelLocalOrder(confirmPopup.orderId);
     setConfirmPopup({ show: false, orderId: null });
   };
 
-  // 🔥 Cancelar No
   const closePopup = () => {
     setConfirmPopup({ show: false, orderId: null });
   };
 
   return (
     <>
-      {/* 🔥 POPUP DE CONFIRMACIÓN */}
       {confirmPopup.show && (
         <div className="popup-overlay">
           <div className="popup-box">

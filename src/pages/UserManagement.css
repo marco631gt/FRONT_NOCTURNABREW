@@ -19,7 +19,6 @@
   overflow: hidden;
 }
 
-/* HEADER */
 .admin-card-header {
   position: sticky;
   top: 0;
@@ -38,20 +37,17 @@
   margin: 0;
 }
 
-/* BODY */
 .admin-card-body {
   max-height: 70vh;
   overflow: hidden;
   padding: 30px 40px;
 }
 
-/* Contenedor de lista y formulario */
 .admin-body-container {
   display: flex;
   gap: 30px;
 }
 
-/* Secciones */
 .users-section {
   flex: 1;
   max-width: 45%;
@@ -67,12 +63,11 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centrado vertical */
-  gap: 15px; /* Espacio entre inputs */
+  justify-content: center; 
+  gap: 15px; 
 }
 
 
-/* Inputs */
 .admin-input input,
 .admin-input select {
   width: 100%;
@@ -84,7 +79,6 @@
   color: white;
 }
 
-/* Scroll para usuarios */
 .users-table {
   background: rgba(0, 0, 0, 0.3);
   padding: 15px;
@@ -97,7 +91,7 @@
 .user-row {
   display: grid;
   grid-template-columns: 1fr 1fr 0.6fr;
-  gap: 18px; /* ← AQUI agregamos espacio entre columnas */
+  gap: 18px; 
   margin-bottom: 10px;
   padding: 12px;
   background: rgba(142, 23, 23, 0.6);
@@ -121,7 +115,6 @@
   margin: 0;
 }
 
-/* Scroll de la tabla de usuarios */
 .users-table::-webkit-scrollbar {
   width: 8px;
 }
@@ -138,14 +131,12 @@
   margin-bottom: 20px;
 }
 
-/* RESET del borde feo al hacer click */
 button:focus,
 button:active {
   outline: none !important;
   box-shadow: none !important;
 }
 
-/* Botones base (blancos aesthetic) */
 .admin-btns button {
   flex: 1;
   padding: 12px 20px;
@@ -159,19 +150,15 @@ button:active {
   color: #333;
 }
 
-/* Hover general */
 .admin-btns button:hover {
   background: #f5f2f1;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.12);
 }
 
-/* --------------------------- */
-/*         BOTONES GUINDO      */
-/* --------------------------- */
 
-.erase-btn, /* DELETE */
-.clear-btn { /* CLEAR */
+.erase-btn, 
+.clear-btn { 
   background: #5b0a18 !important; 
   color: white !important;
   border: 1px solid #5b0a18 !important;
@@ -186,14 +173,12 @@ button:active {
 }
 
 
-/* Título de usuarios */
 .users-title {
   margin-top: 0;
   color: white;
   font-size: 22px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .admin-body-container {
     flex-direction: column;
@@ -210,9 +195,9 @@ button:active {
 
 .user-row p {
   margin: 0;
-  word-break: break-word; /* Corta palabras largas */
-  overflow-wrap: anywhere; /* Permite salto de línea */
-  white-space: normal; /* Evita que el texto se mantenga en una sola línea */
+  word-break: break-word; 
+  overflow-wrap: anywhere; 
+  white-space: normal; 
 }
 
 .admin-input input::placeholder,

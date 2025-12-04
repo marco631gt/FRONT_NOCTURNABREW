@@ -52,7 +52,7 @@ const Menu = () => {
         });
 
         const text = await response.text();
-        console.log("🔍 Respuesta recibida (texto):", text);
+        console.log(" Respuesta recibida (texto):", text);
 
         if (!response.ok || !text.startsWith("{")) {
           throw new Error("Respuesta no válida");
@@ -69,7 +69,7 @@ const Menu = () => {
           setProducts([]);
         }
       } catch (error) {
-        console.error("⚠️ Error fetching products:", error);
+        console.error("Error fetching products:", error);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -144,7 +144,6 @@ const Menu = () => {
 
                
 
-                {/* CANTIDAD */}
                 <div className="qty-container">
                   <button
                     className="qty-btn"
@@ -163,7 +162,6 @@ const Menu = () => {
                   </button>
                 </div>
 
-                {/* BOTÓN */}
                 <button
                 className="btn-add"
                 disabled={!p.available || p.qty === 0}

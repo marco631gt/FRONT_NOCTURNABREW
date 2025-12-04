@@ -2,11 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Landing.css";
 
-// Componentes reutilizables
 import HeaderLanding from "../components/HeaderLanding";
 import Footer from "../components/Footer";
 
-// Imágenes
 import coffeecup from "../assets/images/coffeecup.png";
 import backourcoffe from "../assets/images/backourcoffe.png";
 import coldbrew from "../assets/images/coldbrew.png";
@@ -18,7 +16,6 @@ const Landing = () => {
   return (
     <>
     <HeaderLanding/>
-      {/* HERO */}
       <section className="hero">
         <svg
           className="hero-bg"
@@ -44,7 +41,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* OUR COFFEE */}
       <section
         className="our-coffee"
         style={{ backgroundImage: `url(${backourcoffe})` }}
@@ -72,7 +68,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* OUR TEMPTATIONS */}
       <section className="temptations">
         <h2>OUR TEMPTATIONS</h2>
         <div className="temptation-cards">
@@ -106,7 +101,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* GALLERY */}
       <section className="gallery">
         <img src={ImagesGallery} alt="Gallery" />
       </section>
